@@ -12,6 +12,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import fest.cinefest.mock.FilmesMock;
 import fest.cinefest.model.Filme;
 
 @Service
+@Scope("singleton")
 public class FilmesService {
 
 	@Autowired
