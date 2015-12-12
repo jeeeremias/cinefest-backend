@@ -1,1 +1,3 @@
-${OPENSHIFT_DATA_DIR}/m2/repository
+<settings>
+	<localRepository>${OPENSHIFT_DATA_DIR}/m2/repository</localRepository>
+</settings>
