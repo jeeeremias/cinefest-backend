@@ -13,47 +13,63 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import fest.cinefest.model.Filme;
-import fest.cinefest.service.FilmesService;
+import fest.cinefest.service.FilmeService;
+import fest.cinefest.service.ImagemService;
 
 @RestController
 @Scope("request")
 public class CinefestController {
 	
 	@Autowired
-	FilmesService filmesService;
+	FilmeService filmeService;
 	
-	@RequestMapping("/filmes")
-	@ResponseBody
-	public List<Filme> getFilmes(@RequestParam int limit, @RequestParam int offset) throws SQLException {
-		
-		return filmesService.getFilmes(limit, offset);
-	}
+	@Autowired
+	ImagemService imagemService;
 	
-	@RequestMapping("/filme")
+	@RequestMapping(value = "/filmes", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Filme getFilme(@RequestParam int id) throws SQLException {
-		
-		return filmesService.getFilme(id);
+	public List<Filme> getFilmes(@RequestParam int pag, @RequestParam int tam) throws SQLException {
+		return filmeService.getAll(pag, tam);
 	}
 	
 	@RequestMapping(value = "/imagem", produces = MediaType.IMAGE_JPEG_VALUE)
 	@ResponseBody
 	public byte[] getImagem(@RequestParam int id) throws IOException {
 		
-		return filmesService.getImagem(id);
+		return imagemService.getImagem(id);
 	}
 	
-	@RequestMapping("/mock-database")
+	@RequestMapping("/mock")
 	@ResponseBody
-	public void mockDatabase(@RequestParam int qtde) throws SQLException {
-		
-		filmesService.mockDataBase(qtde);
+	public void mockFilmes(@RequestParam int qtde) throws SQLException {
+		filmeService.mock(qtde);
 	}
 	
-	@RequestMapping("/clean-database")
-	@ResponseBody
-	public void cleanDatabase() throws SQLException {
-		
-		filmesService.cleanDatabase();
-	}
+//	@RequestMapping("/filme")
+//	@ResponseBody
+//	public Filme getFilme(@RequestParam int id) throws SQLException {
+//		
+//		return filmesService.getFilme(id);
+//	}
+//	
+//	@RequestMapping(value = "/imagem", produces = MediaType.IMAGE_JPEG_VALUE)
+//	@ResponseBody
+//	public byte[] getImagem(@RequestParam int id) throws IOException {
+//		
+//		return filmesService.getImagem(id);
+//	}
+//	
+//	@RequestMapping("/mock-database")
+//	@ResponseBody
+//	public void mockDatabase(@RequestParam int qtde) throws SQLException {
+//		
+//		filmesService.mockDataBase(qtde);
+//	}
+//	
+//	@RequestMapping("/clean-database")
+//	@ResponseBody
+//	public void cleanDatabase() throws SQLException {
+//		
+//		filmesService.cleanDatabase();
+//	}
 }

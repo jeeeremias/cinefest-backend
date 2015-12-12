@@ -1,15 +1,36 @@
 package fest.cinefest.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Filme {
-	private int id;
-	private String nome;
-	private String descricao;
-	private String autor;
-	private String duracao;
-	private List<Integer> imagens;
+import javax.persistence.*;
+
+@Entity
+public class Filme implements Serializable {
 	
+	@Id
+	@GeneratedValue
+	private Integer idFilme;
+	
+	@Column
+	private String nome;
+	
+	@Column
+	private String descricao;
+	
+	@Column
+	private String autor;
+	
+	@Column
+	private String duracao;
+	
+	@OneToMany(mappedBy = "filme", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Imagem> imagens;
+	
+	public Filme() {
+		super();
+	}
+
 	public Filme(String nome, String descrição, String autor, String duracao) {
 		super();
 		this.nome = nome;
@@ -18,12 +39,14 @@ public class Filme {
 		this.duracao = duracao;
 	}
 
-	public int getId() {
-		return id;
+	public Integer getIdFilme() {
+		return idFilme;
 	}
-	public void setId(int id) {
-		this.id = id;
+
+	public void setIdFilme(Integer idFilme) {
+		this.idFilme = idFilme;
 	}
+
 	public String getDescricao() {
 		return descricao;
 	}
@@ -48,10 +71,13 @@ public class Filme {
 	public void setDuracao(String duracao) {
 		this.duracao = duracao;
 	}
-	public List<Integer> getImagens() {
+	public List<Imagem> getImagens() {
 		return imagens;
 	}
-	public void setImagens(List<Integer> imagens) {
+	public void setImagens(List<Imagem> imagens) {
 		this.imagens = imagens;
+	}
+	public void addImagem(Imagem imagem) {
+		this.imagens.add(imagem);
 	}
 }

@@ -5,10 +5,10 @@
 	<groupId>fest</groupId>
 	<artifactId>cinefest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>cinefest</name>
-	<description>Backend service of Cinefest app</description>
+	<url>http://maven.apache.org</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -1,5 +1,3 @@
 fest/cinefest/web/rest/CinefestController.class
-fest/cinefest/start/Application.class
 fest/cinefest/model/Filme.class
 fest/cinefest/mock/FilmesMock.class
-fest/cinefest/service/FilmesService.class
