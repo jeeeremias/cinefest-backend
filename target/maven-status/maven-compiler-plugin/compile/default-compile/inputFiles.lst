@@ -1,0 +1,9 @@
+/home/jeremias/workspace/cinefest/src/main/java/fest/cinefest/domain/FilmeRepository.java
+/home/jeremias/workspace/cinefest/src/main/java/fest/cinefest/web/rest/CinefestController.java
+/home/jeremias/workspace/cinefest/src/main/java/fest/cinefest/service/ImagemService.java
+/home/jeremias/workspace/cinefest/src/main/java/fest/cinefest/domain/ImagemRepository.java
+/home/jeremias/workspace/cinefest/src/main/java/fest/cinefest/model/Imagem.java
+/home/jeremias/workspace/cinefest/src/main/java/fest/cinefest/service/FilmeService.java
+/home/jeremias/workspace/cinefest/src/main/java/fest/cinefest/Application.java
+/home/jeremias/workspace/cinefest/src/main/java/fest/cinefest/model/Filme.java
+/home/jeremias/workspace/cinefest/src/main/java/fest/cinefest/mock/FilmesMock.java
