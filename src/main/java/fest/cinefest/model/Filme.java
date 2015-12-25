@@ -16,7 +16,10 @@ public class Filme implements Serializable {
 	private String nome;
 	
 	@Column
-	private String descricao;
+	private String descricaoCurta;
+	
+	@Column
+	private String descricaoCompleta;
 	
 	@Column
 	private String autor;
@@ -31,10 +34,10 @@ public class Filme implements Serializable {
 		super();
 	}
 
-	public Filme(String nome, String descrição, String autor, String duracao) {
+	public Filme(String nome, String descricaoCurta, String autor, String duracao) {
 		super();
 		this.nome = nome;
-		this.descricao = descrição;
+		this.descricaoCurta = descricaoCurta;
 		this.autor = autor;
 		this.duracao = duracao;
 	}
@@ -47,12 +50,22 @@ public class Filme implements Serializable {
 		this.idFilme = idFilme;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getDescricaoCurta() {
+		return descricaoCurta;
 	}
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+
+	public void setDescricaoCurta(String descricaoCurta) {
+		this.descricaoCurta = descricaoCurta;
 	}
+
+	public String getDescricaoCompleta() {
+		return descricaoCompleta;
+	}
+
+	public void setDescricaoCompleta(String descricaoCompleta) {
+		this.descricaoCompleta = descricaoCompleta;
+	}
+
 	public String getNome() {
 		return nome;
 	}

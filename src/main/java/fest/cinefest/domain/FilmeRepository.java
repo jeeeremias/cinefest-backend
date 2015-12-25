@@ -6,7 +6,7 @@ import org.springframework.data.repository.Repository;
 
 import fest.cinefest.model.Filme;
 
-public interface FilmeRepository extends Repository<Filme, Long> {
+public interface FilmeRepository extends Repository<Filme, Integer> {
 	Page<Filme> findAll(Pageable pageable);
 	Filme save(Filme filme);
 }
