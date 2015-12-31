@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import fest.cinefest.domain.FilmeRepository;
 import fest.cinefest.domain.ImagemRepository;
@@ -22,10 +23,12 @@ public class FilmeService {
 	@Autowired
 	ImagemRepository imagemRespository;
 	
+	@Transactional
 	public List<Filme> getAll(int pag, int tam) {
 		return filmeRespository.findAll(new PageRequest(pag, tam)).getContent();
 	}
 	
+	@Transactional
 	public void mock(int qtde) {
 		Filme filme;
 		Imagem imagem;

@@ -2,6 +2,7 @@ package fest.cinefest.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import fest.cinefest.domain.ImagemRepository;
 import fest.cinefest.domain.UsuarioRepository;
@@ -17,14 +18,17 @@ public class UsuarioService {
 	@Autowired
 	ImagemRepository imagemRespository;
 	
+	@Transactional
 	public Usuario getUsuario(String email) {
 		return usuarioRepository.findOne(email);
 	}
 	
+	@Transactional
 	public boolean existe(String email) {
 		return usuarioRepository.exists(email);
 	}
 	
+	@Transactional
 	public Response cadastro(Usuario usuario) {
 		Response response = new Response();
 		if(existe(usuario.getEmail())) {
@@ -45,6 +49,7 @@ public class UsuarioService {
 		return response;
 	}
 	
+	@Transactional
 	public Response login(Usuario usuario) {
 		Usuario usuario2 = null;
 		Response response = new Response();
