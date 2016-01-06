@@ -15,6 +15,7 @@ import fest.cinefest.model.Filme;
 import fest.cinefest.model.Imagem;
 
 @Service
+@Transactional
 public class FilmeService {
 	
 	@Autowired
@@ -23,12 +24,10 @@ public class FilmeService {
 	@Autowired
 	ImagemRepository imagemRespository;
 	
-	@Transactional
 	public List<Filme> getAll(int pag, int tam) {
 		return filmeRespository.findAll(new PageRequest(pag, tam)).getContent();
 	}
 	
-	@Transactional
 	public void mock(int qtde) {
 		Filme filme;
 		Imagem imagem;

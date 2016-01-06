@@ -13,12 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 import fest.cinefest.domain.ImagemRepository;
 
 @Service
+@Transactional
 public class ImagemService {
 
 	@Autowired
 	ImagemRepository imagemRespository;
 	
-	@Transactional
 	public byte[] getImagem(int id) throws IOException {
 		BufferedImage imagem = ImageIO.read(getClass().getResourceAsStream("/imagens/imagem" + id + ".jpg"));
 		ByteArrayOutputStream bao = new ByteArrayOutputStream();
