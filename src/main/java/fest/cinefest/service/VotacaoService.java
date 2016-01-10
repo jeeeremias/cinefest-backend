@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fest.cinefest.domain.VotacaoRepository;
+import fest.cinefest.model.Filme;
 import fest.cinefest.model.Response;
-import fest.cinefest.model.Usuario;
 import fest.cinefest.model.Voto;
 
 @Service
@@ -15,6 +15,9 @@ public class VotacaoService {
 	
 	@Autowired
 	VotacaoRepository votacaoRepository;
+	
+	@Autowired
+	FilmeService filmeService;
 	
 	public Voto getVoto(String cpf) {
 		return votacaoRepository.findOne(cpf);
@@ -26,14 +29,22 @@ public class VotacaoService {
 	
 	public Response votar(Voto voto) {
 		Response response = new Response();
+		Filme filme;
 		if(existe(voto.getCpf())) {
 			response.setSucesso(false);
 			response.setMensagem("Já existe um voto para este CPF.");
 		} else {
 			response.setSucesso(true);
-			response.setMensagem("Cadastro realizado com sucesso.");
+			response.setMensagem("Voto realizado com sucesso.");
 			try {
-				votacaoRepository.save(voto);
+				if(filmeService.existe(voto.getIdFilme())) {
+					filme = filmeService.getOne(voto.getIdFilme());
+					voto.setFilme(filme);
+					votacaoRepository.save(voto);
+				} else {
+					response.setSucesso(false);
+					response.setMensagem("Filme escolhido não existe.");
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				response.setSucesso(false);

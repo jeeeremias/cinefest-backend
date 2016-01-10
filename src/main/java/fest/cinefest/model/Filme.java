@@ -30,7 +30,7 @@ public class Filme implements Serializable {
 	@OneToMany(mappedBy = "filme", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Imagem> imagens;
 	
-	@OneToMany(mappedBy = "voto", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "filme", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Voto> votos;
 	
 	public Filme() {

@@ -8,5 +8,7 @@ import fest.cinefest.model.Filme;
 
 public interface FilmeRepository extends Repository<Filme, Integer> {
 	Page<Filme> findAll(Pageable pageable);
+	Filme findOne(Integer id);
 	Filme save(Filme filme);
+	boolean exists(Integer id);
 }

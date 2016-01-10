@@ -28,6 +28,14 @@ public class FilmeService {
 		return filmeRespository.findAll(new PageRequest(pag, tam)).getContent();
 	}
 	
+	public Filme getOne(Integer id) {
+		return filmeRespository.findOne(id);
+	}
+	
+	public boolean existe(Integer id) {
+		return filmeRespository.exists(id);
+	}
+	
 	public void mock(int qtde) {
 		Filme filme;
 		Imagem imagem;

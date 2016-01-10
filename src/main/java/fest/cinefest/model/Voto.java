@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -17,6 +18,9 @@ public class Voto implements Serializable {
 	@NotNull
 	private String cpf;
 	
+	@Transient
+	private Integer idFilme;
+	
 	@ManyToOne
 	@JoinColumn(name = "idFilme")
 	@JsonIgnore
@@ -27,6 +31,12 @@ public class Voto implements Serializable {
 	}
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+	public Integer getIdFilme() {
+		return idFilme;
+	}
+	public void setIdFilme(Integer idFilme) {
+		this.idFilme = idFilme;
 	}
 	public Filme getFilme() {
 		return filme;
