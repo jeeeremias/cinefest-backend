@@ -18,6 +18,7 @@ public class Usuario implements Serializable {
 	private String nome;
 	
 	@Column
+	@NotNull
 	private String senha;
 	
 	public Usuario() {
