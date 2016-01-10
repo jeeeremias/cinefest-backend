@@ -51,7 +51,7 @@ public class UsuarioService {
 		Usuario usuario2 = null;
 		Response response = new Response();
 		response.setSucesso(true);
-		if (usuario.getEmail().equals("admin") && usuario.getSenha().equals("admin")) {
+		if (usuario.getEmail().equals("admin@admin.com") && usuario.getSenha().equals("admin")) {
 		} else {
 			usuario2 = getUsuario(usuario.getEmail().toLowerCase());
 			if (usuario2 == null) {
