@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import fest.cinefest.model.Filme;
 import fest.cinefest.model.Response;
 import fest.cinefest.model.Usuario;
+import fest.cinefest.model.Voto;
 import fest.cinefest.service.FilmeService;
 import fest.cinefest.service.ImagemService;
 import fest.cinefest.service.UsuarioService;
+import fest.cinefest.service.VotacaoService;
 
 @RestController
 @Scope("request")
@@ -36,6 +38,9 @@ public class CinefestController {
 	
 	@Autowired
 	ImagemService imagemService;
+	
+	@Autowired
+	VotacaoService votacaoService;
 	
 	@CrossOrigin
 	@RequestMapping(value = "/filmes", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -56,6 +61,13 @@ public class CinefestController {
 	@ResponseBody
 	public Response login(@RequestBody @Valid Usuario usuario) {
 		return usuarioService.login(usuario);
+	}
+	
+	@CrossOrigin
+	@RequestMapping(value = "/votacao", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+	@ResponseBody
+	public Response votacao(@RequestBody @Valid Voto voto) {
+		return votacaoService.votar(voto);
 	}
 	
 	@CrossOrigin

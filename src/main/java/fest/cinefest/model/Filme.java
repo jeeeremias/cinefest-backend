@@ -30,6 +30,9 @@ public class Filme implements Serializable {
 	@OneToMany(mappedBy = "filme", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Imagem> imagens;
 	
+	@OneToMany(mappedBy = "voto", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Voto> votos;
+	
 	public Filme() {
 		super();
 	}
@@ -92,5 +95,11 @@ public class Filme implements Serializable {
 	}
 	public void addImagem(Imagem imagem) {
 		this.imagens.add(imagem);
+	}
+	public List<Voto> getVotos() {
+		return votos;
+	}
+	public void setVotos(List<Voto> votos) {
+		this.votos = votos;
 	}
 }
