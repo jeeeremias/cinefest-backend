@@ -1,13 +1,14 @@
 package fest.cinefest.service;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
-
-import javassist.expr.NewArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -43,8 +44,8 @@ public class FilmeService {
 
 	public String iniciar() throws IOException {
 		String status = "";
-		BufferedReader br = new BufferedReader(new FileReader(getClass()
-				.getResource("/filmes.csv").getFile()));
+		InputStream is = getClass().getResourceAsStream("/filmes.csv");
+		BufferedReader br = new BufferedReader(new InputStreamReader(is));
 		String line;
 		List<Filme> filmes = new ArrayList<Filme>();
 		List<Imagem> imagens;
