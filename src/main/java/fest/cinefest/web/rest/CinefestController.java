@@ -73,12 +73,10 @@ public class CinefestController {
 	}
 	
 	@CrossOrigin
-	@RequestMapping(value = "/iniciar", produces = MediaType.IMAGE_JPEG_VALUE)
+	@RequestMapping(value = "/iniciar", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public boolean iniciar() throws IOException {
+	public String iniciar() throws IOException {
 		
-		filmeService.iniciar();
-		
-		return true;
+		return filmeService.iniciar();
 	}
 }

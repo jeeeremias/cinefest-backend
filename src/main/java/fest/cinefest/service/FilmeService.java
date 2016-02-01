@@ -41,7 +41,8 @@ public class FilmeService {
 		return filmeRespository.exists(id);
 	}
 
-	public void iniciar() throws IOException {
+	public String iniciar() throws IOException {
+		String status = "";
 		BufferedReader br = new BufferedReader(new FileReader(getClass()
 				.getResource("/filmes.csv").getFile()));
 		String line;
@@ -66,9 +67,12 @@ public class FilmeService {
 			imagens.add(new Imagem("/" + filmeString[0] + "_3.jpg", false, filme));
 			filme.setImagens(imagens);
 			filmes.add(filme);
+			status = status.concat("parse filme: " + filmeString[0] + " ;");
 		}
 		for (Filme filmee : filmes) {
 			filmeRespository.save(filmee);
+			status = status.concat("Gravou filme: " + filmee.getIdFilme() + " ;");
 		}
+		return status;
 	}
 }
