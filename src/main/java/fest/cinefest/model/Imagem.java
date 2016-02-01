@@ -27,11 +27,18 @@ public class Imagem implements Serializable {
 	public Imagem() {
 		super();
 	}
+
+	public Imagem(String resource, boolean capa, Filme filme) {
+		super();
+		this.resource = resource;
+		this.capa = capa;
+		this.filme = filme;
+	}
 	
 	public String getResource() {
 		return resource;
 	}
-	
+
 	public void setResource(String resource) {
 		this.resource = resource;
 	}

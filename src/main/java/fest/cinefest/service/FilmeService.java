@@ -1,7 +1,13 @@
 package fest.cinefest.service;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
+
+import javassist.expr.NewArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -10,51 +16,59 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fest.cinefest.domain.FilmeRepository;
 import fest.cinefest.domain.ImagemRepository;
-import fest.cinefest.mock.FilmesMock;
 import fest.cinefest.model.Filme;
 import fest.cinefest.model.Imagem;
 
 @Service
 @Transactional
 public class FilmeService {
-	
+
 	@Autowired
 	FilmeRepository filmeRespository;
-	
+
 	@Autowired
 	ImagemRepository imagemRespository;
-	
+
 	public List<Filme> getAll(int pag, int tam) {
 		return filmeRespository.findAll(new PageRequest(pag, tam)).getContent();
 	}
-	
+
 	public Filme getOne(Integer id) {
 		return filmeRespository.findOne(id);
 	}
-	
+
 	public boolean existe(Integer id) {
 		return filmeRespository.exists(id);
 	}
-	
-	public void mock(int qtde) {
+
+	public void iniciar() throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(getClass()
+				.getResource("/filmes.csv").getFile()));
+		String line;
+		List<Filme> filmes = new ArrayList<Filme>();
+		List<Imagem> imagens;
 		Filme filme;
-		Imagem imagem;
-		for (int i = 0, d = 0; i < qtde; i ++, d ++) {
-			if (d == 3) {
-				d = 0;
+		String shortDesc;
+		while ((line = br.readLine()) != null) {
+			String[] filmeString = line.split(Pattern.quote("|"));
+			if (filmeString[11].length() >= 150) {
+				shortDesc = filmeString[11].substring(0, 147) + "...";
+			} else {
+				shortDesc = filmeString[11];
 			}
-			filme = new Filme(FilmesMock.nomes[d], FilmesMock.descricoes[d], FilmesMock.autores[d], "14:47");
-			filme.setImagens(new ArrayList<Imagem>());
-			for (int e = 0; e <= 3; e ++) {
-				imagem = new Imagem();
-				if (e == 0) {
-					imagem.setCapa(true);
-				}
-				imagem.setResource(String.valueOf(FilmesMock.imagens[d][e]));
-				imagem.setFilme(filme);
-				filme.addImagem(imagem);
-			}
-			filme = filmeRespository.save(filme);
+			
+			filme = new Filme(Integer.parseInt(filmeString[0]), filmeString[1], filmeString[2],
+					filmeString[3], filmeString[4], Integer.parseInt(filmeString[5]), filmeString[6], filmeString[7], filmeString[8],
+					filmeString[9], filmeString[10], shortDesc, filmeString[11], filmeString[12], filmeString[13]);
+			imagens = new ArrayList<Imagem>();
+			imagens.add(new Imagem("/" + filmeString[0] + "_1.jpg", true, filme));
+			imagens.add(new Imagem("/" + filmeString[0] + "_2.jpg", false, filme));
+			imagens.add(new Imagem("/" + filmeString[0] + "_3.jpg", false, filme));
+			filme.setImagens(imagens);
+			filmes.add(filme);
+		}
+		for (Filme filmee : filmes) {
+			filmeRespository.save(filmee);
 		}
 	}
 }

@@ -19,8 +19,8 @@ public class ImagemService {
 	@Autowired
 	ImagemRepository imagemRespository;
 	
-	public byte[] getImagem(int id) throws IOException {
-		BufferedImage imagem = ImageIO.read(getClass().getResourceAsStream("/imagens/imagem" + id + ".jpg"));
+	public byte[] getImagem(String resource) throws IOException {
+		BufferedImage imagem = ImageIO.read(getClass().getResourceAsStream("/images" + resource));
 		ByteArrayOutputStream bao = new ByteArrayOutputStream();
 		ImageIO.write(imagem, "jpg", bao);
 		return bao.toByteArray();

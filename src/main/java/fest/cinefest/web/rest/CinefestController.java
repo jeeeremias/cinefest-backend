@@ -1,7 +1,6 @@
 package fest.cinefest.web.rest;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -20,11 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import fest.cinefest.model.Filme;
 import fest.cinefest.model.Response;
 import fest.cinefest.model.Usuario;
-import fest.cinefest.model.Voto;
 import fest.cinefest.service.FilmeService;
 import fest.cinefest.service.ImagemService;
 import fest.cinefest.service.UsuarioService;
-import fest.cinefest.service.VotacaoService;
 
 @RestController
 @Scope("request")
@@ -39,14 +36,18 @@ public class CinefestController {
 	@Autowired
 	ImagemService imagemService;
 	
-	@Autowired
-	VotacaoService votacaoService;
-	
 	@CrossOrigin
 	@RequestMapping(value = "/filmes", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<Filme> getFilmes(@RequestParam int pag, @RequestParam int tam) {
 		return filmeService.getAll(pag, tam);
+	}
+	
+	@CrossOrigin
+	@RequestMapping(value = "/filme", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Filme getFilme(@RequestParam int id) {
+		return filmeService.getOne(id);
 	}
 	
 	@CrossOrigin
@@ -64,24 +65,20 @@ public class CinefestController {
 	}
 	
 	@CrossOrigin
-	@RequestMapping(value = "/votacao", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-	@ResponseBody
-	public Response votacao(@RequestBody @Valid Voto voto) {
-		return votacaoService.votar(voto);
-	}
-	
-	@CrossOrigin
 	@RequestMapping(value = "/imagem", produces = MediaType.IMAGE_JPEG_VALUE)
 	@ResponseBody
-	public byte[] getImagem(@RequestParam int id) throws IOException {
+	public byte[] getImagem(@RequestParam String resource) throws IOException {
 		
-		return imagemService.getImagem(id);
+		return imagemService.getImagem(resource);
 	}
 	
 	@CrossOrigin
-	@RequestMapping("/mock")
+	@RequestMapping(value = "/iniciar", produces = MediaType.IMAGE_JPEG_VALUE)
 	@ResponseBody
-	public void mockFilmes(@RequestParam int qtde) throws SQLException {
-		filmeService.mock(qtde);
+	public boolean iniciar() throws IOException {
+		
+		filmeService.iniciar();
+		
+		return true;
 	}
 }
