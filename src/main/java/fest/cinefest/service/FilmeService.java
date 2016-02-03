@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +32,7 @@ public class FilmeService {
 	ImagemRepository imagemRespository;
 
 	public List<Filme> getAll(int pag, int tam) {
-		return filmeRespository.findAll(new PageRequest(pag, tam)).getContent();
+		return filmeRespository.findAll(new PageRequest(pag, tam, new Sort(Sort.Direction.ASC, "nome"))).getContent();
 	}
 
 	public Filme getOne(Integer id) {
