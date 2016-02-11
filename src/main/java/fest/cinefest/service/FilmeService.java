@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -46,7 +47,7 @@ public class FilmeService {
 	public List<Filme> iniciar() throws IOException {
 		String status = "";
 		InputStream is = getClass().getResourceAsStream("/filmes.csv");
-		BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
 		String line;
 		List<Filme> filmes = new ArrayList<Filme>();
 		List<Imagem> imagens;
