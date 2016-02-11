@@ -1,8 +1,6 @@
 package fest.cinefest.service;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -34,6 +32,18 @@ public class FilmeService {
 
 	public List<Filme> getAll(int pag, int tam) {
 		return filmeRespository.findAll(new PageRequest(pag, tam, new Sort(Sort.Direction.ASC, "nome"))).getContent();
+	}
+	
+	public List<Filme> getByDay(String dataExibicao) {
+		List<Filme> filmes = filmeRespository.findByDataExibicao(dataExibicao, new Sort(Sort.Direction.ASC, "nome"));
+		if (dataExibicao.equals("15/02") || dataExibicao.equals("16/02") || dataExibicao.equals("17/02") || dataExibicao.equals("18/02") || dataExibicao.equals("19/02")) {
+			if(filmes != null) {
+				filmes.addAll(filmeRespository.findByDataExibicao("15 a 19/02", new Sort(Sort.Direction.ASC, "nome")));
+			} else {
+				filmes = filmeRespository.findByDataExibicao("15 a 19/02", new Sort(Sort.Direction.ASC, "nome"));
+			}
+		}
+		return filmes;
 	}
 
 	public Filme getOne(Integer id) {

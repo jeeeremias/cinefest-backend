@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import fest.cinefest.model.Filme;
 import fest.cinefest.model.Response;
 import fest.cinefest.model.Usuario;
+import fest.cinefest.model.Voto;
 import fest.cinefest.service.FilmeService;
 import fest.cinefest.service.ImagemService;
 import fest.cinefest.service.UsuarioService;
+import fest.cinefest.service.VotoService;
 
 @RestController
 @Scope("request")
@@ -36,11 +38,28 @@ public class CinefestController {
 	@Autowired
 	ImagemService imagemService;
 	
+	@Autowired
+	VotoService votoService;
+	
 	@CrossOrigin
 	@RequestMapping(value = "/filmes", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<Filme> getFilmes(@RequestParam int pag, @RequestParam int tam) {
 		return filmeService.getAll(pag, tam);
+	}
+	
+	@CrossOrigin
+	@RequestMapping(value = "/filmes/dia", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Filme> getFilmes(@RequestParam String dia) {
+		return filmeService.getByDay(dia);
+	}
+	
+	@CrossOrigin
+	@RequestMapping(value = "/votar", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Voto votar(@RequestBody Voto voto) {
+		return votoService.save(voto);
 	}
 	
 	@CrossOrigin
