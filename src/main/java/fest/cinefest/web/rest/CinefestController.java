@@ -75,7 +75,7 @@ public class CinefestController {
 	@CrossOrigin
 	@RequestMapping(value = "/iniciar", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public String iniciar() throws IOException {
+	public List<Filme> iniciar() throws IOException {
 		
 		return filmeService.iniciar();
 	}
