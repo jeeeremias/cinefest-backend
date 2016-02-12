@@ -18,11 +18,33 @@ public class Voto implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "idFilme")
-	@JsonIgnore
 	private Filme filme;
 
 	public Voto() {
 		super();
 	}
+	
+	public Integer getIdVoto() {
+		return idVoto;
+	}
 
+	public void setIdVoto(Integer idVoto) {
+		this.idVoto = idVoto;
+	}
+
+	public String getDia() {
+		return dia;
+	}
+
+	public void setDia(String dia) {
+		this.dia = dia;
+	}
+
+	public Filme getFilme() {
+		return filme;
+	}
+
+	public void setFilme(Filme filme) {
+		this.filme = filme;
+	}
 }

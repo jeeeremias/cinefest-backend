@@ -56,9 +56,11 @@ public class CinefestController {
 	}
 	
 	@CrossOrigin
-	@RequestMapping(value = "/votar", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/votar", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	@ResponseBody
 	public Voto votar(@RequestBody Voto voto) {
+		System.out.println(voto.getDia());
+//		System.out.println(voto.getFilme().getIdFilme());
 		return votoService.save(voto);
 	}
 	
