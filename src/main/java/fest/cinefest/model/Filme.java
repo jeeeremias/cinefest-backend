@@ -3,9 +3,15 @@ package fest.cinefest.model;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 public class Filme implements Serializable {
@@ -55,10 +61,10 @@ public class Filme implements Serializable {
 	@Column
 	private String emailDiretor;
 	
-	@OneToMany(mappedBy = "filme", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "filme", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Imagem> imagens;
 
-	@OneToMany(mappedBy = "filme", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "filme", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Voto> votos;
 
 	public Filme() {

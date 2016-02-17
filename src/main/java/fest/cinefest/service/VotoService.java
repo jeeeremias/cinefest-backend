@@ -7,7 +7,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fest.cinefest.domain.FilmeRepository;
 import fest.cinefest.domain.VotoRepository;
+import fest.cinefest.model.Filme;
 import fest.cinefest.model.Voto;
 
 @Service
@@ -16,8 +18,13 @@ public class VotoService {
 
 	@Autowired
 	VotoRepository votoRespository;
+	
+	@Autowired
+	FilmeRepository filmeRespository;
 
 	public Voto save(Voto voto) {
+		Filme filme = filmeRespository.findOne(voto.getIdFilme());
+		voto.setFilme(filme);
 		return votoRespository.save(voto);
 	}
 	
