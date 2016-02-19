@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fest.cinefest.domain.FilmeRepository;
 import fest.cinefest.domain.ImagemRepository;
+import fest.cinefest.domain.VotoRepository;
 import fest.cinefest.model.Filme;
 import fest.cinefest.model.Imagem;
 
@@ -26,6 +27,9 @@ public class FilmeService {
 
 	@Autowired
 	FilmeRepository filmeRespository;
+	
+	@Autowired
+	VotoRepository votoRespository;
 
 	@Autowired
 	ImagemRepository imagemRespository;
@@ -52,6 +56,22 @@ public class FilmeService {
 
 	public boolean existe(Integer id) {
 		return filmeRespository.exists(id);
+	}
+	
+	public String votos(String dia) {
+		List<Filme> filmes = getByDay(dia);
+		StringBuilder sb = new StringBuilder("Codigo, Filme, Votos, (%)\n");
+		float total = votoRespository.countByDia(dia);
+		
+		for (Filme filme : filmes) {
+			sb.append(filme.getIdFilme() + ",");
+			sb.append(filme.getNome() + ",");
+			sb.append(filme.getVotos().size() + ",");
+			sb.append(((100.0 * filme.getVotos().size()) / total) + ",");
+			sb.append("\n");
+		}
+		sb.append(",,,\n,,Total Votos," + total + "\n");
+		return sb.toString();
 	}
 
 	public List<Filme> iniciar() throws IOException {

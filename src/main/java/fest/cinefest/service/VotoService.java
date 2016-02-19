@@ -31,4 +31,8 @@ public class VotoService {
 	public List<Voto> getAll(int pag, int tam) {
 		return votoRespository.findAll(new Sort(Sort.Direction.ASC, "dia"));
 	}
+	
+	public Long countByDia(String dia) {
+		return votoRespository.countByDia(dia);
+	}
 }

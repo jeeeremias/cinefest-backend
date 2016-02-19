@@ -1,8 +1,10 @@
 package fest.cinefest.web.rest;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,8 @@ public class CinefestController {
 	@Autowired
 	VotoService votoService;
 	
+	public static final MediaType MEDIA_TYPE = new MediaType("text", "tsv", Charset.forName("utf-8"));
+	
 	@CrossOrigin
 	@RequestMapping(value = "/filmes", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -60,6 +64,19 @@ public class CinefestController {
 	@ResponseBody
 	public Voto votar(@RequestBody Voto voto) {
 		return votoService.save(voto);
+	}
+	
+	@CrossOrigin
+	@RequestMapping(value = "/votos")
+	@ResponseBody
+	public void votos(@RequestParam String dia, HttpServletResponse response) throws IOException {
+		String csvFileName = "relatorio_votos_dia_" + dia + ".csv";
+        response.setContentType("text/csv;charset=UTF-8");
+        response.setHeader("Content-disposition", String.format("attachment; filename=\"%s\"", csvFileName));
+        System.out.println(response.getCharacterEncoding());
+		response.getOutputStream().print(filmeService.votos(dia));
+		response.getOutputStream().flush();
+		response.getOutputStream().close();
 	}
 	
 	@CrossOrigin
