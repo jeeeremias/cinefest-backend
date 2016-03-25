@@ -43,7 +43,7 @@ public class CinefestController {
 	@Autowired
 	VotoService votoService;
 	
-	public static final MediaType MEDIA_TYPE = new MediaType("text", "tsv", Charset.forName("utf-8"));
+	public static final MediaType MEDIA_TYPE = new MediaType("text", "csv", Charset.forName("utf-8"));
 	
 	@CrossOrigin
 	@RequestMapping(value = "/filmes", produces = MediaType.APPLICATION_JSON_VALUE)
