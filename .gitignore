@@ -71,5 +71,6 @@ hs_err_pid*
 .idea/misc.xml
 .idea/modules.xml
 .idea/sonarlint/
+.idea/sonarIssues.xml
 cinefest.iml
 target/

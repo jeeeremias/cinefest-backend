@@ -45,28 +45,24 @@ public class CinefestController {
 	
 	public static final MediaType MEDIA_TYPE = new MediaType("text", "csv", Charset.forName("utf-8"));
 	
-	@CrossOrigin
 	@RequestMapping(value = "/filmes", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<Filme> getFilmes(@RequestParam int pag, @RequestParam int tam) {
 		return filmeService.getAll(pag, tam);
 	}
 	
-	@CrossOrigin
 	@RequestMapping(value = "/filmes/dia", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<Filme> getFilmes(@RequestParam String dia) {
 		return filmeService.getByDay(dia);
 	}
 	
-	@CrossOrigin
 	@RequestMapping(value = "/votar", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	@ResponseBody
 	public Voto votar(@RequestBody Voto voto) {
 		return votoService.save(voto);
 	}
 	
-	@CrossOrigin
 	@RequestMapping(value = "/votos")
 	@ResponseBody
 	public void votos(@RequestParam String dia, HttpServletResponse response) throws IOException {
@@ -79,28 +75,24 @@ public class CinefestController {
 		response.getOutputStream().close();
 	}
 	
-	@CrossOrigin
 	@RequestMapping(value = "/filme", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Filme getFilme(@RequestParam int id) {
 		return filmeService.getOne(id);
 	}
 	
-	@CrossOrigin
 	@RequestMapping(value = "/cadastro", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	@ResponseBody
 	public Response cadastro(@RequestBody @Valid Usuario usuario) {
 		return usuarioService.cadastro(usuario);
 	}
 	
-	@CrossOrigin
 	@RequestMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	@ResponseBody
 	public Response login(@RequestBody @Valid Usuario usuario) {
 		return usuarioService.login(usuario);
 	}
 	
-	@CrossOrigin
 	@RequestMapping(value = "/imagem", produces = MediaType.IMAGE_JPEG_VALUE)
 	@ResponseBody
 	public byte[] getImagem(@RequestParam String resource) throws IOException {
@@ -108,7 +100,6 @@ public class CinefestController {
 		return imagemService.getImagem(resource);
 	}
 	
-	@CrossOrigin
 	@RequestMapping(value = "/iniciar", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<Filme> iniciar() throws IOException {
