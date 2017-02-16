@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import fest.cinefest.domain.MovieRepository;
 import fest.cinefest.domain.PhotoRepository;
 import fest.cinefest.domain.VoteRepository;
-import fest.cinefest.model.Imagem;
+import fest.cinefest.model.Photo;
 
 @Service
 @Transactional
@@ -65,7 +65,7 @@ public class FilmeService {
 		
 		for (Movie movie : movies) {
 			sb.append(movie.getId() + ",");
-			sb.append(movie.getNome() + ",");
+			sb.append(movie.getName() + ",");
 			sb.append(movie.getVotes().size() + ",");
 			sb.append(((100.0 * movie.getVotes().size()) / total) + ",");
 			sb.append("\n");
@@ -80,7 +80,7 @@ public class FilmeService {
 		BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
 		String line;
 		List<Movie> movies = new ArrayList<Movie>();
-		List<Imagem> imagens;
+		List<Photo> imagens;
 		Movie movie;
 		String shortDesc;
 		while ((line = br.readLine()) != null) {
@@ -94,10 +94,10 @@ public class FilmeService {
 			movie = new Movie(Integer.parseInt(filmeString[0]), filmeString[1], filmeString[2],
 					filmeString[3], filmeString[4], Integer.parseInt(filmeString[5]), filmeString[6], filmeString[7], filmeString[8],
 					filmeString[9], filmeString[10], shortDesc, filmeString[11], filmeString[12], filmeString[13]);
-			imagens = new ArrayList<Imagem>();
-			imagens.add(new Imagem("/" + filmeString[0] + "_1.jpg", true, movie));
-			imagens.add(new Imagem("/" + filmeString[0] + "_2.jpg", false, movie));
-			imagens.add(new Imagem("/" + filmeString[0] + "_3.jpg", false, movie));
+			imagens = new ArrayList<Photo>();
+			imagens.add(new Photo("/" + filmeString[0] + "_1.jpg", true, movie));
+			imagens.add(new Photo("/" + filmeString[0] + "_2.jpg", false, movie));
+			imagens.add(new Photo("/" + filmeString[0] + "_3.jpg", false, movie));
 			movie.setPhotos(imagens);
 			movies.add(movie);
 			status = status.concat("parse movie: " + filmeString[0] + " ;");

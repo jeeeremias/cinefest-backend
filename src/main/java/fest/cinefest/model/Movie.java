@@ -59,10 +59,10 @@ public class Movie implements Serializable {
 	private String directorEmail;
 	
 	@OneToMany(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Imagem> photos;
+	private List<Photo> photos;
 
 	@OneToMany(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Voto> votes;
+	private List<Vote> votes;
 
 	public Movie() {
 		super();
@@ -107,11 +107,11 @@ public class Movie implements Serializable {
 		this.type = type;
 	}
 
-	public String getNome() {
+	public String getName() {
 		return name;
 	}
 
-	public void setNome(String nome) {
+	public void setName(String nome) {
 		this.name = nome;
 	}
 
@@ -211,19 +211,19 @@ public class Movie implements Serializable {
 		this.directorEmail = directorEmail;
 	}
 
-	public List<Imagem> getPhotos() {
+	public List<Photo> getPhotos() {
 		return photos;
 	}
 
-	public void setPhotos(List<Imagem> photos) {
+	public void setPhotos(List<Photo> photos) {
 		this.photos = photos;
 	}
 
-	public List<Voto> getVotes() {
+	public List<Vote> getVotes() {
 		return votes;
 	}
 
-	public void setVotes(List<Voto> votes) {
+	public void setVotes(List<Vote> votes) {
 		this.votes = votes;
 	}
 }

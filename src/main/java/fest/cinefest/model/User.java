@@ -8,28 +8,28 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Usuario implements Serializable {
+public class User implements Serializable {
 	
 	@Id
 	@NotNull
 	private String email;
 	
 	@Column
-	private String nome;
+	private String name;
 	
 	@Column
 	@NotNull
-	private String senha;
+	private String password;
 	
-	public Usuario() {
+	public User() {
 		super();
 	}
 	
-	public Usuario(String email, String nome, String senha) {
+	public User(String email, String name, String password) {
 		super();
 		this.email = email;
-		this.nome = nome;
-		this.senha = senha;
+		this.name = name;
+		this.password = password;
 	}
 	
 	public String getEmail() {
@@ -40,19 +40,19 @@ public class Usuario implements Serializable {
 		this.email = email;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getSenha() {
-		return senha;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

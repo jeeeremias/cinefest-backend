@@ -12,40 +12,40 @@ import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Imagem implements Serializable {
+public class Photo implements Serializable {
 
 	@Id
 	@GeneratedValue
-	private Integer idImagem;
+	private Integer id;
 	
 	@Column
-	private String resource;
+	private String source;
 
 	@Column
-	private boolean capa;
+	private boolean main;
 	
 	@ManyToOne
 	@JoinColumn(name = "idFilme")
 	@JsonIgnore
 	private Movie movie;
 
-	public Imagem() {
+	public Photo() {
 		super();
 	}
 
-	public Imagem(String resource, boolean capa, Movie movie) {
+	public Photo(String source, boolean main, Movie movie) {
 		super();
-		this.resource = resource;
-		this.capa = capa;
+		this.source = source;
+		this.main = main;
 		this.movie = movie;
 	}
 	
-	public String getResource() {
-		return resource;
+	public String getSource() {
+		return source;
 	}
 
-	public void setResource(String resource) {
-		this.resource = resource;
+	public void setSource(String source) {
+		this.source = source;
 	}
 	
 	public Movie getMovie() {
@@ -56,20 +56,20 @@ public class Imagem implements Serializable {
 		this.movie = movie;
 	}
 	
-	public boolean isCapa() {
-		return capa;
+	public boolean isMain() {
+		return main;
 	}
 
-	public void setCapa(boolean capa) {
-		this.capa = capa;
+	public void setMain(boolean main) {
+		this.main = main;
 	}
 
-	public Integer getIdImagem() {
-		return idImagem;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setIdImagem(Integer idImagem) {
-		this.idImagem = idImagem;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 }

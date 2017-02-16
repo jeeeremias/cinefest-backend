@@ -1,7 +1,7 @@
 package fest.cinefest.domain;
 
-import fest.cinefest.model.Usuario;
+import fest.cinefest.model.User;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface UserRepository extends PagingAndSortingRepository<Usuario, String> {
+public interface UserRepository extends PagingAndSortingRepository<User, String> {
 }

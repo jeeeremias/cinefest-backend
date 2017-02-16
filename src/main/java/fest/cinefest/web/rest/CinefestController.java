@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import fest.cinefest.model.Movie;
+import fest.cinefest.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
@@ -18,9 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import fest.cinefest.model.Response;
-import fest.cinefest.model.Usuario;
-import fest.cinefest.model.Voto;
+import fest.cinefest.model.Vote;
 import fest.cinefest.service.FilmeService;
 import fest.cinefest.service.ImagemService;
 import fest.cinefest.service.UsuarioService;
@@ -58,8 +57,8 @@ public class CinefestController {
 	
 	@RequestMapping(value = "/votar", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	@ResponseBody
-	public Voto votar(@RequestBody Voto voto) {
-		return votoService.save(voto);
+	public Vote votar(@RequestBody Vote vote) {
+		return votoService.save(vote);
 	}
 	
 	@RequestMapping(value = "/votos")
@@ -82,14 +81,14 @@ public class CinefestController {
 	
 	@RequestMapping(value = "/cadastro", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	@ResponseBody
-	public Response cadastro(@RequestBody @Valid Usuario usuario) {
-		return usuarioService.cadastro(usuario);
+	public boolean cadastro(@RequestBody @Valid User user) {
+		return usuarioService.cadastro(user);
 	}
 	
 	@RequestMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	@ResponseBody
-	public Response login(@RequestBody @Valid Usuario usuario) {
-		return usuarioService.login(usuario);
+	public boolean login(@RequestBody @Valid User user) {
+		return usuarioService.login(user);
 	}
 	
 	@RequestMapping(value = "/imagem", produces = MediaType.IMAGE_JPEG_VALUE)

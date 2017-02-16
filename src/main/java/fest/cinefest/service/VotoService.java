@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fest.cinefest.domain.MovieRepository;
 import fest.cinefest.domain.VoteRepository;
-import fest.cinefest.model.Voto;
+import fest.cinefest.model.Vote;
 
 @Service
 @Transactional
@@ -22,13 +22,13 @@ public class VotoService {
 	@Autowired
     MovieRepository filmeRespository;
 
-	public Voto save(Voto voto) {
-		Movie movie = filmeRespository.findOne(voto.getIdFilme());
-		voto.setMovie(movie);
-		return votoRespository.save(voto);
+	public Vote save(Vote vote) {
+		Movie movie = filmeRespository.findOne(vote.getMovieId());
+		vote.setMovie(movie);
+		return votoRespository.save(vote);
 	}
 	
-	public List<Voto> getAll(int pag, int tam) {
+	public List<Vote> getAll(int pag, int tam) {
 		return votoRespository.findAll(new Sort(Sort.Direction.ASC, "dia"));
 	}
 	

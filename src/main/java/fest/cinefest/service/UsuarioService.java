@@ -1,13 +1,11 @@
 package fest.cinefest.service;
 
+import fest.cinefest.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import fest.cinefest.domain.PhotoRepository;
 import fest.cinefest.domain.UserRepository;
-import fest.cinefest.model.Response;
-import fest.cinefest.model.Usuario;
 
 @Service
 @Transactional
@@ -16,10 +14,7 @@ public class UsuarioService {
 	@Autowired
 	UserRepository usuarioRepository;
 	
-	@Autowired
-    PhotoRepository imagemRespository;
-	
-	public Usuario getUsuario(String email) {
+	public User getUsuario(String email) {
 		return usuarioRepository.findOne(email);
 	}
 	
@@ -27,43 +22,34 @@ public class UsuarioService {
 		return usuarioRepository.exists(email);
 	}
 	
-	public Response cadastro(Usuario usuario) {
-		Response response = new Response();
-		if(existe(usuario.getEmail())) {
-			response.setSucesso(false);
-			response.setMensagem("Usuario já cadastrado.");
+	public boolean cadastro(User user) {
+		if(existe(user.getEmail())) {
+			System.out.println("User já cadastrado.");
 		} else {
-			response.setSucesso(true);
-			response.setMensagem("Cadastro realizado com sucesso.");
 			try {
-				usuario.setEmail(usuario.getEmail().toLowerCase());
-				usuarioRepository.save(usuario);
+				user.setEmail(user.getEmail().toLowerCase());
+                usuarioRepository.save(user);
 			} catch (Exception e) {
-				e.printStackTrace();
-				response.setSucesso(false);
-				response.setMensagem(e.getLocalizedMessage());
+				System.out.println("Cadastro realizado com sucesso.");
 			}
 		}
-		return response;
+		System.out.println("Cadastro realizado com sucesso.");
+		return true;
 	}
 	
-	public Response login(Usuario usuario) {
-		Usuario usuario2 = null;
-		Response response = new Response();
-		response.setSucesso(true);
-		if (usuario.getEmail().equals("admin@admin.com") && usuario.getSenha().equals("admin")) {
+	public boolean login(User user) {
+		User user2 = null;
+		if (user.getEmail().equals("admin@admin.com") && user.getPassword().equals("admin")) {
 		} else {
-			usuario2 = getUsuario(usuario.getEmail().toLowerCase());
-			if (usuario2 == null) {
-				response.setSucesso(false);
-				response.setMensagem("Usuario não cadastrado.");
+			user2 = getUsuario(user.getEmail().toLowerCase());
+			if (user2 == null) {
+                System.out.println("User não cadastrado.");
 			} else {
-				if (!usuario.getSenha().equals(usuario2.getSenha())) {
-					response.setSucesso(false);
-					response.setMensagem("Senha incorreta.");
+				if (!user.getPassword().equals(user2.getPassword())) {
+					System.out.println("Senha incorreta.");
 				}
 			}
 		}
-		return response;
+		return true;
 	}
 }
