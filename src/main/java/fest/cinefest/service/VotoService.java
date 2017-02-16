@@ -2,14 +2,14 @@ package fest.cinefest.service;
 
 import java.util.List;
 
+import fest.cinefest.model.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import fest.cinefest.domain.FilmeRepository;
-import fest.cinefest.domain.VotoRepository;
-import fest.cinefest.model.Filme;
+import fest.cinefest.domain.MovieRepository;
+import fest.cinefest.domain.VoteRepository;
 import fest.cinefest.model.Voto;
 
 @Service
@@ -17,14 +17,14 @@ import fest.cinefest.model.Voto;
 public class VotoService {
 
 	@Autowired
-	VotoRepository votoRespository;
+	VoteRepository votoRespository;
 	
 	@Autowired
-	FilmeRepository filmeRespository;
+    MovieRepository filmeRespository;
 
 	public Voto save(Voto voto) {
-		Filme filme = filmeRespository.findOne(voto.getIdFilme());
-		voto.setFilme(filme);
+		Movie movie = filmeRespository.findOne(voto.getIdFilme());
+		voto.setMovie(movie);
 		return votoRespository.save(voto);
 	}
 	
@@ -33,6 +33,6 @@ public class VotoService {
 	}
 	
 	public Long countByDia(String dia) {
-		return votoRespository.countByDia(dia);
+		return votoRespository.countByDay(dia);
 	}
 }

@@ -9,16 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import fest.cinefest.model.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import fest.cinefest.domain.FilmeRepository;
-import fest.cinefest.domain.ImagemRepository;
-import fest.cinefest.domain.VotoRepository;
-import fest.cinefest.model.Filme;
+import fest.cinefest.domain.MovieRepository;
+import fest.cinefest.domain.PhotoRepository;
+import fest.cinefest.domain.VoteRepository;
 import fest.cinefest.model.Imagem;
 
 @Service
@@ -26,31 +26,31 @@ import fest.cinefest.model.Imagem;
 public class FilmeService {
 
 	@Autowired
-	FilmeRepository filmeRespository;
+	MovieRepository filmeRespository;
 	
 	@Autowired
-	VotoRepository votoRespository;
+	VoteRepository votoRespository;
 
 	@Autowired
-	ImagemRepository imagemRespository;
+	PhotoRepository imagemRespository;
 
-	public List<Filme> getAll(int pag, int tam) {
+	public List<Movie> getAll(int pag, int tam) {
 		return filmeRespository.findAll(new PageRequest(pag, tam, new Sort(Sort.Direction.ASC, "nome"))).getContent();
 	}
 	
-	public List<Filme> getByDay(String dataExibicao) {
-		List<Filme> filmes = filmeRespository.findByDataExibicao(dataExibicao, new Sort(Sort.Direction.ASC, "nome"));
+	public List<Movie> getByDay(String dataExibicao) {
+		List<Movie> movies = filmeRespository.findByScreeningDate(dataExibicao, new Sort(Sort.Direction.ASC, "nome"));
 		if (dataExibicao.equals("15/02") || dataExibicao.equals("16/02") || dataExibicao.equals("17/02") || dataExibicao.equals("18/02") || dataExibicao.equals("19/02")) {
-			if(filmes != null) {
-				filmes.addAll(filmeRespository.findByDataExibicao("15 a 19/02", new Sort(Sort.Direction.ASC, "nome")));
+			if(movies != null) {
+				movies.addAll(filmeRespository.findByScreeningDate("15 a 19/02", new Sort(Sort.Direction.ASC, "nome")));
 			} else {
-				filmes = filmeRespository.findByDataExibicao("15 a 19/02", new Sort(Sort.Direction.ASC, "nome"));
+				movies = filmeRespository.findByScreeningDate("15 a 19/02", new Sort(Sort.Direction.ASC, "nome"));
 			}
 		}
-		return filmes;
+		return movies;
 	}
 
-	public Filme getOne(Integer id) {
+	public Movie getOne(Integer id) {
 		return filmeRespository.findOne(id);
 	}
 
@@ -59,29 +59,29 @@ public class FilmeService {
 	}
 	
 	public String votos(String dia) {
-		List<Filme> filmes = getByDay(dia);
-		StringBuilder sb = new StringBuilder("Codigo, Filme, Votos, (%)\n");
-		float total = votoRespository.countByDia(dia);
+		List<Movie> movies = getByDay(dia);
+		StringBuilder sb = new StringBuilder("Codigo, Movie, Votos, (%)\n");
+		float total = votoRespository.countByDay(dia);
 		
-		for (Filme filme : filmes) {
-			sb.append(filme.getIdFilme() + ",");
-			sb.append(filme.getNome() + ",");
-			sb.append(filme.getVotos().size() + ",");
-			sb.append(((100.0 * filme.getVotos().size()) / total) + ",");
+		for (Movie movie : movies) {
+			sb.append(movie.getId() + ",");
+			sb.append(movie.getNome() + ",");
+			sb.append(movie.getVotes().size() + ",");
+			sb.append(((100.0 * movie.getVotes().size()) / total) + ",");
 			sb.append("\n");
 		}
 		sb.append(",,,\n,,Total Votos," + total + "\n");
 		return sb.toString();
 	}
 
-	public List<Filme> iniciar() throws IOException {
+	public List<Movie> iniciar() throws IOException {
 		String status = "";
 		InputStream is = getClass().getResourceAsStream("/filmes.csv");
 		BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
 		String line;
-		List<Filme> filmes = new ArrayList<Filme>();
+		List<Movie> movies = new ArrayList<Movie>();
 		List<Imagem> imagens;
-		Filme filme;
+		Movie movie;
 		String shortDesc;
 		while ((line = br.readLine()) != null) {
 			String[] filmeString = line.split(Pattern.quote("|"));
@@ -91,21 +91,21 @@ public class FilmeService {
 				shortDesc = filmeString[11];
 			}
 			
-			filme = new Filme(Integer.parseInt(filmeString[0]), filmeString[1], filmeString[2],
+			movie = new Movie(Integer.parseInt(filmeString[0]), filmeString[1], filmeString[2],
 					filmeString[3], filmeString[4], Integer.parseInt(filmeString[5]), filmeString[6], filmeString[7], filmeString[8],
 					filmeString[9], filmeString[10], shortDesc, filmeString[11], filmeString[12], filmeString[13]);
 			imagens = new ArrayList<Imagem>();
-			imagens.add(new Imagem("/" + filmeString[0] + "_1.jpg", true, filme));
-			imagens.add(new Imagem("/" + filmeString[0] + "_2.jpg", false, filme));
-			imagens.add(new Imagem("/" + filmeString[0] + "_3.jpg", false, filme));
-			filme.setImagens(imagens);
-			filmes.add(filme);
-			status = status.concat("parse filme: " + filmeString[0] + " ;");
+			imagens.add(new Imagem("/" + filmeString[0] + "_1.jpg", true, movie));
+			imagens.add(new Imagem("/" + filmeString[0] + "_2.jpg", false, movie));
+			imagens.add(new Imagem("/" + filmeString[0] + "_3.jpg", false, movie));
+			movie.setPhotos(imagens);
+			movies.add(movie);
+			status = status.concat("parse movie: " + filmeString[0] + " ;");
 		}
-		for (Filme filmee : filmes) {
+		for (Movie filmee : movies) {
 			filmeRespository.save(filmee);
-			status = status.concat("Gravou filme: " + filmee.getIdFilme() + " ;");
+			status = status.concat("Gravou movie: " + filmee.getId() + " ;");
 		}
-		return filmes;
+		return movies;
 	}
 }

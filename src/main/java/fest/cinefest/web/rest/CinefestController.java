@@ -7,10 +7,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import fest.cinefest.model.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import fest.cinefest.model.Filme;
 import fest.cinefest.model.Response;
 import fest.cinefest.model.Usuario;
 import fest.cinefest.model.Voto;
@@ -47,13 +46,13 @@ public class CinefestController {
 	
 	@RequestMapping(value = "/filmes", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<Filme> getFilmes(@RequestParam int pag, @RequestParam int tam) {
+	public List<Movie> getFilmes(@RequestParam int pag, @RequestParam int tam) {
 		return filmeService.getAll(pag, tam);
 	}
 	
 	@RequestMapping(value = "/filmes/dia", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<Filme> getFilmes(@RequestParam String dia) {
+	public List<Movie> getFilmes(@RequestParam String dia) {
 		return filmeService.getByDay(dia);
 	}
 	
@@ -77,7 +76,7 @@ public class CinefestController {
 	
 	@RequestMapping(value = "/filme", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Filme getFilme(@RequestParam int id) {
+	public Movie getFilme(@RequestParam int id) {
 		return filmeService.getOne(id);
 	}
 	
@@ -102,7 +101,7 @@ public class CinefestController {
 	
 	@RequestMapping(value = "/iniciar", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<Filme> iniciar() throws IOException {
+	public List<Movie> iniciar() throws IOException {
 		
 		return filmeService.iniciar();
 	}

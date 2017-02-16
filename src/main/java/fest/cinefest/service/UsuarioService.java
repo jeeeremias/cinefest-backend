@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import fest.cinefest.domain.ImagemRepository;
-import fest.cinefest.domain.UsuarioRepository;
+import fest.cinefest.domain.PhotoRepository;
+import fest.cinefest.domain.UserRepository;
 import fest.cinefest.model.Response;
 import fest.cinefest.model.Usuario;
 
@@ -14,10 +14,10 @@ import fest.cinefest.model.Usuario;
 public class UsuarioService {
 	
 	@Autowired
-	UsuarioRepository usuarioRepository;
+	UserRepository usuarioRepository;
 	
 	@Autowired
-	ImagemRepository imagemRespository;
+    PhotoRepository imagemRespository;
 	
 	public Usuario getUsuario(String email) {
 		return usuarioRepository.findOne(email);

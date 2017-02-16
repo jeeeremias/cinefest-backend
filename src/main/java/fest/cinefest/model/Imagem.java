@@ -27,17 +27,17 @@ public class Imagem implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "idFilme")
 	@JsonIgnore
-	private Filme filme;
+	private Movie movie;
 
 	public Imagem() {
 		super();
 	}
 
-	public Imagem(String resource, boolean capa, Filme filme) {
+	public Imagem(String resource, boolean capa, Movie movie) {
 		super();
 		this.resource = resource;
 		this.capa = capa;
-		this.filme = filme;
+		this.movie = movie;
 	}
 	
 	public String getResource() {
@@ -48,12 +48,12 @@ public class Imagem implements Serializable {
 		this.resource = resource;
 	}
 	
-	public Filme getFilme() {
-		return filme;
+	public Movie getMovie() {
+		return movie;
 	}
 	
-	public void setFilme(Filme filme) {
-		this.filme = filme;
+	public void setMovie(Movie movie) {
+		this.movie = movie;
 	}
 	
 	public boolean isCapa() {

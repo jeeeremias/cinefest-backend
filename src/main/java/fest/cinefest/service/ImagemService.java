@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import fest.cinefest.domain.ImagemRepository;
+import fest.cinefest.domain.PhotoRepository;
 
 @Service
 @Transactional
 public class ImagemService {
 
 	@Autowired
-	ImagemRepository imagemRespository;
+    PhotoRepository imagemRespository;
 	
 	public byte[] getImagem(String resource) throws IOException {
 		InputStream imagem = getClass().getResourceAsStream("/images" + resource);
