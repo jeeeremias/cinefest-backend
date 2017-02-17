@@ -1,7 +1,5 @@
 package fest.cinefest.service;
 
-import java.util.List;
-
 import fest.cinefest.model.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -14,25 +12,25 @@ import fest.cinefest.model.Vote;
 
 @Service
 @Transactional
-public class VotoService {
+public class VoteService {
 
 	@Autowired
-	VoteRepository votoRespository;
+	VoteRepository voteRespository;
 	
 	@Autowired
-    MovieRepository filmeRespository;
+    MovieRepository movieRespository;
 
 	public Vote save(Vote vote) {
-		Movie movie = filmeRespository.findOne(vote.getMovieId());
+		Movie movie = movieRespository.findOne(vote.getMovieId());
 		vote.setMovie(movie);
-		return votoRespository.save(vote);
+		return voteRespository.save(vote);
 	}
 	
-	public List<Vote> getAll(int pag, int tam) {
-		return votoRespository.findAll(new Sort(Sort.Direction.ASC, "dia"));
+	public Iterable<Vote> getAll(int offset, int size) {
+		return voteRespository.findAll(new Sort(Sort.Direction.ASC, "day"));
 	}
 	
-	public Long countByDia(String dia) {
-		return votoRespository.countByDay(dia);
+	public Long countByDia(String day) {
+		return voteRespository.countByDay(day);
 	}
 }

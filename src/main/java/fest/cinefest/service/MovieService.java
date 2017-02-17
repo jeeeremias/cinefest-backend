@@ -23,45 +23,42 @@ import fest.cinefest.model.Photo;
 
 @Service
 @Transactional
-public class FilmeService {
+public class MovieService {
 
 	@Autowired
-	MovieRepository filmeRespository;
+	MovieRepository movieRespository;
 	
 	@Autowired
-	VoteRepository votoRespository;
-
-	@Autowired
-	PhotoRepository imagemRespository;
+	VoteRepository voteRespository;
 
 	public List<Movie> getAll(int pag, int tam) {
-		return filmeRespository.findAll(new PageRequest(pag, tam, new Sort(Sort.Direction.ASC, "nome"))).getContent();
+		return movieRespository.findAll(new PageRequest(pag, tam, new Sort(Sort.Direction.ASC, "nome"))).getContent();
 	}
 	
 	public List<Movie> getByDay(String dataExibicao) {
-		List<Movie> movies = filmeRespository.findByScreeningDate(dataExibicao, new Sort(Sort.Direction.ASC, "nome"));
+		List<Movie> movies = movieRespository.findByScreeningDate(dataExibicao, new Sort(Sort.Direction.ASC, "name"));
 		if (dataExibicao.equals("15/02") || dataExibicao.equals("16/02") || dataExibicao.equals("17/02") || dataExibicao.equals("18/02") || dataExibicao.equals("19/02")) {
 			if(movies != null) {
-				movies.addAll(filmeRespository.findByScreeningDate("15 a 19/02", new Sort(Sort.Direction.ASC, "nome")));
+				movies.addAll(movieRespository.findByScreeningDate("15 a 19/02", new Sort(Sort.Direction.ASC, "name")));
 			} else {
-				movies = filmeRespository.findByScreeningDate("15 a 19/02", new Sort(Sort.Direction.ASC, "nome"));
+				movies = movieRespository.findByScreeningDate("15 a 19/02", new Sort(Sort.Direction.ASC, "name"));
 			}
 		}
 		return movies;
 	}
 
 	public Movie getOne(Integer id) {
-		return filmeRespository.findOne(id);
+		return movieRespository.findOne(id);
 	}
 
 	public boolean existe(Integer id) {
-		return filmeRespository.exists(id);
+		return movieRespository.exists(id);
 	}
 	
 	public String votos(String dia) {
 		List<Movie> movies = getByDay(dia);
 		StringBuilder sb = new StringBuilder("Codigo, Movie, Votos, (%)\n");
-		float total = votoRespository.countByDay(dia);
+		float total = voteRespository.countByDay(dia);
 		
 		for (Movie movie : movies) {
 			sb.append(movie.getId() + ",");
@@ -103,7 +100,7 @@ public class FilmeService {
 			status = status.concat("parse movie: " + filmeString[0] + " ;");
 		}
 		for (Movie filmee : movies) {
-			filmeRespository.save(filmee);
+			movieRespository.save(filmee);
 			status = status.concat("Gravou movie: " + filmee.getId() + " ;");
 		}
 		return movies;

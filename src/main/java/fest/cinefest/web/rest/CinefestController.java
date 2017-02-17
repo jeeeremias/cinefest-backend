@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 import fest.cinefest.model.Movie;
 import fest.cinefest.model.User;
@@ -20,88 +21,87 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import fest.cinefest.model.Vote;
-import fest.cinefest.service.FilmeService;
-import fest.cinefest.service.ImagemService;
-import fest.cinefest.service.UsuarioService;
-import fest.cinefest.service.VotoService;
+import fest.cinefest.service.MovieService;
+import fest.cinefest.service.PhotoService;
+import fest.cinefest.service.UserService;
+import fest.cinefest.service.VoteService;
 
 @RestController
-@Scope("request")
 public class CinefestController {
 	
 	@Autowired
-	FilmeService filmeService;
+	MovieService movieService;
 	
 	@Autowired
-	UsuarioService usuarioService;
+	UserService userService;
 	
 	@Autowired
-	ImagemService imagemService;
+	PhotoService photoService;
 	
 	@Autowired
-	VotoService votoService;
+	VoteService voteService;
 	
 	public static final MediaType MEDIA_TYPE = new MediaType("text", "csv", Charset.forName("utf-8"));
 	
-	@RequestMapping(value = "/filmes", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/movies", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<Movie> getFilmes(@RequestParam int pag, @RequestParam int tam) {
-		return filmeService.getAll(pag, tam);
+	public List<Movie> getMovies(@RequestParam int offset, @RequestParam int size) {
+		return movieService.getAll(offset, size);
 	}
 	
-	@RequestMapping(value = "/filmes/dia", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/movies/day/{day}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<Movie> getFilmes(@RequestParam String dia) {
-		return filmeService.getByDay(dia);
+	public List<Movie> getMovies(@PathParam("day") String day) {
+		return movieService.getByDay(day);
 	}
 	
-	@RequestMapping(value = "/votar", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+	@RequestMapping(value = "/vote", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
 	@ResponseBody
-	public Vote votar(@RequestBody Vote vote) {
-		return votoService.save(vote);
+	public Vote vote(@RequestBody Vote vote) {
+		return voteService.save(vote);
 	}
 	
-	@RequestMapping(value = "/votos")
+	@RequestMapping(value = "/votes")
 	@ResponseBody
-	public void votos(@RequestParam String dia, HttpServletResponse response) throws IOException {
+	public void votes(@RequestParam String dia, HttpServletResponse response) throws IOException {
 		String csvFileName = "relatorio_votos_dia_" + dia + ".csv";
         response.setContentType("text/csv;charset=UTF-8");
         response.setHeader("Content-disposition", String.format("attachment; filename=\"%s\"", csvFileName));
         System.out.println(response.getCharacterEncoding());
-		response.getOutputStream().print(filmeService.votos(dia));
+		response.getOutputStream().print(movieService.votos(dia));
 		response.getOutputStream().flush();
 		response.getOutputStream().close();
 	}
 	
-	@RequestMapping(value = "/filme", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/movie/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Movie getFilme(@RequestParam int id) {
-		return filmeService.getOne(id);
+	public Movie getMovie(@PathParam("id") int id) {
+		return movieService.getOne(id);
 	}
 	
-	@RequestMapping(value = "/cadastro", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+	@RequestMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	@ResponseBody
-	public boolean cadastro(@RequestBody @Valid User user) {
-		return usuarioService.cadastro(user);
+	public boolean register(@RequestBody @Valid User user) {
+		return userService.cadastro(user);
 	}
 	
 	@RequestMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	@ResponseBody
 	public boolean login(@RequestBody @Valid User user) {
-		return usuarioService.login(user);
+		return userService.login(user);
 	}
 	
-	@RequestMapping(value = "/imagem", produces = MediaType.IMAGE_JPEG_VALUE)
+	@RequestMapping(value = "/photo/{source}", produces = MediaType.IMAGE_JPEG_VALUE)
 	@ResponseBody
-	public byte[] getImagem(@RequestParam String resource) throws IOException {
+	public byte[] getPhoto(@PathParam("source") String resource) throws IOException {
 		
-		return imagemService.getImagem(resource);
+		return photoService.getPhoto(resource);
 	}
 	
-	@RequestMapping(value = "/iniciar", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/init", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<Movie> iniciar() throws IOException {
+	public List<Movie> init() throws IOException {
 		
-		return filmeService.iniciar();
+		return movieService.iniciar();
 	}
 }

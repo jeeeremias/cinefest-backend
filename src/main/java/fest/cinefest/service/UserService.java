@@ -9,17 +9,17 @@ import fest.cinefest.domain.UserRepository;
 
 @Service
 @Transactional
-public class UsuarioService {
+public class UserService {
 	
 	@Autowired
-	UserRepository usuarioRepository;
+	UserRepository userRepository;
 	
 	public User getUsuario(String email) {
-		return usuarioRepository.findOne(email);
+		return userRepository.findOne(email);
 	}
 	
 	public boolean existe(String email) {
-		return usuarioRepository.exists(email);
+		return userRepository.exists(email);
 	}
 	
 	public boolean cadastro(User user) {
@@ -28,7 +28,7 @@ public class UsuarioService {
 		} else {
 			try {
 				user.setEmail(user.getEmail().toLowerCase());
-                usuarioRepository.save(user);
+                userRepository.save(user);
 			} catch (Exception e) {
 				System.out.println("Cadastro realizado com sucesso.");
 			}

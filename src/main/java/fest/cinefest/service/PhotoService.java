@@ -12,12 +12,9 @@ import fest.cinefest.domain.PhotoRepository;
 
 @Service
 @Transactional
-public class ImagemService {
+public class PhotoService {
 
-	@Autowired
-    PhotoRepository imagemRespository;
-	
-	public byte[] getImagem(String resource) throws IOException {
+	public byte[] getPhoto(String resource) throws IOException {
 		InputStream imagem = getClass().getResourceAsStream("/images" + resource);
 		return IOUtils.toByteArray(imagem);
 	}
