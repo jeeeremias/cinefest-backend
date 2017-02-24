@@ -1,6 +1,6 @@
-package fest.cinefest.domain;
+package com.cinefest.repository;
 
-import fest.cinefest.model.Photo;
+import com.cinefest.entity.Photo;
 import org.springframework.data.repository.CrudRepository;
 
 public interface PhotoRepository extends CrudRepository<Photo, Integer> {

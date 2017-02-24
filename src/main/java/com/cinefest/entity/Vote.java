@@ -1,4 +1,4 @@
-package fest.cinefest.model;
+package com.cinefest.entity;
 
 import java.io.Serializable;
 

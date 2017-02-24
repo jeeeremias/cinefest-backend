@@ -1,6 +1,6 @@
-package fest.cinefest.domain;
+package com.cinefest.repository;
 
-import fest.cinefest.model.Vote;
+import com.cinefest.entity.Vote;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface VoteRepository extends PagingAndSortingRepository<Vote, Integer> {

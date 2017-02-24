@@ -1,6 +1,6 @@
-package fest.cinefest.domain;
+package com.cinefest.repository;
 
-import fest.cinefest.model.Movie;
+import com.cinefest.entity.Movie;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.PagingAndSortingRepository;
 

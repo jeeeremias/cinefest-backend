@@ -1,14 +1,14 @@
-package fest.cinefest.service;
+package com.cinefest.service;
 
-import fest.cinefest.model.Movie;
+import com.cinefest.entity.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import fest.cinefest.domain.MovieRepository;
-import fest.cinefest.domain.VoteRepository;
-import fest.cinefest.model.Vote;
+import com.cinefest.repository.MovieRepository;
+import com.cinefest.repository.VoteRepository;
+import com.cinefest.entity.Vote;
 
 @Service
 @Transactional

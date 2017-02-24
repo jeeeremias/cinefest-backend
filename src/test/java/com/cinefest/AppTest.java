@@ -1,4 +1,4 @@
-package fest.cinefest;
+package com.cinefest;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

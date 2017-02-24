@@ -1,4 +1,4 @@
-package fest.cinefest.service;
+package com.cinefest.service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,17 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import fest.cinefest.model.Movie;
+import com.cinefest.repository.VoteRepository;
+import com.cinefest.entity.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import fest.cinefest.domain.MovieRepository;
-import fest.cinefest.domain.PhotoRepository;
-import fest.cinefest.domain.VoteRepository;
-import fest.cinefest.model.Photo;
+import com.cinefest.repository.MovieRepository;
+import com.cinefest.entity.Photo;
 
 @Service
 @Transactional

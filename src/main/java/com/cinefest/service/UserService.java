@@ -1,11 +1,11 @@
-package fest.cinefest.service;
+package com.cinefest.service;
 
-import fest.cinefest.model.User;
+import com.cinefest.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import fest.cinefest.domain.UserRepository;
+import com.cinefest.repository.UserRepository;
 
 @Service
 @Transactional
