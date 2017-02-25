@@ -32,62 +32,26 @@ public class MovieController {
 	@Autowired
 	MovieService movieService;
 	
-	@Autowired
-	UserService userService;
-	
-	@Autowired
-	VoteService voteService;
-	
 	public static final MediaType MEDIA_TYPE = new MediaType("text", "csv", Charset.forName("utf-8"));
-	
-	@RequestMapping(value = "/movies", produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
 	@ResponseBody
 	public List<Movie> getMovies(@RequestParam MovieParams params) {
 		return movieService.getAll(params.getOffset(), params.getSize());
 	}
 
-	@RequestMapping(value = "/movies/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
-	@ResponseBody
-	public List<Movie> uptadeMovie(@PathParam("id") long id, @RequestBody MovieDTO movie) {
-		throw new NotImplementedException();
-	}
-	
-	@RequestMapping(value = "/vote", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
-	@ResponseBody
-	public Vote vote(@RequestBody Vote vote) {
-		return voteService.save(vote);
-	}
-	
-	@RequestMapping(value = "/votes")
-	@ResponseBody
-	public void votes(@RequestParam String dia, HttpServletResponse response) throws IOException {
-		String csvFileName = "relatorio_votos_dia_" + dia + ".csv";
-        response.setContentType("text/csv;charset=UTF-8");
-        response.setHeader("Content-disposition", String.format("attachment; filename=\"%s\"", csvFileName));
-        System.out.println(response.getCharacterEncoding());
-		response.getOutputStream().print(movieService.votos(dia));
-		response.getOutputStream().flush();
-		response.getOutputStream().close();
-	}
-	
-	@RequestMapping(value = "/movie/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
 	@ResponseBody
 	public Movie getMovie(@PathParam("id") int id) {
 		return movieService.getOne(id);
 	}
-	
-	@RequestMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+
+	@RequestMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
 	@ResponseBody
-	public boolean register(@RequestBody @Valid User user) {
-		return userService.cadastro(user);
+	public Movie uptadeMovie(@PathParam("id") long id, @RequestBody MovieDTO movie) {
+		throw new NotImplementedException();
 	}
-	
-	@RequestMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-	@ResponseBody
-	public boolean login(@RequestBody @Valid User user) {
-		return userService.login(user);
-	}
-	
+
 	@RequestMapping(value = "/init", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<Movie> init() throws IOException {
