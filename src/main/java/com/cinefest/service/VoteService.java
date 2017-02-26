@@ -1,6 +1,6 @@
 package com.cinefest.service;
 
-import com.cinefest.entity.Movie;
+import com.cinefest.entity.MovieEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cinefest.repository.MovieRepository;
 import com.cinefest.repository.VoteRepository;
-import com.cinefest.entity.Vote;
+import com.cinefest.entity.VoteEntity;
 
 @Service
 @Transactional
@@ -20,13 +20,13 @@ public class VoteService {
 	@Autowired
     MovieRepository movieRespository;
 
-	public Vote save(Vote vote) {
-		Movie movie = movieRespository.findOne(vote.getMovieId());
-		vote.setMovie(movie);
-		return voteRespository.save(vote);
+	public VoteEntity save(VoteEntity voteEntity) {
+		MovieEntity movieEntity = movieRespository.findOne(voteEntity.getMovieId());
+		voteEntity.setMovieEntity(movieEntity);
+		return voteRespository.save(voteEntity);
 	}
 	
-	public Iterable<Vote> getAll(int offset, int size) {
+	public Iterable<VoteEntity> getAll(int offset, int size) {
 		return voteRespository.findAll(new Sort(Sort.Direction.ASC, "day"));
 	}
 	

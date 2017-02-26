@@ -1,11 +1,11 @@
 package com.cinefest.repository;
 
-import com.cinefest.entity.Movie;
+import com.cinefest.entity.MovieEntity;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
 
-public interface MovieRepository extends PagingAndSortingRepository<Movie, Integer> {
-	List<Movie> findByScreeningDate(String screeningDate, Sort sort);
+public interface MovieRepository extends PagingAndSortingRepository<MovieEntity, Integer> {
+	List<MovieEntity> findByScreeningDate(String screeningDate, Sort sort);
 }

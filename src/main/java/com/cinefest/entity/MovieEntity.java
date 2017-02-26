@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Movie implements Serializable {
+public class MovieEntity implements Serializable {
 	
 	@Id
 	private Integer id;
@@ -59,20 +59,20 @@ public class Movie implements Serializable {
 	private String directorEmail;
 	
 	@OneToMany(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Photo> photos;
+	private List<PhotoEntity> photoEntities;
 
 	@OneToMany(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Vote> votes;
+	private List<VoteEntity> voteEntities;
 
-	public Movie() {
+	public MovieEntity() {
 		super();
 	}
 
-	public Movie(Integer id, String type, String nome, String city,
-				 String state, Integer releaseYear, String genre, String runtime,
-				 String screeningDate, String screeningTime, String director,
-				 String shortSynopsis, String fullSynopsis,
-				 String directorBiography, String directorEmail) {
+	public MovieEntity(Integer id, String type, String nome, String city,
+                       String state, Integer releaseYear, String genre, String runtime,
+                       String screeningDate, String screeningTime, String director,
+                       String shortSynopsis, String fullSynopsis,
+                       String directorBiography, String directorEmail) {
 		super();
 		this.id = id;
 		this.type = type;
@@ -211,19 +211,19 @@ public class Movie implements Serializable {
 		this.directorEmail = directorEmail;
 	}
 
-	public List<Photo> getPhotos() {
-		return photos;
+	public List<PhotoEntity> getPhotoEntities() {
+		return photoEntities;
 	}
 
-	public void setPhotos(List<Photo> photos) {
-		this.photos = photos;
+	public void setPhotoEntities(List<PhotoEntity> photoEntities) {
+		this.photoEntities = photoEntities;
 	}
 
-	public List<Vote> getVotes() {
-		return votes;
+	public List<VoteEntity> getVoteEntities() {
+		return voteEntities;
 	}
 
-	public void setVotes(List<Vote> votes) {
-		this.votes = votes;
+	public void setVoteEntities(List<VoteEntity> voteEntities) {
+		this.voteEntities = voteEntities;
 	}
 }

@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class User implements Serializable {
+public class UserEntity implements Serializable {
 	
 	@Id
 	@NotNull
@@ -21,11 +21,11 @@ public class User implements Serializable {
 	@NotNull
 	private String password;
 	
-	public User() {
+	public UserEntity() {
 		super();
 	}
 	
-	public User(String email, String name, String password) {
+	public UserEntity(String email, String name, String password) {
 		super();
 		this.email = email;
 		this.name = name;

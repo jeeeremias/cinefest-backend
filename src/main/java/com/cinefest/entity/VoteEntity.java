@@ -13,7 +13,7 @@ import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Vote implements Serializable {
+public class VoteEntity implements Serializable {
 
 	@Id
 	@GeneratedValue
@@ -28,9 +28,9 @@ public class Vote implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "movieId")
 	@JsonIgnore
-	private Movie movie;
+	private MovieEntity movieEntity;
 
-	public Vote() {
+	public VoteEntity() {
 		super();
 	}
 	
@@ -50,12 +50,12 @@ public class Vote implements Serializable {
 		this.day = day;
 	}
 
-	public Movie getMovie() {
-		return movie;
+	public MovieEntity getMovieEntity() {
+		return movieEntity;
 	}
 
-	public void setMovie(Movie movie) {
-		this.movie = movie;
+	public void setMovieEntity(MovieEntity movieEntity) {
+		this.movieEntity = movieEntity;
 	}
 
 	public Integer getMovieId() {

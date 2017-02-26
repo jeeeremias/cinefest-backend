@@ -1,21 +1,14 @@
 package com.cinefest.web.rest;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
-import com.cinefest.entity.Movie;
-import com.cinefest.entity.User;
-import com.cinefest.entity.Vote;
+import com.cinefest.entity.MovieEntity;
 import com.cinefest.pojo.movie.MovieDTO;
 import com.cinefest.pojo.movie.MovieParams;
 import com.cinefest.service.MovieService;
-import com.cinefest.service.UserService;
-import com.cinefest.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,26 +29,20 @@ public class MovieController {
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
 	@ResponseBody
-	public List<Movie> getMovies(@RequestParam MovieParams params) {
+	public List<MovieEntity> getMovies(@RequestParam MovieParams params) {
 		return movieService.getAll(params.getOffset(), params.getSize());
 	}
 
 	@RequestMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
 	@ResponseBody
-	public Movie getMovie(@PathParam("id") int id) {
+	public MovieEntity getMovie(@PathParam("id") int id) {
 		return movieService.getOne(id);
 	}
 
 	@RequestMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
 	@ResponseBody
-	public Movie uptadeMovie(@PathParam("id") long id, @RequestBody MovieDTO movie) {
+	public MovieEntity uptadeMovie(@PathParam("id") long id, @RequestBody MovieDTO movie) {
 		throw new NotImplementedException();
 	}
 
-	@RequestMapping(value = "/init", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public List<Movie> init() throws IOException {
-		
-		return movieService.iniciar();
-	}
 }

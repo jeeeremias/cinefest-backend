@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Photo implements Serializable {
+public class PhotoEntity implements Serializable {
 
 	@Id
 	@GeneratedValue
@@ -27,17 +27,17 @@ public class Photo implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "idFilme")
 	@JsonIgnore
-	private Movie movie;
+	private MovieEntity movieEntity;
 
-	public Photo() {
+	public PhotoEntity() {
 		super();
 	}
 
-	public Photo(String source, boolean main, Movie movie) {
+	public PhotoEntity(String source, boolean main, MovieEntity movieEntity) {
 		super();
 		this.source = source;
 		this.main = main;
-		this.movie = movie;
+		this.movieEntity = movieEntity;
 	}
 	
 	public String getSource() {
@@ -48,12 +48,12 @@ public class Photo implements Serializable {
 		this.source = source;
 	}
 	
-	public Movie getMovie() {
-		return movie;
+	public MovieEntity getMovieEntity() {
+		return movieEntity;
 	}
 	
-	public void setMovie(Movie movie) {
-		this.movie = movie;
+	public void setMovieEntity(MovieEntity movieEntity) {
+		this.movieEntity = movieEntity;
 	}
 	
 	public boolean isMain() {

@@ -1,6 +1,6 @@
 package com.cinefest.service;
 
-import com.cinefest.entity.User;
+import com.cinefest.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +14,7 @@ public class UserService {
 	@Autowired
 	UserRepository userRepository;
 	
-	public User getUsuario(String email) {
+	public UserEntity getUsuario(String email) {
 		return userRepository.findOne(email);
 	}
 	
@@ -22,13 +22,13 @@ public class UserService {
 		return userRepository.exists(email);
 	}
 	
-	public boolean cadastro(User user) {
-		if(existe(user.getEmail())) {
-			System.out.println("User já cadastrado.");
+	public boolean cadastro(UserEntity userEntity) {
+		if(existe(userEntity.getEmail())) {
+			System.out.println("UserEntity já cadastrado.");
 		} else {
 			try {
-				user.setEmail(user.getEmail().toLowerCase());
-                userRepository.save(user);
+				userEntity.setEmail(userEntity.getEmail().toLowerCase());
+                userRepository.save(userEntity);
 			} catch (Exception e) {
 				System.out.println("Cadastro realizado com sucesso.");
 			}
@@ -37,15 +37,15 @@ public class UserService {
 		return true;
 	}
 	
-	public boolean login(User user) {
-		User user2 = null;
-		if (user.getEmail().equals("admin@admin.com") && user.getPassword().equals("admin")) {
+	public boolean login(UserEntity userEntity) {
+		UserEntity userEntity2 = null;
+		if (userEntity.getEmail().equals("admin@admin.com") && userEntity.getPassword().equals("admin")) {
 		} else {
-			user2 = getUsuario(user.getEmail().toLowerCase());
-			if (user2 == null) {
-                System.out.println("User não cadastrado.");
+			userEntity2 = getUsuario(userEntity.getEmail().toLowerCase());
+			if (userEntity2 == null) {
+                System.out.println("UserEntity não cadastrado.");
 			} else {
-				if (!user.getPassword().equals(user2.getPassword())) {
+				if (!userEntity.getPassword().equals(userEntity2.getPassword())) {
 					System.out.println("Senha incorreta.");
 				}
 			}
