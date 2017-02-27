@@ -1,47 +1,61 @@
 package com.cinefest.web.rest;
 
-import java.nio.charset.Charset;
-import java.util.List;
-
-import javax.websocket.server.PathParam;
-
 import com.cinefest.entity.MovieEntity;
 import com.cinefest.pojo.movie.MovieDTO;
 import com.cinefest.pojo.movie.MovieParams;
 import com.cinefest.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-@RestController("movies")
-public class MovieController {
-	
-	@Autowired
-	MovieService movieService;
-	
-	public static final MediaType MEDIA_TYPE = new MediaType("text", "csv", Charset.forName("utf-8"));
+import javax.servlet.http.HttpServletResponse;
+import javax.websocket.server.PathParam;
+import java.util.List;
 
-	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+import static com.cinefest.web.rest.MovieController.ENTITY_NAME;
+
+@RestController(ENTITY_NAME)
+class MovieController {
+
+	static final String ENTITY_NAME = "/movies";
+	static final String ID_PARAM = "/{id}";
+
+    @Autowired
+	MovieService movieService;
+
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<MovieEntity> getMovies(@RequestParam MovieParams params) {
 		return movieService.getAll(params.getOffset(), params.getSize());
 	}
 
-	@RequestMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET, value = ID_PARAM, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public MovieEntity getMovie(@PathParam("id") int id) {
 		return movieService.getOne(id);
 	}
 
-	@RequestMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
+	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	public void newMovie(@RequestBody MovieDTO movie, HttpServletResponse response, UriComponentsBuilder b) {
+		MovieEntity movieEntity = movieService.newMovie(movie);
+        UriComponents uriComponents = b.path(ENTITY_NAME + ID_PARAM).buildAndExpand(movieEntity.getId());
+		response.addHeader("Location", uriComponents.toUriString());
+	}
+
+	@RequestMapping(method = RequestMethod.PUT, value = ID_PARAM, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public MovieEntity uptadeMovie(@PathParam("id") long id, @RequestBody MovieDTO movie) {
+		return movieService.save(null);
+	}
+
+	@RequestMapping(method = RequestMethod.DELETE, value = ID_PARAM, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public MovieEntity deleteMovie(@PathParam("id") long id, @RequestBody MovieDTO movie) {
 		throw new NotImplementedException();
 	}
 

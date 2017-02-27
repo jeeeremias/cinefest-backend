@@ -2,6 +2,7 @@ package com.cinefest.service;
 
 import com.cinefest.entity.MovieEntity;
 import com.cinefest.entity.PhotoEntity;
+import com.cinefest.util.enumeration.MovieType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -37,14 +40,14 @@ public class MockService {
                 shortDesc = filmeString[11];
             }
 
-            movieEntity = new MovieEntity(Integer.parseInt(filmeString[0]), filmeString[1], filmeString[2],
-                    filmeString[3], filmeString[4], Integer.parseInt(filmeString[5]), filmeString[6], filmeString[7], filmeString[8],
-                    filmeString[9], filmeString[10], shortDesc, filmeString[11], filmeString[12], filmeString[13]);
+            movieEntity = new MovieEntity(Integer.parseInt(filmeString[0]), MovieType.valueOf(filmeString[1]), filmeString[2],
+                    filmeString[3], filmeString[4], LocalDate.now(), filmeString[6], filmeString[7], LocalDateTime.now(),
+                    filmeString[10], shortDesc, filmeString[11], filmeString[12], filmeString[13]);
             imagens = new ArrayList<PhotoEntity>();
             imagens.add(new PhotoEntity("/" + filmeString[0] + "_1.jpg", true, movieEntity));
             imagens.add(new PhotoEntity("/" + filmeString[0] + "_2.jpg", false, movieEntity));
             imagens.add(new PhotoEntity("/" + filmeString[0] + "_3.jpg", false, movieEntity));
-            movieEntity.setPhotoEntities(imagens);
+            movieEntity.setPhotos(imagens);
             movieEntities.add(movieEntity);
             status = status.concat("parse movieEntity: " + filmeString[0] + " ;");
         }

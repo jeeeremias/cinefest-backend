@@ -3,7 +3,9 @@ package com.cinefest.service;
 import java.util.List;
 
 import com.cinefest.entity.MovieEntity;
+import com.cinefest.pojo.movie.MovieDTO;
 import com.cinefest.repository.VoteRepository;
+import com.cinefest.util.converter.MovieConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -54,12 +56,17 @@ public class MovieService {
 		for (MovieEntity movieEntity : movieEntities) {
 			sb.append(movieEntity.getId() + ",");
 			sb.append(movieEntity.getName() + ",");
-			sb.append(movieEntity.getVoteEntities().size() + ",");
-			sb.append(((100.0 * movieEntity.getVoteEntities().size()) / total) + ",");
+			sb.append(movieEntity.getVotes().size() + ",");
+			sb.append(((100.0 * movieEntity.getVotes().size()) / total) + ",");
 			sb.append("\n");
 		}
 		sb.append(",,,\n,,Total Votos," + total + "\n");
 		return sb.toString();
+	}
+
+	public MovieEntity newMovie(MovieDTO movieDTO) {
+		MovieEntity movieEntity = MovieConverter.dtoToEntity(movieDTO);
+		return save(movieEntity);
 	}
 
 	public MovieEntity save(MovieEntity movieEntity) {

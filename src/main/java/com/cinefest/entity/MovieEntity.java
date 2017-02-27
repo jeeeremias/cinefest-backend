@@ -1,6 +1,10 @@
 package com.cinefest.entity;
 
+import com.cinefest.util.enumeration.MovieType;
+
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -17,7 +21,7 @@ public class MovieEntity implements Serializable {
 	private Integer id;
 	
 	@Column
-	private String type;
+	private MovieType type;
 	
 	@Column
 	private String name;
@@ -29,7 +33,7 @@ public class MovieEntity implements Serializable {
 	private String state;
 	
 	@Column
-	private Integer releaseYear;
+	private LocalDate incomeDate;
 	
 	@Column
 	private String genre;
@@ -38,10 +42,7 @@ public class MovieEntity implements Serializable {
 	private String runtime;
 	
 	@Column
-	private String screeningDate;
-	
-	@Column
-	private String screeningTime;
+	private LocalDateTime screeningDateTime;
 	
 	@Column
 	private String director;
@@ -59,31 +60,30 @@ public class MovieEntity implements Serializable {
 	private String directorEmail;
 	
 	@OneToMany(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<PhotoEntity> photoEntities;
+	private List<PhotoEntity> photos;
 
 	@OneToMany(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<VoteEntity> voteEntities;
+	private List<VoteEntity> votes;
 
 	public MovieEntity() {
 		super();
 	}
 
-	public MovieEntity(Integer id, String type, String nome, String city,
-                       String state, Integer releaseYear, String genre, String runtime,
-                       String screeningDate, String screeningTime, String director,
-                       String shortSynopsis, String fullSynopsis,
-                       String directorBiography, String directorEmail) {
+	public MovieEntity(Integer id, MovieType type, String nome, String city,
+					   String state, LocalDate incomeDate, String genre, String runtime,
+					   LocalDateTime screeningDateTime, String director,
+					   String shortSynopsis, String fullSynopsis,
+					   String directorBiography, String directorEmail) {
 		super();
 		this.id = id;
 		this.type = type;
 		this.name = nome;
 		this.city = city;
 		this.state = state;
-		this.releaseYear = releaseYear;
+		this.incomeDate = incomeDate;
 		this.genre = genre;
 		this.runtime = runtime;
-		this.screeningDate = screeningDate;
-		this.screeningTime = screeningTime;
+		this.screeningDateTime = screeningDateTime;
 		this.director = director;
 		this.shortSynopsis = shortSynopsis;
 		this.fullSynopsis = fullSynopsis;
@@ -99,11 +99,11 @@ public class MovieEntity implements Serializable {
 		this.id = id;
 	}
 
-	public String getType() {
+	public MovieType getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(MovieType type) {
 		this.type = type;
 	}
 
@@ -131,12 +131,12 @@ public class MovieEntity implements Serializable {
 		this.state = state;
 	}
 
-	public Integer getReleaseYear() {
-		return releaseYear;
+	public LocalDate getIncomeDate() {
+		return incomeDate;
 	}
 
-	public void setReleaseYear(Integer releaseYear) {
-		this.releaseYear = releaseYear;
+	public void setIncomeDate(LocalDate incomeDate) {
+		this.incomeDate = incomeDate;
 	}
 
 	public String getGenre() {
@@ -155,20 +155,12 @@ public class MovieEntity implements Serializable {
 		this.runtime = runtime;
 	}
 
-	public String getScreeningDate() {
-		return screeningDate;
+	public LocalDateTime getScreeningDateTime() {
+		return screeningDateTime;
 	}
 
-	public void setScreeningDate(String screeningDate) {
-		this.screeningDate = screeningDate;
-	}
-
-	public String getScreeningTime() {
-		return screeningTime;
-	}
-
-	public void setScreeningTime(String screeningTime) {
-		this.screeningTime = screeningTime;
+	public void setScreeningDateTime(LocalDateTime screeningDateTime) {
+		this.screeningDateTime = screeningDateTime;
 	}
 
 	public String getDirector() {
@@ -211,19 +203,19 @@ public class MovieEntity implements Serializable {
 		this.directorEmail = directorEmail;
 	}
 
-	public List<PhotoEntity> getPhotoEntities() {
-		return photoEntities;
+	public List<PhotoEntity> getPhotos() {
+		return photos;
 	}
 
-	public void setPhotoEntities(List<PhotoEntity> photoEntities) {
-		this.photoEntities = photoEntities;
+	public void setPhotos(List<PhotoEntity> photos) {
+		this.photos = photos;
 	}
 
-	public List<VoteEntity> getVoteEntities() {
-		return voteEntities;
+	public List<VoteEntity> getVotes() {
+		return votes;
 	}
 
-	public void setVoteEntities(List<VoteEntity> voteEntities) {
-		this.voteEntities = voteEntities;
+	public void setVotes(List<VoteEntity> votes) {
+		this.votes = votes;
 	}
 }
