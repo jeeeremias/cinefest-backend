@@ -29,12 +29,12 @@ public class MovieService {
 	}
 	
 	public List<MovieEntity> getByDay(String dataExibicao) {
-		List<MovieEntity> movieEntities = movieRespository.findByScreeningDate(dataExibicao, new Sort(Sort.Direction.ASC, "name"));
+		List<MovieEntity> movieEntities = movieRespository.findByscreeningDateTime(dataExibicao, new Sort(Sort.Direction.ASC, "name"));
 		if (dataExibicao.equals("15/02") || dataExibicao.equals("16/02") || dataExibicao.equals("17/02") || dataExibicao.equals("18/02") || dataExibicao.equals("19/02")) {
 			if(movieEntities != null) {
-				movieEntities.addAll(movieRespository.findByScreeningDate("15 a 19/02", new Sort(Sort.Direction.ASC, "name")));
+				movieEntities.addAll(movieRespository.findByscreeningDateTime("15 a 19/02", new Sort(Sort.Direction.ASC, "name")));
 			} else {
-				movieEntities = movieRespository.findByScreeningDate("15 a 19/02", new Sort(Sort.Direction.ASC, "name"));
+				movieEntities = movieRespository.findByscreeningDateTime("15 a 19/02", new Sort(Sort.Direction.ASC, "name"));
 			}
 		}
 		return movieEntities;

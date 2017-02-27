@@ -28,7 +28,7 @@ public class VoteEntity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "movieId")
 	@JsonIgnore
-	private MovieEntity movieEntity;
+	private MovieEntity movie;
 
 	public VoteEntity() {
 		super();
@@ -50,12 +50,12 @@ public class VoteEntity implements Serializable {
 		this.day = day;
 	}
 
-	public MovieEntity getMovieEntity() {
-		return movieEntity;
+	public MovieEntity getMovie() {
+		return movie;
 	}
 
-	public void setMovieEntity(MovieEntity movieEntity) {
-		this.movieEntity = movieEntity;
+	public void setMovie(MovieEntity movie) {
+		this.movie = movie;
 	}
 
 	public Integer getMovieId() {

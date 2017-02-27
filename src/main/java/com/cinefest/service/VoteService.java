@@ -22,7 +22,7 @@ public class VoteService {
 
 	public VoteEntity save(VoteEntity voteEntity) {
 		MovieEntity movieEntity = movieRespository.findOne(voteEntity.getMovieId());
-		voteEntity.setMovieEntity(movieEntity);
+		voteEntity.setMovie(movieEntity);
 		return voteRespository.save(voteEntity);
 	}
 	

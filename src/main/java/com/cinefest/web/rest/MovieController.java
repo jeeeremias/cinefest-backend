@@ -18,7 +18,7 @@ import java.util.List;
 
 import static com.cinefest.web.rest.MovieController.ENTITY_NAME;
 
-@RestController(ENTITY_NAME)
+@RestController
 class MovieController {
 
 	static final String ENTITY_NAME = "/movies";
@@ -27,19 +27,19 @@ class MovieController {
     @Autowired
 	MovieService movieService;
 
-	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.GET, value = ENTITY_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<MovieEntity> getMovies(@RequestParam MovieParams params) {
+	public List<MovieEntity> getMovies(@RequestParam(required = false) MovieParams params) {
 		return movieService.getAll(params.getOffset(), params.getSize());
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = ID_PARAM, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.GET, value = ENTITY_NAME + ID_PARAM, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public MovieEntity getMovie(@PathParam("id") int id) {
 		return movieService.getOne(id);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, value = ENTITY_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void newMovie(@RequestBody MovieDTO movie, HttpServletResponse response, UriComponentsBuilder b) {
 		MovieEntity movieEntity = movieService.newMovie(movie);
@@ -47,13 +47,13 @@ class MovieController {
 		response.addHeader("Location", uriComponents.toUriString());
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, value = ID_PARAM, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.PUT, value = ENTITY_NAME + ID_PARAM, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public MovieEntity uptadeMovie(@PathParam("id") long id, @RequestBody MovieDTO movie) {
 		return movieService.save(null);
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE, value = ID_PARAM, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.DELETE, value = ENTITY_NAME + ID_PARAM, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public MovieEntity deleteMovie(@PathParam("id") long id, @RequestBody MovieDTO movie) {
 		throw new NotImplementedException();

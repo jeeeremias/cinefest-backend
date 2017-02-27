@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@RestController("/votes")
+//@RestController("/votes")
 public class VoteController {
 
     @Autowired

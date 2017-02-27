@@ -25,19 +25,19 @@ public class PhotoEntity implements Serializable {
 	private boolean main;
 	
 	@ManyToOne
-	@JoinColumn(name = "idFilme")
+	@JoinColumn(name = "idMovie")
 	@JsonIgnore
-	private MovieEntity movieEntity;
+	private MovieEntity movie;
 
 	public PhotoEntity() {
 		super();
 	}
 
-	public PhotoEntity(String source, boolean main, MovieEntity movieEntity) {
+	public PhotoEntity(String source, boolean main, MovieEntity movie) {
 		super();
 		this.source = source;
 		this.main = main;
-		this.movieEntity = movieEntity;
+		this.movie = movie;
 	}
 	
 	public String getSource() {
@@ -48,12 +48,12 @@ public class PhotoEntity implements Serializable {
 		this.source = source;
 	}
 	
-	public MovieEntity getMovieEntity() {
-		return movieEntity;
+	public MovieEntity getMovie() {
+		return movie;
 	}
 	
-	public void setMovieEntity(MovieEntity movieEntity) {
-		this.movieEntity = movieEntity;
+	public void setMovie(MovieEntity movie) {
+		this.movie = movie;
 	}
 	
 	public boolean isMain() {

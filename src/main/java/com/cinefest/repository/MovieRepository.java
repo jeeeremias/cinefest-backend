@@ -7,5 +7,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import java.util.List;
 
 public interface MovieRepository extends PagingAndSortingRepository<MovieEntity, Integer> {
-	List<MovieEntity> findByScreeningDate(String screeningDate, Sort sort);
+	List<MovieEntity> findByscreeningDateTime(String screeningDateTime, Sort sort);
 }
