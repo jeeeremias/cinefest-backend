@@ -29,8 +29,8 @@ class MovieController {
 
 	@RequestMapping(method = RequestMethod.GET, value = ENTITY_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<MovieEntity> getMovies(@RequestParam(required = false) MovieParams params) {
-		return movieService.getAll(params.getOffset(), params.getSize());
+	public Iterable<MovieEntity> getMovies(@RequestParam(required = false) MovieParams params) {
+		return movieService.getAll(params);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = ENTITY_NAME + ID_PARAM, produces = MediaType.APPLICATION_JSON_VALUE)

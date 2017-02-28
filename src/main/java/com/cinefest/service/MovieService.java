@@ -1,9 +1,12 @@
 package com.cinefest.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.cinefest.entity.MovieEntity;
+import com.cinefest.pojo.QueryParams;
 import com.cinefest.pojo.movie.MovieDTO;
+import com.cinefest.pojo.movie.MovieParams;
 import com.cinefest.repository.VoteRepository;
 import com.cinefest.util.converter.MovieConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +27,32 @@ public class MovieService {
 	@Autowired
 	VoteRepository voteRespository;
 
-	public List<MovieEntity> getAll(int pag, int tam) {
-		return movieRespository.findAll(new PageRequest(pag, tam, new Sort(Sort.Direction.ASC, "nome"))).getContent();
+	public Iterable<MovieEntity> getAll(MovieParams params) {
+		if (params == null) {
+			return movieRespository.findAll();
+		}
+		PageRequest pageRequest = createPageRequest(params.getOffset(), params.getSize(), params.getSortParams());
+		return movieRespository.findAll(pageRequest).getContent();
 	}
-	
-	public List<MovieEntity> getByDay(String dataExibicao) {
+
+    private PageRequest createPageRequest(int offset, int size, List<String> sortParams) {
+	    Sort.Direction direction;
+	    List<Sort.Order> orders = new ArrayList<>();
+	    for (String prop : sortParams) {
+            if (prop.startsWith("-")) {
+                direction = Sort.Direction.DESC;
+                prop = prop.substring(1);
+            } else {
+                direction = Sort.Direction.ASC;
+            }
+            orders.add(new Sort.Order(direction, prop));
+        }
+        Sort sort = new Sort(orders);
+        PageRequest pageRequest = new PageRequest(offset, size, sort);
+	    return pageRequest;
+    }
+
+    public List<MovieEntity> getByDay(String dataExibicao) {
 		List<MovieEntity> movieEntities = movieRespository.findByscreeningDateTime(dataExibicao, new Sort(Sort.Direction.ASC, "name"));
 		if (dataExibicao.equals("15/02") || dataExibicao.equals("16/02") || dataExibicao.equals("17/02") || dataExibicao.equals("18/02") || dataExibicao.equals("19/02")) {
 			if(movieEntities != null) {
@@ -44,7 +68,7 @@ public class MovieService {
 		return movieRespository.findOne(id);
 	}
 
-	public boolean existe(Integer id) {
+	public boolean exist(Integer id) {
 		return movieRespository.exists(id);
 	}
 	
