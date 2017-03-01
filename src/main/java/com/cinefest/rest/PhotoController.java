@@ -1,4 +1,4 @@
-package com.cinefest.web.rest;
+package com.cinefest.rest;
 
 import com.cinefest.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;

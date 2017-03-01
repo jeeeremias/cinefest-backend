@@ -31,6 +31,6 @@ public class VoteService {
 	}
 	
 	public Long countByDia(String day) {
-		return voteRespository.countByDay(day);
+		return voteRespository.countByDateTime(day);
 	}
 }

@@ -1,9 +1,10 @@
-package com.cinefest.web.rest;
+package com.cinefest.rest;
 
 import com.cinefest.entity.MovieEntity;
-import com.cinefest.pojo.movie.MovieDTO;
-import com.cinefest.pojo.movie.MovieParams;
+import com.cinefest.pojo.params.QueryParams;
+import com.cinefest.pojo.dto.MovieDTO;
 import com.cinefest.service.MovieService;
+import com.cinefest.util.converter.rest.GenericQueryParamsConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,9 +15,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.websocket.server.PathParam;
-import java.util.List;
-
-import static com.cinefest.web.rest.MovieController.ENTITY_NAME;
+import java.util.Map;
 
 @RestController
 class MovieController {
@@ -27,10 +26,14 @@ class MovieController {
     @Autowired
 	MovieService movieService;
 
+    @Autowired
+    GenericQueryParamsConverter paramsConverter;
+
 	@RequestMapping(method = RequestMethod.GET, value = ENTITY_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Iterable<MovieEntity> getMovies(@RequestParam(required = false) MovieParams params) {
-		return movieService.getAll(params);
+	public Iterable<MovieEntity> getMovies(@RequestParam(required = false) Map<String, String> params) {
+	    QueryParams queryParams = paramsConverter.convertToQueryParam(params);
+		return movieService.getAll(queryParams);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = ENTITY_NAME + ID_PARAM, produces = MediaType.APPLICATION_JSON_VALUE)

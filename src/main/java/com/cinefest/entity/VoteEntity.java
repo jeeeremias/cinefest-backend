@@ -1,6 +1,7 @@
 package com.cinefest.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,10 +18,10 @@ public class VoteEntity implements Serializable {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 
 	@Column
-	private String day;
+	private LocalDateTime dateTime;
 
 	@Transient
 	private Integer movieId;
@@ -34,20 +35,20 @@ public class VoteEntity implements Serializable {
 		super();
 	}
 	
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getDay() {
-		return day;
+	public LocalDateTime getDateTime() {
+		return dateTime;
 	}
 
-	public void setDay(String day) {
-		this.day = day;
+	public void setDateTime(LocalDateTime dateTime) {
+		this.dateTime = dateTime;
 	}
 
 	public MovieEntity getMovie() {

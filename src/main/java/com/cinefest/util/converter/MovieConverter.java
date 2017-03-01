@@ -1,7 +1,7 @@
 package com.cinefest.util.converter;
 
 import com.cinefest.entity.MovieEntity;
-import com.cinefest.pojo.movie.MovieDTO;
+import com.cinefest.pojo.dto.MovieDTO;
 
 public class MovieConverter {
 

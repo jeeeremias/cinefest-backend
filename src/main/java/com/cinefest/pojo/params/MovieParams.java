@@ -1,6 +1,4 @@
-package com.cinefest.pojo.movie;
-
-import com.cinefest.pojo.QueryParams;
+package com.cinefest.pojo.params;
 
 public class MovieParams extends QueryParams {
     private String day;

@@ -1,6 +1,6 @@
 package com.cinefest.util.enumeration;
 
-public enum MovieType {
+public enum MovieTypeEnum {
 
     NACIONAL("Nacional"),
     REGIONAL("Regional"),
@@ -10,7 +10,7 @@ public enum MovieType {
 
     private String desc;
 
-    MovieType(String desc) {
+    MovieTypeEnum(String desc) {
         this.desc = desc;
     }
 

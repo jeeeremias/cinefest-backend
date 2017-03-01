@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cinefest.entity.MovieEntity;
-import com.cinefest.pojo.QueryParams;
-import com.cinefest.pojo.movie.MovieDTO;
-import com.cinefest.pojo.movie.MovieParams;
+import com.cinefest.pojo.params.QueryParams;
+import com.cinefest.pojo.dto.MovieDTO;
 import com.cinefest.repository.VoteRepository;
 import com.cinefest.util.converter.MovieConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +26,8 @@ public class MovieService {
 	@Autowired
 	VoteRepository voteRespository;
 
-	public Iterable<MovieEntity> getAll(MovieParams params) {
-		if (params == null) {
-			return movieRespository.findAll();
-		}
-		PageRequest pageRequest = createPageRequest(params.getOffset(), params.getSize(), params.getSortParams());
+	public Iterable<MovieEntity> getAll(QueryParams params) {
+		PageRequest pageRequest = createPageRequest(params.getPage(), params.getSize(), params.getSort());
 		return movieRespository.findAll(pageRequest).getContent();
 	}
 
@@ -75,7 +71,7 @@ public class MovieService {
 	public String votos(String dia) {
 		List<MovieEntity> movieEntities = getByDay(dia);
 		StringBuilder sb = new StringBuilder("Codigo, MovieEntity, Votos, (%)\n");
-		float total = voteRespository.countByDay(dia);
+		float total = voteRespository.countByDateTime(dia);
 		
 		for (MovieEntity movieEntity : movieEntities) {
 			sb.append(movieEntity.getId() + ",");

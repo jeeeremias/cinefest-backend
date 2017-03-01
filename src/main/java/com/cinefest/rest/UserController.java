@@ -1,4 +1,4 @@
-package com.cinefest.web.rest;
+package com.cinefest.rest;
 
 import com.cinefest.entity.UserEntity;
 import com.cinefest.service.UserService;

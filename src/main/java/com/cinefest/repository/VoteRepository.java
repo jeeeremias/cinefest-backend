@@ -4,5 +4,5 @@ import com.cinefest.entity.VoteEntity;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface VoteRepository extends PagingAndSortingRepository<VoteEntity, Integer> {
-	Long countByDay(String day);
+	Long countByDateTime(String dateTime);
 }

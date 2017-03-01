@@ -1,7 +1,7 @@
-package com.cinefest.web.rest;
+package com.cinefest.rest;
 
 import com.cinefest.entity.VoteEntity;
-import com.cinefest.pojo.vote.VoteParams;
+import com.cinefest.pojo.params.VoteParams;
 import com.cinefest.service.MovieService;
 import com.cinefest.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class VoteController {
     @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
     public Iterable<VoteEntity> getVotes(@RequestParam VoteParams params) {
-        return voteService.getAll(params.getOffset(), params.getSize());
+        return voteService.getAll(params.getPage(), params.getSize());
     }
 
     @RequestMapping(value = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)

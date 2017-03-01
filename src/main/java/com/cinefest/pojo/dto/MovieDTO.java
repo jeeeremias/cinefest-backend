@@ -1,13 +1,13 @@
-package com.cinefest.pojo.movie;
+package com.cinefest.pojo.dto;
 
-import com.cinefest.util.enumeration.MovieType;
+import com.cinefest.util.enumeration.MovieTypeEnum;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class MovieDTO {
 
-    private MovieType type;
+    private MovieTypeEnum type;
     private String name;
     private String city;
     private String state;
@@ -21,11 +21,11 @@ public class MovieDTO {
     private String directorBiography;
     private String directorEmail;
 
-    public MovieType getType() {
+    public MovieTypeEnum getType() {
         return type;
     }
 
-    public void setType(MovieType type) {
+    public void setType(MovieTypeEnum type) {
         this.type = type;
     }
 
