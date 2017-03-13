@@ -17,9 +17,9 @@ public class GenericQueryParamsConverter {
     public QueryParams convertToQueryParam(Map<String, String> params) {
         QueryParams queryParams = new QueryParams();
 
-        queryParams.setPage(getNaturalAttr(params, "page", 0));
-        queryParams.setSize(getNaturalAttr(params, "size", 100));
-        queryParams.setSort(getListAttr(params, "sort"));
+        queryParams.setPage(getNaturalAttr(params, GENERIC_PARAMS[0], 0));
+        queryParams.setSize(getNaturalAttr(params, GENERIC_PARAMS[1], 100));
+        queryParams.setSort(getListAttr(params, GENERIC_PARAMS[2]));
 
         for (String value : GENERIC_PARAMS) {
             params.remove(value);
