@@ -1,9 +1,9 @@
-package com.cinefest.rest;
+package com.cinefest.rest.controller;
 
 import com.cinefest.entity.MovieEntity;
 import com.cinefest.pojo.params.QueryParams;
 import com.cinefest.pojo.dto.MovieDTO;
-import com.cinefest.service.MovieService;
+import com.cinefest.rest.service.MovieRestService;
 import com.cinefest.util.converter.rest.GenericQueryParamsConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ class MovieController {
 	static final String ID_PARAM = "/{id}";
 
     @Autowired
-	MovieService movieService;
+	MovieRestService movieRestService;
 
     @Autowired
     GenericQueryParamsConverter paramsConverter;
@@ -33,19 +33,19 @@ class MovieController {
 	@ResponseBody
 	public Iterable<MovieEntity> getMovies(@RequestParam(required = false) Map<String, String> params) {
 	    QueryParams queryParams = paramsConverter.convertToQueryParam(params);
-		return movieService.getAll(queryParams);
+		return movieRestService.getAll(queryParams);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = ENTITY_NAME + ID_PARAM, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public MovieEntity getMovie(@PathParam("id") int id) {
-		return movieService.getOne(id);
+		return movieRestService.getOne(id);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = ENTITY_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void newMovie(@RequestBody MovieDTO movie, HttpServletResponse response, UriComponentsBuilder b) {
-		MovieEntity movieEntity = movieService.newMovie(movie);
+		MovieEntity movieEntity = movieRestService.newMovie(movie);
         UriComponents uriComponents = b.path(ENTITY_NAME + ID_PARAM).buildAndExpand(movieEntity.getId());
 		response.addHeader("Location", uriComponents.toUriString());
 	}
@@ -53,7 +53,7 @@ class MovieController {
 	@RequestMapping(method = RequestMethod.PUT, value = ENTITY_NAME + ID_PARAM, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public MovieEntity uptadeMovie(@PathParam("id") long id, @RequestBody MovieDTO movie) {
-		return movieService.save(null);
+		return movieRestService.save(null);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = ENTITY_NAME + ID_PARAM, produces = MediaType.APPLICATION_JSON_VALUE)

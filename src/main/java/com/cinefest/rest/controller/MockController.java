@@ -1,4 +1,4 @@
-package com.cinefest.rest;
+package com.cinefest.rest.controller;
 
 import com.cinefest.entity.MovieEntity;
 import com.cinefest.service.MockService;

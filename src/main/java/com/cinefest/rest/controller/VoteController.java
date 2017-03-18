@@ -1,9 +1,9 @@
-package com.cinefest.rest;
+package com.cinefest.rest.controller;
 
 import com.cinefest.entity.VoteEntity;
 import com.cinefest.pojo.params.QueryParams;
-import com.cinefest.service.MovieService;
-import com.cinefest.service.VoteService;
+import com.cinefest.rest.service.MovieRestService;
+import com.cinefest.rest.service.VoteRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -15,27 +15,27 @@ import java.io.IOException;
 public class VoteController {
 
     @Autowired
-    VoteService voteService;
+    VoteRestService voteRestService;
 
     @Autowired
-    MovieService movieService;
+    MovieRestService movieRestService;
 
     @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
     public Iterable<VoteEntity> getVotes(@RequestParam QueryParams params) {
-        return voteService.getAll(params.getPage(), params.getSize());
+        return voteRestService.getAll(params.getPage(), params.getSize());
     }
 
     @RequestMapping(value = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
     public VoteEntity updateVote(@RequestBody VoteEntity voteEntity) {
-        return voteService.save(voteEntity);
+        return voteRestService.save(voteEntity);
     }
 
     @RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
     public VoteEntity vote(@RequestBody VoteEntity voteEntity) {
-        return voteService.save(voteEntity);
+        return voteRestService.save(voteEntity);
     }
 
     @RequestMapping(value = "/file", method = RequestMethod.GET)
@@ -45,7 +45,7 @@ public class VoteController {
         response.setContentType("text/csv;charset=UTF-8");
         response.setHeader("Content-disposition", String.format("attachment; filename=\"%s\"", csvFileName));
         System.out.println(response.getCharacterEncoding());
-        response.getOutputStream().print(movieService.votos(dia));
+        response.getOutputStream().print(movieRestService.votos(dia));
         response.getOutputStream().flush();
         response.getOutputStream().close();
     }

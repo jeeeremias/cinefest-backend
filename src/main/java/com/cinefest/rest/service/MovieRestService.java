@@ -1,4 +1,4 @@
-package com.cinefest.service;
+package com.cinefest.rest.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import com.cinefest.repository.MovieRepository;
 
 @Service
 @Transactional
-public class MovieService {
+public class MovieRestService {
 
 	@Autowired
 	MovieRepository movieRespository;

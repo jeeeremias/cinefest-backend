@@ -1,4 +1,4 @@
-package com.cinefest.service;
+package com.cinefest.rest.service;
 
 import com.cinefest.entity.MovieEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import com.cinefest.entity.VoteEntity;
 
 @Service
 @Transactional
-public class VoteService {
+public class VoteRestService {
 
 	@Autowired
 	VoteRepository voteRespository;
