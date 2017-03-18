@@ -7,37 +7,41 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by jere on 18/03/17.
- */
 public abstract class BaseRestService<T> {
 
     @Autowired
-    GenericQueryParamsConverter queryParamsConverter;
+    protected GenericQueryParamsConverter queryParamsConverter;
 
     protected PageRequest createPageRequest(int offset, int size, List<String> sortParams) {
         Sort.Direction direction;
         List<Sort.Order> orders = new ArrayList<>();
-        for (String prop : sortParams) {
-            if (prop.startsWith("-")) {
+        String prop;
+        for (String param : sortParams) {
+            if (param.startsWith("-")) {
                 direction = Sort.Direction.DESC;
-                prop = prop.substring(1);
+                prop = param.substring(1);
             } else {
                 direction = Sort.Direction.ASC;
+                prop = param;
             }
-            orders.add(new Sort.Order(direction, prop));
+            if (isSortableParam(prop)) {
+                orders.add(new Sort.Order(direction, prop));
+            }
         }
         Sort sort = new Sort(orders);
         PageRequest pageRequest = new PageRequest(offset, size, sort);
         return pageRequest;
     }
 
-    protected QueryParams toQueryParams(Map<String, String> params) {
-        return queryParamsConverter.convertToQueryParam(params);
-    }
+    protected abstract QueryParams toQueryParams(Map<String, String> params);
+
+    protected abstract boolean isSortableParam(String param);
+
+    protected abstract boolean isSearchableParam(String param);
 
     public abstract List<T> getAll (Map<String, String> params);
 }

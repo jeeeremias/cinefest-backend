@@ -1,7 +1,6 @@
 package com.cinefest.rest.controller;
 
 import com.cinefest.entity.MovieEntity;
-import com.cinefest.pojo.params.QueryParams;
 import com.cinefest.pojo.dto.MovieDTO;
 import com.cinefest.rest.service.MovieRestService;
 import com.cinefest.rest.util.converter.GenericQueryParamsConverter;

@@ -5,6 +5,7 @@ import com.cinefest.pojo.dto.MovieDTO;
 import com.cinefest.pojo.params.QueryParams;
 import com.cinefest.repository.MovieRepository;
 import com.cinefest.repository.VoteRepository;
+import com.cinefest.util.enumeration.MovieAttrsEnum;
 import com.cinefest.util.converter.MovieConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -25,7 +26,7 @@ public class MovieRestService extends BaseRestService<MovieEntity> {
 	@Autowired
 	VoteRepository voteRespository;
 
-	@Override
+    @Override
 	public List<MovieEntity> getAll(Map<String, String> params) {
 	    QueryParams queryParams = toQueryParams(params);
 		PageRequest pageRequest = createPageRequest(queryParams.getPage(), queryParams.getSize(), queryParams.getSort());
@@ -76,4 +77,35 @@ public class MovieRestService extends BaseRestService<MovieEntity> {
 	public MovieEntity save(MovieEntity movieEntity) {
 		return movieRespository.save(movieEntity);
 	}
+
+    @Override
+    protected QueryParams toQueryParams(Map<String, String> params) {
+        QueryParams queryParams = queryParamsConverter.convertToQueryParam(params);
+
+        Map<String, String> genericParams = queryParams.getGenericParams();
+        for (String key : genericParams.values()) {
+            if (!isSearchableParam(key)) {
+                genericParams.remove(key);
+            }
+        }
+        return queryParams;
+    }
+
+    @Override
+    protected boolean isSortableParam(String param) {
+        MovieAttrsEnum e = MovieAttrsEnum.fromQueryAttr(param);
+        if (e != null) {
+            return e.sortable;
+        }
+        return false;
+    }
+
+    @Override
+    protected boolean isSearchableParam(String param) {
+        MovieAttrsEnum e = MovieAttrsEnum.fromEntityAttr(param);
+        if (e != null) {
+            return e.searchable;
+        }
+        return false;
+    }
 }
