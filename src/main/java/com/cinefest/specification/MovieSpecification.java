@@ -23,12 +23,12 @@ public class MovieSpecification implements Specification<MovieEntity> {
             return criteriaBuilder.lessThanOrEqualTo(
                     root.get(criteria.getKey()), criteria.getValue());
         }
-        if (criteria.getValue().startsWith("\"")) {
+        if (criteria.getValue().startsWith(":")) {
             return criteriaBuilder.equal(
-                    root.get(criteria.getKey()), criteria.getValue().substring(1, criteria.getValue().length()));
+                    root.get(criteria.getKey()), criteria.getValue().substring(1));
         }
         return criteriaBuilder.like(
-                root.get(criteria.getKey()), criteria.getValue());
+                root.get(criteria.getKey()), "%" + criteria.getValue() + "%");
     }
 
     public MovieSpecification(SearchCriteria searchCriteria) {

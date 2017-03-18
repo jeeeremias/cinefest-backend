@@ -5,6 +5,7 @@ import com.cinefest.pojo.dto.MovieDTO;
 import com.cinefest.pojo.params.QueryParams;
 import com.cinefest.repository.MovieRepository;
 import com.cinefest.repository.VoteRepository;
+import com.cinefest.service.MovieService;
 import com.cinefest.util.enumeration.MovieAttrsEnum;
 import com.cinefest.util.converter.MovieConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,61 +22,15 @@ import java.util.Map;
 public class MovieRestService extends BaseRestService<MovieEntity> {
 
 	@Autowired
-	MovieRepository movieRespository;
-	
-	@Autowired
 	VoteRepository voteRespository;
+
+	@Autowired
+    MovieService movieService;
 
     @Override
 	public List<MovieEntity> getAll(Map<String, String> params) {
 	    QueryParams queryParams = toQueryParams(params);
-		PageRequest pageRequest = createPageRequest(queryParams.getPage(), queryParams.getSize(), queryParams.getSort());
-		return movieRespository.findAll(pageRequest).getContent();
-	}
-
-    public List<MovieEntity> getByDay(String dataExibicao) {
-		List<MovieEntity> movieEntities = movieRespository.findByscreeningDateTime(dataExibicao, new Sort(Sort.Direction.ASC, "name"));
-		if (dataExibicao.equals("15/02") || dataExibicao.equals("16/02") || dataExibicao.equals("17/02") || dataExibicao.equals("18/02") || dataExibicao.equals("19/02")) {
-			if(movieEntities != null) {
-				movieEntities.addAll(movieRespository.findByscreeningDateTime("15 a 19/02", new Sort(Sort.Direction.ASC, "name")));
-			} else {
-				movieEntities = movieRespository.findByscreeningDateTime("15 a 19/02", new Sort(Sort.Direction.ASC, "name"));
-			}
-		}
-		return movieEntities;
-	}
-
-	public MovieEntity getOne(Integer id) {
-		return movieRespository.findOne(id);
-	}
-
-	public boolean exist(Integer id) {
-		return movieRespository.exists(id);
-	}
-	
-	public String votos(String dia) {
-		List<MovieEntity> movieEntities = getByDay(dia);
-		StringBuilder sb = new StringBuilder("Codigo, MovieEntity, Votos, (%)\n");
-		float total = voteRespository.countByDateTime(dia);
-		
-		for (MovieEntity movieEntity : movieEntities) {
-			sb.append(movieEntity.getId() + ",");
-			sb.append(movieEntity.getName() + ",");
-			sb.append(movieEntity.getVotes().size() + ",");
-			sb.append(((100.0 * movieEntity.getVotes().size()) / total) + ",");
-			sb.append("\n");
-		}
-		sb.append(",,,\n,,Total Votos," + total + "\n");
-		return sb.toString();
-	}
-
-	public MovieEntity newMovie(MovieDTO movieDTO) {
-		MovieEntity movieEntity = MovieConverter.dtoToEntity(movieDTO);
-		return save(movieEntity);
-	}
-
-	public MovieEntity save(MovieEntity movieEntity) {
-		return movieRespository.save(movieEntity);
+		return movieService.getAll(queryParams);
 	}
 
     @Override
