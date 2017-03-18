@@ -1,11 +1,9 @@
 package com.cinefest.rest.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.cinefest.entity.MovieEntity;
-import com.cinefest.pojo.params.QueryParams;
 import com.cinefest.pojo.dto.MovieDTO;
+import com.cinefest.pojo.params.QueryParams;
+import com.cinefest.repository.MovieRepository;
 import com.cinefest.repository.VoteRepository;
 import com.cinefest.util.converter.MovieConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +12,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cinefest.repository.MovieRepository;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
-public class MovieRestService {
+public class MovieRestService extends BaseRestService<MovieEntity> {
 
 	@Autowired
 	MovieRepository movieRespository;
@@ -26,27 +25,12 @@ public class MovieRestService {
 	@Autowired
 	VoteRepository voteRespository;
 
-	public Iterable<MovieEntity> getAll(QueryParams params) {
-		PageRequest pageRequest = createPageRequest(params.getPage(), params.getSize(), params.getSort());
+	@Override
+	public List<MovieEntity> getAll(Map<String, String> params) {
+	    QueryParams queryParams = toQueryParams(params);
+		PageRequest pageRequest = createPageRequest(queryParams.getPage(), queryParams.getSize(), queryParams.getSort());
 		return movieRespository.findAll(pageRequest).getContent();
 	}
-
-    private PageRequest createPageRequest(int offset, int size, List<String> sortParams) {
-	    Sort.Direction direction;
-	    List<Sort.Order> orders = new ArrayList<>();
-	    for (String prop : sortParams) {
-            if (prop.startsWith("-")) {
-                direction = Sort.Direction.DESC;
-                prop = prop.substring(1);
-            } else {
-                direction = Sort.Direction.ASC;
-            }
-            orders.add(new Sort.Order(direction, prop));
-        }
-        Sort sort = new Sort(orders);
-        PageRequest pageRequest = new PageRequest(offset, size, sort);
-	    return pageRequest;
-    }
 
     public List<MovieEntity> getByDay(String dataExibicao) {
 		List<MovieEntity> movieEntities = movieRespository.findByscreeningDateTime(dataExibicao, new Sort(Sort.Direction.ASC, "name"));

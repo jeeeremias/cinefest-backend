@@ -1,4 +1,4 @@
-package com.cinefest.util.converter.rest;
+package com.cinefest.rest.util.converter;
 
 import com.cinefest.pojo.params.QueryParams;
 import org.springframework.stereotype.Component;

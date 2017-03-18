@@ -4,7 +4,7 @@ import com.cinefest.entity.MovieEntity;
 import com.cinefest.pojo.params.QueryParams;
 import com.cinefest.pojo.dto.MovieDTO;
 import com.cinefest.rest.service.MovieRestService;
-import com.cinefest.util.converter.rest.GenericQueryParamsConverter;
+import com.cinefest.rest.util.converter.GenericQueryParamsConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,8 +32,7 @@ class MovieController {
 	@RequestMapping(method = RequestMethod.GET, value = ENTITY_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Iterable<MovieEntity> getMovies(@RequestParam(required = false) Map<String, String> params) {
-	    QueryParams queryParams = paramsConverter.convertToQueryParam(params);
-		return movieRestService.getAll(queryParams);
+		return movieRestService.getAll(params);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = ENTITY_NAME + ID_PARAM, produces = MediaType.APPLICATION_JSON_VALUE)
