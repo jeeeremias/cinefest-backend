@@ -1,11 +1,13 @@
-package com.cinefest.util.criteria;
+package com.cinefest.pojo.criteria;
 
-/**
- * Created by jere on 17/03/17.
- */
 public class SearchCriteria {
     private String key;
     private String value;
+
+    public SearchCriteria(String key, String value) {
+        this.key = key;
+        this.value = value;
+    }
 
     public String getKey() {
         return key;

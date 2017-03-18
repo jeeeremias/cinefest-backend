@@ -1,7 +1,7 @@
 package com.cinefest.specification;
 
 import com.cinefest.entity.MovieEntity;
-import com.cinefest.util.criteria.SearchCriteria;
+import com.cinefest.pojo.criteria.SearchCriteria;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;

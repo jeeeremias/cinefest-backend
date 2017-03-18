@@ -1,21 +1,26 @@
 package com.cinefest.service;
 
 import com.cinefest.entity.MovieEntity;
+import com.cinefest.pojo.criteria.SearchCriteria;
 import com.cinefest.pojo.dto.MovieDTO;
 import com.cinefest.pojo.params.QueryParams;
 import com.cinefest.repository.MovieRepository;
 import com.cinefest.repository.VoteRepository;
-import com.cinefest.rest.util.converter.GenericQueryParamsConverter;
+import com.cinefest.specification.MovieSpecification;
 import com.cinefest.util.converter.MovieConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
+@Transactional
 public class MovieService {
 
     @Autowired
@@ -24,12 +29,10 @@ public class MovieService {
     @Autowired
     VoteRepository voteRespository;
 
-    @Autowired
-    protected GenericQueryParamsConverter queryParamsConverter;
-
     public List<MovieEntity> getAll(QueryParams queryParams) {
         PageRequest pageRequest = createPageRequest(queryParams.getPage(), queryParams.getSize(), queryParams.getSort());
-        return movieRespository.findAll(pageRequest).getContent();
+        Specifications specifications = createSpecifications(queryParams.getGenericParams());
+        return movieRespository.findAll(specifications, pageRequest).getContent();
     }
 
     public List<MovieEntity> getByDay(String dataExibicao) {
@@ -95,5 +98,19 @@ public class MovieService {
         Sort sort = new Sort(orders);
         PageRequest pageRequest = new PageRequest(offset, size, sort);
         return pageRequest;
+    }
+
+    private Specifications createSpecifications(Map<String, String> genericParams) {
+        Specifications specifications = null;
+        MovieSpecification movieSpecification;
+        for (String key : genericParams.values()) {
+            movieSpecification = new MovieSpecification(new SearchCriteria(key, genericParams.get(key)));
+            if (specifications == null) {
+                specifications = Specifications.where(movieSpecification);
+            } else {
+                specifications.and(movieSpecification);
+            }
+        }
+        return specifications;
     }
 }

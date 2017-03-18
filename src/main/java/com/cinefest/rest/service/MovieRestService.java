@@ -18,11 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional
 public class MovieRestService extends BaseRestService<MovieEntity> {
-
-	@Autowired
-	VoteRepository voteRespository;
 
 	@Autowired
     MovieService movieService;
