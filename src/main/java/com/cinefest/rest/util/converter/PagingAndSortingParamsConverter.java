@@ -1,5 +1,6 @@
 package com.cinefest.rest.util.converter;
 
+import com.cinefest.pojo.params.PagingAndSortingParams;
 import com.cinefest.pojo.params.QueryParams;
 import org.springframework.stereotype.Component;
 
@@ -8,26 +9,26 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class GenericQueryParamsConverter {
+public class PagingAndSortingParamsConverter {
 
-    private static final String[] GENERIC_PARAMS = {
+    static final String[] GENERIC_PARAMS = {
             "page", "size", "sort"
     };
+    final int defaultPage = 0;
+    final int defaultSize = 100;
 
-    public QueryParams convertToQueryParam(Map<String, String> params) {
-        QueryParams queryParams = new QueryParams();
+    public PagingAndSortingParams convertToQueryParam(Map<String, String> params) {
+        PagingAndSortingParams pagingAndSortingParams = new PagingAndSortingParams();
 
-        queryParams.setPage(getNaturalAttr(params, GENERIC_PARAMS[0], 0));
-        queryParams.setSize(getNaturalAttr(params, GENERIC_PARAMS[1], 100));
-        queryParams.setSort(getListAttr(params, GENERIC_PARAMS[2]));
+        pagingAndSortingParams.setPage(getNaturalAttr(params, GENERIC_PARAMS[0], defaultPage));
+        pagingAndSortingParams.setSize(getNaturalAttr(params, GENERIC_PARAMS[1], defaultSize));
+        pagingAndSortingParams.setSort(getListAttr(params, GENERIC_PARAMS[2]));
 
         for (String value : GENERIC_PARAMS) {
             params.remove(value);
         }
 
-        queryParams.setGenericParams(params);
-
-        return queryParams;
+        return pagingAndSortingParams;
     }
 
     private List<String> getListAttr(Map<String, String> params, String attr) {

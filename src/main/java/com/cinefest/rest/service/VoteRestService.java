@@ -1,6 +1,7 @@
 package com.cinefest.rest.service;
 
 import com.cinefest.entity.MovieEntity;
+import com.cinefest.pojo.params.QueryParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class VoteRestService {
 		return voteRespository.save(voteEntity);
 	}
 	
-	public Iterable<VoteEntity> getAll(int offset, int size) {
+	public Iterable<VoteEntity> getAll(QueryParams params) {
 		return voteRespository.findAll(new Sort(Sort.Direction.ASC, "day"));
 	}
 	

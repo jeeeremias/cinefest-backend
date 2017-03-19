@@ -23,7 +23,7 @@ public class VoteController {
     @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
     public Iterable<VoteEntity> getVotes(@RequestParam QueryParams params) {
-        return voteRestService.getAll(params.getPage(), params.getSize());
+        return voteRestService.getAll(params);
     }
 
     @RequestMapping(value = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)

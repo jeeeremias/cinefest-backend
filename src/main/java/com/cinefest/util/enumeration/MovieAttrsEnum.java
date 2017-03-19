@@ -5,14 +5,14 @@ package com.cinefest.util.enumeration;
  */
 public enum MovieAttrsEnum {
 
-    TYPE("type", "type", true, true),
+    TYPE("type", "type", true, false),
     NAME("name", "name", true, true),
     CITY("city", "city", true, true),
     STATE("state", "state", true, true),
-    INCOME_DATE("income_date", "incomeDate", true, true),
+    INCOME_DATE("income_date", "incomeDate", true, false),
     GENRE("genre", "genre", true, true),
-    RUNTIME("runtime", "runtime", true, true),
-    SCREENING_DATE_TIME("screening_date_time", "screeningDateTime", true, true),
+    RUNTIME("runtime", "runtime", true, false),
+    SCREENING_DATE_TIME("screening_date_time", "screeningDateTime", true, false),
     DIRECTOR("director", "director", true, true),
     SHORT_SYNOPSIS("short_synopsis", "shortSynopsis", true, true),
     FULL_SYNOPSIS("full_synopsis", "fullSynopsis", true, true),

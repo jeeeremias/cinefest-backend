@@ -3,6 +3,7 @@ package com.cinefest.service;
 import com.cinefest.entity.MovieEntity;
 import com.cinefest.pojo.criteria.SearchCriteria;
 import com.cinefest.pojo.dto.MovieDTO;
+import com.cinefest.pojo.params.PagingAndSortingParams;
 import com.cinefest.pojo.params.QueryParams;
 import com.cinefest.repository.MovieRepository;
 import com.cinefest.repository.VoteRepository;
@@ -30,7 +31,7 @@ public class MovieService {
     VoteRepository voteRespository;
 
     public List<MovieEntity> getAll(QueryParams queryParams) {
-        PageRequest pageRequest = createPageRequest(queryParams.getPage(), queryParams.getSize(), queryParams.getSort());
+        PageRequest pageRequest = createPageRequest(queryParams.getPagingAndSortingParams());
         Specifications specifications = createSpecifications(queryParams.getGenericParams());
         return movieRespository.findAll(specifications, pageRequest).getContent();
     }
@@ -81,11 +82,11 @@ public class MovieService {
     }
 
 
-    private PageRequest createPageRequest(int offset, int size, List<String> sortParams) {
+    private PageRequest createPageRequest(PagingAndSortingParams params) {
         Sort.Direction direction;
         List<Sort.Order> orders = new ArrayList<>();
         String prop;
-        for (String param : sortParams) {
+        for (String param : params.getSort()) {
             if (param.startsWith("-")) {
                 direction = Sort.Direction.DESC;
                 prop = param.substring(1);
@@ -96,19 +97,19 @@ public class MovieService {
             orders.add(new Sort.Order(direction, prop));
         }
         Sort sort = new Sort(orders);
-        PageRequest pageRequest = new PageRequest(offset, size, sort);
+        PageRequest pageRequest = new PageRequest(params.getPage(), params.getSize(), sort);
         return pageRequest;
     }
 
     private Specifications createSpecifications(Map<String, String> genericParams) {
         Specifications specifications = null;
         MovieSpecification movieSpecification;
-        for (String key : genericParams.values()) {
-            movieSpecification = new MovieSpecification(new SearchCriteria(key, genericParams.get(key)));
+        for (Map.Entry<String, String> entry : genericParams.entrySet()) {
+            movieSpecification = new MovieSpecification(new SearchCriteria(entry.getKey(), entry.getValue()));
             if (specifications == null) {
                 specifications = Specifications.where(movieSpecification);
             } else {
-                specifications.and(movieSpecification);
+                specifications = specifications.and(movieSpecification);
             }
         }
         return specifications;

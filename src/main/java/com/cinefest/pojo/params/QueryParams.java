@@ -1,36 +1,18 @@
 package com.cinefest.pojo.params;
 
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 public class QueryParams {
-    int page;
-    int size;
-    List<String> sort;
+    PagingAndSortingParams pagingAndSortingParams;
     Map<String, String> genericParams;
 
-    public int getPage() {
-        return page;
+    public PagingAndSortingParams getPagingAndSortingParams() {
+        return pagingAndSortingParams;
     }
 
-    public void setPage(int page) {
-        this.page = page;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public List<String> getSort() {
-        return sort;
-    }
-
-    public void setSort(List<String> sort) {
-        this.sort = sort;
+    public void setPagingAndSortingParams(PagingAndSortingParams pagingAndSortingParams) {
+        this.pagingAndSortingParams = pagingAndSortingParams;
     }
 
     public Map<String, String> getGenericParams() {
@@ -39,5 +21,12 @@ public class QueryParams {
 
     public void setGenericParams(Map<String, String> genericParams) {
         this.genericParams = genericParams;
+    }
+
+    public void addGenericParam(String key, String value) {
+        if (genericParams == null) {
+            genericParams = new HashMap<>();
+        }
+        genericParams.put(key, value);
     }
 }

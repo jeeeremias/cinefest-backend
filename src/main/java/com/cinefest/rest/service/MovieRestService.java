@@ -2,6 +2,7 @@ package com.cinefest.rest.service;
 
 import com.cinefest.entity.MovieEntity;
 import com.cinefest.pojo.dto.MovieDTO;
+import com.cinefest.pojo.params.PagingAndSortingParams;
 import com.cinefest.pojo.params.QueryParams;
 import com.cinefest.repository.MovieRepository;
 import com.cinefest.repository.VoteRepository;
@@ -31,14 +32,18 @@ public class MovieRestService extends BaseRestService<MovieEntity> {
 
     @Override
     protected QueryParams toQueryParams(Map<String, String> params) {
-        QueryParams queryParams = queryParamsConverter.convertToQueryParam(params);
+        QueryParams queryParams = new QueryParams();
+        queryParams.setPagingAndSortingParams(queryParamsConverter.convertToQueryParam(params));
 
-        Map<String, String> genericParams = queryParams.getGenericParams();
-        for (String key : genericParams.values()) {
-            if (!isSearchableParam(key)) {
-                genericParams.remove(key);
-            }
-        }
+        params
+                .entrySet()
+                .forEach(e -> {
+                    MovieAttrsEnum attrsEnum = MovieAttrsEnum.fromQueryAttr(e.getKey());
+                    if (attrsEnum.searchable) {
+                        queryParams.addGenericParam(attrsEnum.entityAttr, e.getValue());
+                    }
+                });
+
         return queryParams;
     }
 
@@ -53,7 +58,7 @@ public class MovieRestService extends BaseRestService<MovieEntity> {
 
     @Override
     protected boolean isSearchableParam(String param) {
-        MovieAttrsEnum e = MovieAttrsEnum.fromEntityAttr(param);
+        MovieAttrsEnum e = MovieAttrsEnum.fromQueryAttr(param);
         if (e != null) {
             return e.searchable;
         }

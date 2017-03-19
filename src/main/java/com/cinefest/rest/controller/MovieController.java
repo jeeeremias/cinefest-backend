@@ -3,7 +3,7 @@ package com.cinefest.rest.controller;
 import com.cinefest.entity.MovieEntity;
 import com.cinefest.pojo.dto.MovieDTO;
 import com.cinefest.rest.service.MovieRestService;
-import com.cinefest.rest.util.converter.GenericQueryParamsConverter;
+import com.cinefest.rest.util.converter.PagingAndSortingParamsConverter;
 import com.cinefest.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +30,7 @@ class MovieController {
 	MovieService movieService;
 
     @Autowired
-    GenericQueryParamsConverter paramsConverter;
+    PagingAndSortingParamsConverter paramsConverter;
 
 	@RequestMapping(method = RequestMethod.GET, value = ENTITY_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
