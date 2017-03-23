@@ -5,7 +5,7 @@ package com.cinefest.util.enumeration;
  */
 public enum MovieAttrsEnum {
 
-    TYPE("type", "type", true, false),
+    TYPE("type", "type", true, true),
     NAME("name", "name", true, true),
     CITY("city", "city", true, true),
     STATE("state", "state", true, true),

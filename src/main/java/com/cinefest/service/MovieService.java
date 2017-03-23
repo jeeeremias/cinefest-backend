@@ -105,7 +105,10 @@ public class MovieService {
         Specifications specifications = null;
         MovieSpecification movieSpecification;
         for (Map.Entry<String, String> entry : genericParams.entrySet()) {
-            movieSpecification = new MovieSpecification(new SearchCriteria(entry.getKey(), entry.getValue()));
+            char op = getOperator(entry.getValue());
+            movieSpecification = new MovieSpecification(
+                    new SearchCriteria(
+                            entry.getKey(), op, op == '=' ? entry.getValue() : entry.getValue().substring(1)));
             if (specifications == null) {
                 specifications = Specifications.where(movieSpecification);
             } else {
@@ -113,5 +116,12 @@ public class MovieService {
             }
         }
         return specifications;
+    }
+
+    private char getOperator(String value) {
+        if (value.startsWith(">") || value.startsWith("<") || value.startsWith(":")) {
+            return value.charAt(0);
+        }
+        return '=';
     }
 }

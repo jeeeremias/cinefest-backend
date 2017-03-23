@@ -13,6 +13,10 @@ public class MovieSpecification implements Specification<MovieEntity> {
 
     private SearchCriteria criteria;
 
+    public MovieSpecification(SearchCriteria searchCriteria) {
+        this.criteria = searchCriteria;
+    }
+
     @Override
     public Predicate toPredicate(Root<MovieEntity> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
         if (criteria.getValue().startsWith(">")) {
@@ -29,13 +33,5 @@ public class MovieSpecification implements Specification<MovieEntity> {
         }
         return criteriaBuilder.like(
                 root.get(criteria.getKey()), "%" + criteria.getValue() + "%");
-    }
-
-    public MovieSpecification(SearchCriteria searchCriteria) {
-        this.criteria = searchCriteria;
-    }
-
-    public SearchCriteria getSearchCriteria() {
-        return criteria;
     }
 }
