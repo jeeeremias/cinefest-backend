@@ -2,7 +2,7 @@ package com.cinefest.rest.controller;
 
 import com.cinefest.entity.VoteEntity;
 import com.cinefest.pojo.params.QueryParams;
-import com.cinefest.rest.service.VoteRestService;
+import com.cinefest.rest.service.VoteRestFacade;
 import com.cinefest.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -15,7 +15,7 @@ import java.io.IOException;
 public class VoteController {
 
     @Autowired
-    VoteRestService voteRestService;
+    VoteRestFacade voteRestFacade;
 
     @Autowired
     MovieService movieService;
@@ -23,19 +23,19 @@ public class VoteController {
     @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     @ResponseBody
     public Iterable<VoteEntity> getVotes(@RequestParam QueryParams params) {
-        return voteRestService.getAll(params);
+        return voteRestFacade.getAll(params);
     }
 
     @RequestMapping(value = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
     public VoteEntity updateVote(@RequestBody VoteEntity voteEntity) {
-        return voteRestService.save(voteEntity);
+        return voteRestFacade.save(voteEntity);
     }
 
     @RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
     public VoteEntity vote(@RequestBody VoteEntity voteEntity) {
-        return voteRestService.save(voteEntity);
+        return voteRestFacade.save(voteEntity);
     }
 
     @RequestMapping(value = "/file", method = RequestMethod.GET)

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Map;
 
-public abstract class BaseRestService<T> {
+public abstract class BaseRestFacade<T> {
 
     @Autowired
     protected PagingAndSortingParamsConverter queryParamsConverter;

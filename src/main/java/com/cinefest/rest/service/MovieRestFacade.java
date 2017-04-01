@@ -1,25 +1,17 @@
 package com.cinefest.rest.service;
 
 import com.cinefest.entity.MovieEntity;
-import com.cinefest.pojo.dto.MovieDTO;
-import com.cinefest.pojo.params.PagingAndSortingParams;
 import com.cinefest.pojo.params.QueryParams;
-import com.cinefest.repository.MovieRepository;
-import com.cinefest.repository.VoteRepository;
 import com.cinefest.service.MovieService;
 import com.cinefest.util.enumeration.MovieAttrsEnum;
-import com.cinefest.util.converter.MovieConverter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
 
 @Service
-public class MovieRestService extends BaseRestService<MovieEntity> {
+public class MovieRestFacade extends BaseRestFacade<MovieEntity> {
 
 	@Autowired
     MovieService movieService;

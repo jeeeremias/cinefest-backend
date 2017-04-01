@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class PhotoRestService {
+public class PhotoRestFacade {
 
 	public byte[] getPhoto(String resource) throws IOException {
 		InputStream imagem = getClass().getResourceAsStream("/images" + resource);

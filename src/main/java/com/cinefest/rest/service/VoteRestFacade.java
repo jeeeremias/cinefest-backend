@@ -13,7 +13,7 @@ import com.cinefest.entity.VoteEntity;
 
 @Service
 @Transactional
-public class VoteRestService {
+public class VoteRestFacade {
 
 	@Autowired
 	VoteRepository voteRespository;

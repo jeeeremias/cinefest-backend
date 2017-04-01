@@ -9,7 +9,7 @@ import com.cinefest.repository.UserRepository;
 
 @Service
 @Transactional
-public class UserRestService {
+public class UserRestFacade {
 	
 	@Autowired
 	UserRepository userRepository;
