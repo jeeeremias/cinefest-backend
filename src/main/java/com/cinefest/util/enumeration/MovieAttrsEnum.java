@@ -1,5 +1,7 @@
 package com.cinefest.util.enumeration;
 
+import java.util.Arrays;
+
 /**
  * Created by jere on 18/03/17.
  */
@@ -32,20 +34,16 @@ public enum MovieAttrsEnum {
     }
 
     public static MovieAttrsEnum fromQueryAttr(String queryAttr) {
-        for (MovieAttrsEnum e : MovieAttrsEnum.values()) {
-            if (e.queryAttr.equals(queryAttr)) {
-                return e;
-            }
-        }
-        return null;
+        return Arrays.stream(MovieAttrsEnum.values())
+                .filter(e -> e.queryAttr.equals(queryAttr))
+                .findFirst()
+                .orElse(null);
     }
 
     public static MovieAttrsEnum fromEntityAttr(String entityAttr) {
-        for (MovieAttrsEnum e : MovieAttrsEnum.values()) {
-            if (e.entityAttr.equals(entityAttr)) {
-                return e;
-            }
-        }
-        return null;
+        return Arrays.stream(MovieAttrsEnum.values())
+                .filter(e -> e.entityAttr.equals(entityAttr))
+                .findFirst()
+                .orElse(null);
     }
 }
