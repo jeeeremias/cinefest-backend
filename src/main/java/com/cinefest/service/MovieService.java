@@ -1,9 +1,9 @@
 package com.cinefest.service;
 
 import com.cinefest.entity.MovieEntity;
-import com.cinefest.pojo.criteria.SearchCriteria;
 import com.cinefest.pojo.dto.MovieDTO;
 import com.cinefest.pojo.params.PagingAndSortingParams;
+import com.cinefest.pojo.params.QueryCriteria;
 import com.cinefest.pojo.params.QueryParams;
 import com.cinefest.repository.MovieRepository;
 import com.cinefest.repository.VoteRepository;
@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Transactional
@@ -32,7 +31,7 @@ public class MovieService {
 
     public List<MovieEntity> getAll(QueryParams queryParams) {
         PageRequest pageRequest = createPageRequest(queryParams.getPagingAndSortingParams());
-        Specifications specifications = createSpecifications(queryParams.getGenericParams());
+        Specifications specifications = createSpecifications(queryParams.getCriterias());
         return movieRespository.findAll(specifications, pageRequest).getContent();
     }
 
@@ -101,20 +100,10 @@ public class MovieService {
         return pageRequest;
     }
 
-    private Specifications createSpecifications(Map<String, String> genericParams) {
+    private Specifications createSpecifications(List<QueryCriteria> criterias) {
         Specifications specifications = null;
         MovieSpecification movieSpecification;
-        for (Map.Entry<String, String> entry : genericParams.entrySet()) {
-            char op = getOperator(entry.getValue());
-            movieSpecification = new MovieSpecification(
-                    new SearchCriteria(
-                            entry.getKey(), op, op == '=' ? entry.getValue() : entry.getValue().substring(1)));
-            if (specifications == null) {
-                specifications = Specifications.where(movieSpecification);
-            } else {
-                specifications = specifications.and(movieSpecification);
-            }
-        }
+        
         return specifications;
     }
 
