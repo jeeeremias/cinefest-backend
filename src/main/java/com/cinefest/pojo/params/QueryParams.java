@@ -1,11 +1,14 @@
 package com.cinefest.pojo.params;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.cinefest.util.enumeration.QueryOperatorEnum;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class QueryParams {
+
     PagingAndSortingParams pagingAndSortingParams;
-    Map<String, String> genericParams;
+    List<QueryCriteria> criterias;
 
     public PagingAndSortingParams getPagingAndSortingParams() {
         return pagingAndSortingParams;
@@ -15,18 +18,18 @@ public class QueryParams {
         this.pagingAndSortingParams = pagingAndSortingParams;
     }
 
-    public Map<String, String> getGenericParams() {
-        return genericParams;
+    public List<QueryCriteria> getCriterias() {
+        return criterias;
     }
 
-    public void setGenericParams(Map<String, String> genericParams) {
-        this.genericParams = genericParams;
+    public void setCriterias(List<QueryCriteria> criterias) {
+        this.criterias = criterias;
     }
 
-    public void addGenericParam(String key, String value) {
-        if (genericParams == null) {
-            genericParams = new HashMap<>();
+    public void addCriteria(String key, QueryOperatorEnum op, Object value) {
+        if (criterias == null) {
+            criterias = new ArrayList<>();
         }
-        genericParams.put(key, value);
+        criterias.add(new QueryCriteria(key, op, value));
     }
 }
