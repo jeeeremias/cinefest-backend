@@ -1,7 +1,5 @@
 package com.cinefest.pojo.params;
 
-import com.cinefest.util.enumeration.QueryOperatorEnum;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +24,10 @@ public class QueryParams {
         this.criterias = criterias;
     }
 
-    public void addCriteria(String key, QueryOperatorEnum op, Object value) {
+    public void addCriteria(QueryCriteria criteria) {
         if (criterias == null) {
             criterias = new ArrayList<>();
         }
-        criterias.add(new QueryCriteria(key, op, value));
+        criterias.add(criteria);
     }
 }

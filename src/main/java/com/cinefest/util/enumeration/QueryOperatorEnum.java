@@ -4,20 +4,20 @@ import java.util.Arrays;
 
 public enum QueryOperatorEnum {
 
-    GREATER('>'),
-    LESS('<'),
-    EQUALS(':'),
-    LIKE('*');
+    GREATER(">"),
+    LESS("<"),
+    EQUALS(":"),
+    LIKE("*");
 
-    public final char op;
+    public final String op;
 
-    QueryOperatorEnum(char op) {
+    QueryOperatorEnum(String op) {
         this.op = op;
     }
 
     public static QueryOperatorEnum fromOp(char op) {
         return Arrays.stream(QueryOperatorEnum.values())
-                .filter(e -> e.op == op)
+                .filter(e -> e.op.equals(op))
                 .findFirst()
                 .orElse(null);
     }

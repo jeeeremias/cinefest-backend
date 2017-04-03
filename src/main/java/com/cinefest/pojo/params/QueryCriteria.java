@@ -8,12 +8,6 @@ public class QueryCriteria {
     QueryOperatorEnum op;
     Object value;
 
-    public QueryCriteria(String key, QueryOperatorEnum op, Object value) {
-        this.key = key;
-        this.op = op;
-        this.value = value;
-    }
-
     public String getKey() {
         return key;
     }
