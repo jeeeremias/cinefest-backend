@@ -1,7 +1,7 @@
 package com.cinefest.rest.controller;
 
 import com.cinefest.entity.UserEntity;
-import com.cinefest.rest.service.UserRestFacade;
+import com.cinefest.rest.facade.UserRestFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

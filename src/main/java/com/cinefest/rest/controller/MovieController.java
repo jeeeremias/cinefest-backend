@@ -2,7 +2,7 @@ package com.cinefest.rest.controller;
 
 import com.cinefest.entity.MovieEntity;
 import com.cinefest.pojo.dto.MovieDTO;
-import com.cinefest.rest.service.MovieRestFacade;
+import com.cinefest.rest.facade.MovieRestFacade;
 import com.cinefest.rest.util.converter.PagingAndSortingParamsConverter;
 import com.cinefest.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;

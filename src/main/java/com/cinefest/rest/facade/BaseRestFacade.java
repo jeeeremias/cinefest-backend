@@ -1,4 +1,4 @@
-package com.cinefest.rest.service;
+package com.cinefest.rest.facade;
 
 import com.cinefest.pojo.params.QueryParams;
 import com.cinefest.rest.util.converter.PagingAndSortingParamsConverter;

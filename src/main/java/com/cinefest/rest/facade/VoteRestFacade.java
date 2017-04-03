@@ -1,4 +1,4 @@
-package com.cinefest.rest.service;
+package com.cinefest.rest.facade;
 
 import com.cinefest.entity.MovieEntity;
 import com.cinefest.pojo.params.QueryParams;

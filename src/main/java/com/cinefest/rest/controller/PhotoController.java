@@ -1,6 +1,6 @@
 package com.cinefest.rest.controller;
 
-import com.cinefest.rest.service.PhotoRestFacade;
+import com.cinefest.rest.facade.PhotoRestFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;

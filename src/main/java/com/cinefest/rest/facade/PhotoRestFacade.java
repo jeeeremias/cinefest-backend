@@ -1,4 +1,4 @@
-package com.cinefest.rest.service;
+package com.cinefest.rest.facade;
 
 import java.io.IOException;
 import java.io.InputStream;
