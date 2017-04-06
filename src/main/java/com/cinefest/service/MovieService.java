@@ -103,7 +103,10 @@ public class MovieService {
     private Specifications createSpecifications(List<QueryCriteria> criterias) {
         Specifications specifications = null;
         MovieSpecification movieSpecification;
-        
+        for (QueryCriteria criteria : criterias) {
+
+        }
+
         return specifications;
     }
 

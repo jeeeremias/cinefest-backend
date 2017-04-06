@@ -1,5 +1,6 @@
 package com.cinefest.rest.facade;
 
+import com.cinefest.pojo.params.QueryCriteria;
 import com.cinefest.pojo.params.QueryParams;
 import com.cinefest.rest.util.converter.PagingAndSortingParamsConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,6 @@ public abstract class BaseRestFacade<T, E> {
     protected abstract boolean isSortableParam(String param);
 
     protected abstract boolean isSearchableParam(String param);
-
-    protected abstract Object getObjectValueParam(E enumParam, String value);
 
     public abstract List<T> getAll(Map<String, String> params);
 }

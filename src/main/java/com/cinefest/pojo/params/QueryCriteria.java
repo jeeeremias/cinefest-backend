@@ -6,7 +6,7 @@ public class QueryCriteria {
 
     String key;
     QueryOperatorEnum op;
-    Object value;
+    String value;
 
     public String getKey() {
         return key;
@@ -24,11 +24,12 @@ public class QueryCriteria {
         this.op = op;
     }
 
-    public Object getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(Object value) {
+    public void setValue(String value) {
         this.value = value;
     }
+
 }

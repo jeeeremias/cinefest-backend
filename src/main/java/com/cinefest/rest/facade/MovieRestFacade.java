@@ -6,9 +6,11 @@ import com.cinefest.pojo.params.QueryParams;
 import com.cinefest.service.MovieService;
 import com.cinefest.util.enumeration.MovieAttrsEnum;
 import com.cinefest.util.enumeration.MovieTypeEnum;
+import com.cinefest.util.enumeration.QueryOperatorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +39,7 @@ public class MovieRestFacade extends BaseRestFacade<MovieEntity, MovieAttrsEnum>
                 .forEach(e -> {
                     MovieAttrsEnum attrEnum = MovieAttrsEnum.fromQueryAttr(e.getKey());
                     if (attrEnum.searchable) {
-                        queryParams.addCriteria(createCriteria(attrEnum.entityAttr, e.getValue()));
+                        queryParams.addCriteria(createCriteria(attrEnum, e.getValue()));
                     }
                 });
 
@@ -62,27 +64,26 @@ public class MovieRestFacade extends BaseRestFacade<MovieEntity, MovieAttrsEnum>
         return false;
     }
 
-    @Override
-    protected Object getObjectValueParam(MovieAttrsEnum enumParam, String value) {
-        switch (enumParam) {
-            case TYPE:
-                return MovieTypeEnum.fromDesc(value);
-            case INCOME_DATE:
-                return toDate(value);
-            case SCREENING_DATE_TIME:
-                return toDate(value);
-            default:
-                return value;
-        }
-    }
-
     private Date toDate(String date) {
         return new Date();
     }
 
-    private QueryCriteria createCriteria(String entityAttr, String value) {
-        QueryCriteria criteria = createCriteriaFromValue(value);
-        criteria.setKey(entityAttr);
-        return criteria;
+    private QueryCriteria createCriteria(MovieAttrsEnum attrEnum, String value) {
+        QueryCriteria queryCriteria = new QueryCriteria();
+        queryCriteria.setKey(attrEnum.entityAttr);
+
+        return Arrays.stream(QueryOperatorEnum.values())
+                .filter(e -> value.startsWith(e.op))
+                .map(e -> {
+                    queryCriteria.setValue(value.substring(1));
+                    queryCriteria.setOp(e);
+                    return queryCriteria;
+                })
+                .findFirst()
+                .orElseGet(() -> {
+                    queryCriteria.setValue(value);
+                    queryCriteria.setOp(QueryOperatorEnum.EQUALS);
+                    return queryCriteria;
+                });
     }
 }
