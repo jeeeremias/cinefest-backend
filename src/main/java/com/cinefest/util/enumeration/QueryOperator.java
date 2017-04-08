@@ -2,7 +2,7 @@ package com.cinefest.util.enumeration;
 
 import java.util.Arrays;
 
-public enum QueryOperatorEnum {
+public enum QueryOperator {
 
     GREATER(">"),
     LESS("<"),
@@ -11,12 +11,12 @@ public enum QueryOperatorEnum {
 
     public final String op;
 
-    QueryOperatorEnum(String op) {
+    QueryOperator(String op) {
         this.op = op;
     }
 
-    public static QueryOperatorEnum fromOp(char op) {
-        return Arrays.stream(QueryOperatorEnum.values())
+    public static QueryOperator fromOp(char op) {
+        return Arrays.stream(QueryOperator.values())
                 .filter(e -> e.op.equals(op))
                 .findFirst()
                 .orElse(null);

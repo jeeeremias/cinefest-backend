@@ -1,6 +1,6 @@
 package com.cinefest.entity;
 
-import com.cinefest.util.enumeration.MovieTypeEnum;
+import com.cinefest.util.enumeration.MovieType;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -21,7 +21,7 @@ public class MovieEntity implements Serializable {
 	private Long id;
 	
 	@Column
-	private MovieTypeEnum type;
+	private MovieType type;
 	
 	@Column
 	private String name;
@@ -69,11 +69,11 @@ public class MovieEntity implements Serializable {
 		super();
 	}
 
-	public MovieEntity(Long id, MovieTypeEnum type, String nome, String city,
-					   String state, LocalDate incomeDate, String genre, String runtime,
-					   LocalDateTime screeningDateTime, String director,
-					   String shortSynopsis, String fullSynopsis,
-					   String directorBiography, String directorEmail) {
+	public MovieEntity(Long id, MovieType type, String nome, String city,
+                       String state, LocalDate incomeDate, String genre, String runtime,
+                       LocalDateTime screeningDateTime, String director,
+                       String shortSynopsis, String fullSynopsis,
+                       String directorBiography, String directorEmail) {
 		super();
 		this.id = id;
 		this.type = type;
@@ -99,11 +99,11 @@ public class MovieEntity implements Serializable {
 		this.id = id;
 	}
 
-	public MovieTypeEnum getType() {
+	public MovieType getType() {
 		return type;
 	}
 
-	public void setType(MovieTypeEnum type) {
+	public void setType(MovieType type) {
 		this.type = type;
 	}
 

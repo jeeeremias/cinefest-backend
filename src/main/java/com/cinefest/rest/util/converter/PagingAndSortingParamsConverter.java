@@ -1,7 +1,6 @@
 package com.cinefest.rest.util.converter;
 
 import com.cinefest.pojo.params.PagingAndSortingParams;
-import com.cinefest.pojo.params.QueryParams;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -23,10 +22,6 @@ public class PagingAndSortingParamsConverter {
         pagingAndSortingParams.setPage(getNaturalAttr(params, GENERIC_PARAMS[0], defaultPage));
         pagingAndSortingParams.setSize(getNaturalAttr(params, GENERIC_PARAMS[1], defaultSize));
         pagingAndSortingParams.setSort(getListAttr(params, GENERIC_PARAMS[2]));
-
-        for (String value : GENERIC_PARAMS) {
-            params.remove(value);
-        }
 
         return pagingAndSortingParams;
     }

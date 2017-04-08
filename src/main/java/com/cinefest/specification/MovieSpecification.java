@@ -1,9 +1,11 @@
 package com.cinefest.specification;
 
 import com.cinefest.entity.MovieEntity;
-import com.cinefest.pojo.criteria.SearchCriteria;
 import com.cinefest.pojo.params.QueryCriteria;
-import com.cinefest.util.enumeration.QueryOperatorEnum;
+import com.cinefest.util.converter.ParamConverter;
+import com.cinefest.util.enumeration.MovieAttr;
+import com.cinefest.util.enumeration.MovieType;
+import com.cinefest.util.enumeration.ParamType;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -13,26 +15,66 @@ import javax.persistence.criteria.Root;
 
 public class MovieSpecification implements Specification<MovieEntity> {
 
-    private QueryCriteria queryCriteria;
+    private QueryCriteria criteria;
 
-    public MovieSpecification(QueryCriteria queryCriteria) {
-        this.queryCriteria = queryCriteria;
+    public MovieSpecification(QueryCriteria criteria) {
+        this.criteria = criteria;
     }
 
     @Override
-    public Predicate toPredicate(Root<MovieEntity> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-        if (QueryOperatorEnum.GREATER.equals(queryCriteria.getOp())) {
-            return criteriaBuilder.great;
+    public Predicate toPredicate(Root<MovieEntity> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+        switch (criteria.getOp()) {
+            case EQUALS:
+                return getEqualPredicate(root, builder);
+
+            case LIKE:
+                return getLikePredicate(root, builder);
+
+            case GREATER:
+                return getGreaterPredicate(root, builder);
+
+            case LESS:
+                return getLessPredicate(root, builder);
         }
-        if (criteria.getValue().startsWith("<")) {
-            return criteriaBuilder.lessThanOrEqualTo(
-                    root.get(criteria.getKey()), criteria.getValue());
+        return null;
+    }
+
+    private Predicate getEqualPredicate(Root<MovieEntity> root, CriteriaBuilder builder) {
+        if (ParamType.STRING.equals(criteria.getOp())) {
+            return builder.equal(
+                    root.get(criteria.getKey().entityAttr), criteria.getValue());
         }
-        if (criteria.getValue().startsWith(":")) {
-            return criteriaBuilder.equal(
-                    root.get(queryCriteria.getKey()), queryCriteria.getValue());
+        if (ParamType.CUSTOM.equals(criteria.getOp()) && MovieAttr.TYPE.equals(criteria.getOp())) {
+                return builder.greaterThanOrEqualTo(
+                        root.get(criteria.getKey().entityAttr), MovieType.fromDesc(criteria.getValue()));
         }
-        return criteriaBuilder.like(
-                root.get(queryCriteria.getKey()), "%" + queryCriteria.getValue() + "%");
+        return null;
+    }
+
+    private Predicate getLikePredicate(Root<MovieEntity> root, CriteriaBuilder builder) {
+        if (ParamType.STRING.equals(criteria.getOp())) {
+            return builder.like(root.get(criteria.getKey().entityAttr), "%" + criteria.getValue() + "%");
+        }
+        return null;
+    }
+
+    private Predicate getGreaterPredicate(Root<MovieEntity> root, CriteriaBuilder builder) {
+        if (ParamType.DATE.equals(criteria.getKey().type)) {
+            return builder.greaterThanOrEqualTo(
+                    root.get(criteria.getKey().entityAttr), ParamConverter.toDate(criteria.getValue()));
+        }
+        return null;
+    }
+
+    private Predicate getLessPredicate(Root<MovieEntity> root, CriteriaBuilder builder) {
+        if (ParamType.DATE.equals(criteria.getKey().type)) {
+            return builder.greaterThanOrEqualTo(
+                    root.get(criteria.getKey().entityAttr), ParamConverter.toDate(criteria.getValue()));
+        }
+        if (ParamType.CUSTOM.equals(criteria.getOp()) && MovieAttr.TYPE.equals(criteria.getOp())) {
+                return builder.greaterThanOrEqualTo(
+                        root.get(criteria.getKey().entityAttr), MovieType.fromDesc(criteria.getValue()));
+        }
+        return null;
     }
 }

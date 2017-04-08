@@ -2,7 +2,7 @@ package com.cinefest.util.enumeration;
 
 import java.util.Arrays;
 
-public enum MovieTypeEnum {
+public enum MovieType {
 
     NACIONAL("Nacional"),
     REGIONAL("Regional"),
@@ -12,12 +12,12 @@ public enum MovieTypeEnum {
 
     public final String desc;
 
-    MovieTypeEnum(String desc) {
+    MovieType(String desc) {
         this.desc = desc;
     }
 
-    public static MovieTypeEnum fromDesc(String desc) {
-        return Arrays.stream(MovieTypeEnum.values())
+    public static MovieType fromDesc(String desc) {
+        return Arrays.stream(MovieType.values())
                 .filter(e -> e.desc.equals(desc))
                 .findFirst()
                 .orElse(null);

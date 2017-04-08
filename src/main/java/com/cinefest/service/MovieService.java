@@ -4,7 +4,7 @@ import com.cinefest.entity.MovieEntity;
 import com.cinefest.pojo.dto.MovieDTO;
 import com.cinefest.pojo.params.PagingAndSortingParams;
 import com.cinefest.pojo.params.QueryCriteria;
-import com.cinefest.pojo.params.QueryParams;
+import com.cinefest.pojo.params.SearchCriteria;
 import com.cinefest.repository.MovieRepository;
 import com.cinefest.repository.VoteRepository;
 import com.cinefest.specification.MovieSpecification;
@@ -29,9 +29,9 @@ public class MovieService {
     @Autowired
     VoteRepository voteRespository;
 
-    public List<MovieEntity> getAll(QueryParams queryParams) {
-        PageRequest pageRequest = createPageRequest(queryParams.getPagingAndSortingParams());
-        Specifications specifications = createSpecifications(queryParams.getCriterias());
+    public List<MovieEntity> getAll(SearchCriteria searchCriteria) {
+        PageRequest pageRequest = createPageRequest(searchCriteria.getPagingAndSortingParams());
+        Specifications specifications = createSpecifications(searchCriteria.getCriterias());
         return movieRespository.findAll(specifications, pageRequest).getContent();
     }
 

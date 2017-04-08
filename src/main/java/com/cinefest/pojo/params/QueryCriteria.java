@@ -1,26 +1,27 @@
 package com.cinefest.pojo.params;
 
-import com.cinefest.util.enumeration.QueryOperatorEnum;
+import com.cinefest.util.enumeration.MovieAttr;
+import com.cinefest.util.enumeration.QueryOperator;
 
 public class QueryCriteria {
 
-    String key;
-    QueryOperatorEnum op;
+    MovieAttr key;
+    QueryOperator op;
     String value;
 
-    public String getKey() {
+    public MovieAttr getKey() {
         return key;
     }
 
-    public void setKey(String key) {
+    public void setKey(MovieAttr key) {
         this.key = key;
     }
 
-    public QueryOperatorEnum getOp() {
+    public QueryOperator getOp() {
         return op;
     }
 
-    public void setOp(QueryOperatorEnum op) {
+    public void setOp(QueryOperator op) {
         this.op = op;
     }
 
