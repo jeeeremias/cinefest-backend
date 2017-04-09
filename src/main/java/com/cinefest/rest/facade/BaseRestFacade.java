@@ -14,9 +14,5 @@ public abstract class BaseRestFacade<T> {
 
     protected abstract SearchCriteria toQueryParams(Map<String, String> params);
 
-    protected abstract boolean isSortableParam(String param);
-
-    protected abstract boolean isSearchableParam(String param);
-
     public abstract List<T> getAll(Map<String, String> params);
 }

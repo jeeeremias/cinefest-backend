@@ -41,7 +41,7 @@ public class MovieRestFacade extends BaseRestFacade<MovieEntity> {
                         return;
                     if (!attrEnum.searchable)
                         return;
-                    QueryCriteria criteria = createCriteria(attrEnum, e.getValue());
+                    QueryCriteria criteria = createCriteria(e.getValue());
                     criteria.setKey(attrEnum);
                     searchCriteria.addSpecification(new MovieSpecification(criteria));
                 });
@@ -49,29 +49,7 @@ public class MovieRestFacade extends BaseRestFacade<MovieEntity> {
         return searchCriteria;
     }
 
-    @Override
-    protected boolean isSortableParam(String param) {
-        MovieAttr e = MovieAttr.fromQueryAttr(param);
-        if (e != null) {
-            return e.sortable;
-        }
-        return false;
-    }
-
-    @Override
-    protected boolean isSearchableParam(String param) {
-        MovieAttr e = MovieAttr.fromQueryAttr(param);
-        if (e != null) {
-            return e.searchable;
-        }
-        return false;
-    }
-
-    private Date toDate(String date) {
-        return new Date();
-    }
-
-    private QueryCriteria createCriteria(MovieAttr attrEnum, String value) {
+    private QueryCriteria createCriteria(String value) {
         QueryCriteria queryCriteria = new QueryCriteria();
 
         return Arrays.stream(QueryOperator.values())

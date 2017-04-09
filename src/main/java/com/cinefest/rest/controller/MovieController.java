@@ -24,18 +24,15 @@ class MovieController {
 	static final String ID_PARAM = "/{id}";
 
     @Autowired
-	MovieRestFacade movieRestService;
+	MovieRestFacade movieRestFacade;
 
     @Autowired
 	MovieService movieService;
 
-    @Autowired
-    PagingAndSortingParamsConverter paramsConverter;
-
 	@RequestMapping(method = RequestMethod.GET, value = ENTITY_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Iterable<MovieEntity> getMovies(@RequestParam(required = false) Map<String, String> params) {
-		return movieRestService.getAll(params);
+		return movieRestFacade.getAll(params);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = ENTITY_NAME + ID_PARAM, produces = MediaType.APPLICATION_JSON_VALUE)
