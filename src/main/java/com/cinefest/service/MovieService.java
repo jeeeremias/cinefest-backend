@@ -12,6 +12,7 @@ import com.cinefest.util.converter.MovieConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +32,7 @@ public class MovieService {
 
     public List<MovieEntity> getAll(SearchCriteria searchCriteria) {
         PageRequest pageRequest = createPageRequest(searchCriteria.getPagingAndSortingParams());
-        Specifications specifications = createSpecifications(searchCriteria.getCriterias());
+        Specifications specifications = createSpecifications(searchCriteria.getSpecifications());
         return movieRespository.findAll(specifications, pageRequest).getContent();
     }
 
@@ -100,11 +101,14 @@ public class MovieService {
         return pageRequest;
     }
 
-    private Specifications createSpecifications(List<QueryCriteria> criterias) {
+    private Specifications createSpecifications(List<Specification> specs) {
         Specifications specifications = null;
-        MovieSpecification movieSpecification;
-        for (QueryCriteria criteria : criterias) {
-
+        for (Specification spec : specs) {
+            if (specifications == null) {
+                specifications = Specifications.where(spec);
+            } else {
+                specifications.and(spec);
+            }
         }
 
         return specifications;
