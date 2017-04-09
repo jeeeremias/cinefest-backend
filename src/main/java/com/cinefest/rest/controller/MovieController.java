@@ -31,14 +31,14 @@ class MovieController {
 
 	@RequestMapping(method = RequestMethod.GET, value = ENTITY_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Iterable<MovieEntity> getMovies(@RequestParam(required = false) Map<String, String> params) {
+	public Iterable<MovieDTO> getMovies(@RequestParam(required = false) Map<String, String> params) {
 		return movieRestFacade.getAll(params);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = ENTITY_NAME + ID_PARAM, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public MovieEntity getMovie(@PathParam("id") long id) {
-		return movieService.getOne(id);
+	public MovieDTO getMovie(@PathParam("id") long id) {
+		return movieRestFacade.getOne(id);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = ENTITY_NAME, produces = MediaType.APPLICATION_JSON_VALUE)

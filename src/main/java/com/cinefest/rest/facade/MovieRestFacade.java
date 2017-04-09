@@ -1,10 +1,12 @@
 package com.cinefest.rest.facade;
 
 import com.cinefest.entity.MovieEntity;
+import com.cinefest.pojo.dto.MovieDTO;
 import com.cinefest.pojo.params.QueryCriteria;
 import com.cinefest.pojo.params.SearchCriteria;
 import com.cinefest.service.MovieService;
 import com.cinefest.specification.MovieSpecification;
+import com.cinefest.util.converter.MovieConverter;
 import com.cinefest.util.enumeration.MovieAttr;
 import com.cinefest.util.enumeration.QueryOperator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,20 +19,20 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class MovieRestFacade extends BaseRestFacade<MovieEntity> {
+public class MovieRestFacade extends BaseRestFacade<MovieDTO> {
 
 	@Autowired
     MovieService movieService;
 
     @Override
-	public List<MovieEntity> getAll(Map<String, String> params) {
+	public List<MovieDTO> getAll(Map<String, String> params) {
 	    SearchCriteria searchCriteria = toQueryParams(params);
-		return movieService.getAll(searchCriteria);
+		return MovieConverter.entitiesToDtos(movieService.getAll(searchCriteria));
 	}
 
     @Override
-    public MovieEntity getOne(Long id) {
-        return movieService.getOne(id);
+    public MovieDTO getOne(Long id) {
+        return MovieConverter.entityToDto(movieService.getOne(id));
     }
 
     @Override
