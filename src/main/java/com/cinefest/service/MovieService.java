@@ -48,12 +48,8 @@ public class MovieService {
         return movieEntities;
     }
 
-    public MovieEntity getOne(Integer id) {
+    public MovieEntity getOne(long id) {
         return movieRespository.findOne(id);
-    }
-
-    public boolean exist(Integer id) {
-        return movieRespository.exists(id);
     }
 
     public String votos(String dia) {

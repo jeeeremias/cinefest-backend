@@ -10,6 +10,6 @@ import org.springframework.data.repository.Repository;
 
 import java.util.List;
 
-public interface MovieRepository extends JpaRepository<MovieEntity, Integer>, JpaSpecificationExecutor<MovieEntity> {
+public interface MovieRepository extends JpaRepository<MovieEntity, Long>, JpaSpecificationExecutor<MovieEntity> {
 	List<MovieEntity> findByscreeningDateTime(String screeningDateTime, Sort sort);
 }

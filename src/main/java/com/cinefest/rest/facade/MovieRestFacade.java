@@ -29,6 +29,11 @@ public class MovieRestFacade extends BaseRestFacade<MovieEntity> {
 	}
 
     @Override
+    public MovieEntity getOne(Long id) {
+        return movieService.getOne(id);
+    }
+
+    @Override
     protected SearchCriteria toQueryParams(Map<String, String> params) {
         SearchCriteria searchCriteria = new SearchCriteria();
         searchCriteria.setPagingAndSortingParams(pagingAndSortingParamsConverter.convertToQueryParam(params));

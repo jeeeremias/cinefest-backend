@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
 public class MovieEntity implements Serializable {
 	
 	@Id
-	private Long id;
+	private long id;
 	
 	@Column
 	private MovieType type;
@@ -91,11 +91,11 @@ public class MovieEntity implements Serializable {
 		this.directorEmail = directorEmail;
 	}
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

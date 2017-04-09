@@ -15,4 +15,6 @@ public abstract class BaseRestFacade<T> {
     protected abstract SearchCriteria toQueryParams(Map<String, String> params);
 
     public abstract List<T> getAll(Map<String, String> params);
+
+    public abstract T getOne(Long id);
 }

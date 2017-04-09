@@ -37,7 +37,7 @@ class MovieController {
 
 	@RequestMapping(method = RequestMethod.GET, value = ENTITY_NAME + ID_PARAM, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public MovieEntity getMovie(@PathParam("id") int id) {
+	public MovieEntity getMovie(@PathParam("id") long id) {
 		return movieService.getOne(id);
 	}
 
