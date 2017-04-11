@@ -40,7 +40,7 @@ public class MockService {
                 shortDesc = filmeString[11];
             }
 
-            movieEntity = new MovieEntity(Long.valueOf(filmeString[0]), MovieType.valueOf(filmeString[1]), filmeString[2],
+            movieEntity = new MovieEntity(Long.valueOf(filmeString[0]), MovieType.fromDesc(filmeString[1]), filmeString[2],
                     filmeString[3], filmeString[4], LocalDate.now(), filmeString[6], filmeString[7], LocalDateTime.now(),
                     filmeString[10], shortDesc, filmeString[11], filmeString[12], filmeString[13]);
             imagens = new ArrayList<PhotoEntity>();
