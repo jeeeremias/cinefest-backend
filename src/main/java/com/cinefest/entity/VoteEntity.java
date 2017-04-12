@@ -18,13 +18,13 @@ public class VoteEntity implements Serializable {
 
 	@Id
 	@GeneratedValue
-	private Long id;
+	private long id;
 
 	@Column
 	private LocalDateTime dateTime;
 
 	@Transient
-	private Integer movieId;
+	private long movieId;
 
 	@ManyToOne
 	@JoinColumn(name = "movieId")
@@ -35,11 +35,11 @@ public class VoteEntity implements Serializable {
 		super();
 	}
 	
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -59,11 +59,11 @@ public class VoteEntity implements Serializable {
 		this.movie = movie;
 	}
 
-	public Integer getMovieId() {
+	public long getMovieId() {
 		return movieId;
 	}
 
-	public void setMovieId(Integer movieId) {
+	public void setMovieId(long movieId) {
 		this.movieId = movieId;
 	}
 }
