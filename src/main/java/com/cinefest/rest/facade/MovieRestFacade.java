@@ -41,14 +41,15 @@ public class MovieRestFacade {
         SearchCriteria searchCriteria = new SearchCriteria();
         searchCriteria.setPagingAndSortingParams(pagingAndSortingParamsConverter.convertToQueryParam(params));
 
-        params
-                .entrySet()
+        params.entrySet()
                 .forEach(e -> {
                     MovieAttr attrEnum = MovieAttr.fromQueryAttr(e.getKey());
-                    if (attrEnum == null)
+                    if (attrEnum == null || e.getValue() == null) {
                         return;
-                    if (!attrEnum.searchable)
+                    }
+                    if (!attrEnum.searchable) {
                         return;
+                    }
                     QueryCriteria criteria = createCriteria(e.getValue());
                     criteria.setKey(attrEnum);
                     searchCriteria.addSpecification(new MovieSpecification(criteria));

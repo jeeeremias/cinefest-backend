@@ -10,18 +10,19 @@ import java.util.Map;
 @Component
 public class PagingAndSortingParamsConverter {
 
-    static final String[] GENERIC_PARAMS = {
-            "page", "size", "sort"
-    };
+    static final String PAGE_PARAM = "page";
+    static final String SIZE_PARAM = "size";
+    static final String SORT_PARAM = "sort";
+
     final int defaultPage = 0;
     final int defaultSize = 100;
 
     public PagingAndSortingParams convertToQueryParam(Map<String, String> params) {
         PagingAndSortingParams pagingAndSortingParams = new PagingAndSortingParams();
 
-        pagingAndSortingParams.setPage(getNaturalAttr(params, GENERIC_PARAMS[0], defaultPage));
-        pagingAndSortingParams.setSize(getNaturalAttr(params, GENERIC_PARAMS[1], defaultSize));
-        pagingAndSortingParams.setSort(getListAttr(params, GENERIC_PARAMS[2]));
+        pagingAndSortingParams.setPage(getNaturalAttr(params, PAGE_PARAM, defaultPage));
+        pagingAndSortingParams.setSize(getNaturalAttr(params, SIZE_PARAM, defaultSize));
+        pagingAndSortingParams.setSort(getListAttr(params, SORT_PARAM));
 
         return pagingAndSortingParams;
     }
