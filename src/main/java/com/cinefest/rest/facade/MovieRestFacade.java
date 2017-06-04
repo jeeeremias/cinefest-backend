@@ -30,11 +30,11 @@ public class MovieRestFacade {
         if (params != null) {
             searchCriteria = toQueryParams(params);
         }
-		return MovieConverter.entitiesToDtos(movieService.getAll(searchCriteria));
+		return MovieConverter.vosToDtos(movieService.getAll(searchCriteria));
 	}
 
     public MovieDTO getOne(Long id) {
-        return MovieConverter.entityToDto(movieService.getOne(id));
+        return MovieConverter.voToDto(movieService.getOne(id));
     }
 
     private SearchCriteria toQueryParams(Map<String, String> params) {

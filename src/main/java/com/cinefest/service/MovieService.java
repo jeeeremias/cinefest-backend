@@ -3,11 +3,10 @@ package com.cinefest.service;
 import com.cinefest.entity.MovieEntity;
 import com.cinefest.pojo.dto.MovieDTO;
 import com.cinefest.pojo.params.PagingAndSortingParams;
-import com.cinefest.pojo.params.QueryCriteria;
 import com.cinefest.pojo.params.SearchCriteria;
+import com.cinefest.pojo.vo.MovieVO;
 import com.cinefest.repository.MovieRepository;
 import com.cinefest.repository.VoteRepository;
-import com.cinefest.specification.MovieSpecification;
 import com.cinefest.util.converter.MovieConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -30,10 +30,10 @@ public class MovieService {
     @Autowired
     VoteRepository voteRespository;
 
-    public List<MovieEntity> getAll(SearchCriteria searchCriteria) {
+    public List<MovieVO> getAll(SearchCriteria searchCriteria) {
         PageRequest pageRequest = createPageRequest(searchCriteria.getPagingAndSortingParams());
         Specifications specifications = createSpecifications(searchCriteria.getSpecifications());
-        return movieRespository.findAll(specifications, pageRequest).getContent();
+        return MovieConverter.entitiesToVos(movieRespository.findAll(specifications, pageRequest).getContent());
     }
 
     public List<MovieEntity> getByDay(String dataExibicao) {
@@ -48,8 +48,8 @@ public class MovieService {
         return movieEntities;
     }
 
-    public MovieEntity getOne(long id) {
-        return movieRespository.findOne(id);
+    public MovieVO getOne(long id) {
+        return MovieConverter.entityToVO(movieRespository.findOne(id));
     }
 
     public String votos(String dia) {
@@ -68,8 +68,8 @@ public class MovieService {
         return sb.toString();
     }
 
-    public MovieEntity newMovie(MovieDTO movieDTO) {
-        MovieEntity movieEntity = MovieConverter.dtoToEntity(movieDTO);
+    public MovieEntity newMovie(MovieVO movieVO) {
+        MovieEntity movieEntity = MovieConverter.voToEntity(movieVO);
         return save(movieEntity);
     }
 
