@@ -1,7 +1,7 @@
 package com.cinefest.rest.facade;
 
 import com.cinefest.pojo.dto.MovieDTO;
-import com.cinefest.pojo.params.QueryCriteria;
+import com.cinefest.pojo.params.MovieQueryCriteria;
 import com.cinefest.pojo.params.SearchCriteria;
 import com.cinefest.rest.util.converter.PagingAndSortingParamsConverter;
 import com.cinefest.service.MovieService;
@@ -50,7 +50,7 @@ public class MovieRestFacade {
                     if (!attrEnum.searchable) {
                         return;
                     }
-                    QueryCriteria criteria = createCriteria(e.getValue());
+                    MovieQueryCriteria criteria = createCriteria(e.getValue());
                     criteria.setKey(attrEnum);
                     searchCriteria.addSpecification(new MovieSpecification(criteria));
                 });
@@ -58,21 +58,21 @@ public class MovieRestFacade {
         return searchCriteria;
     }
 
-    private QueryCriteria createCriteria(String value) {
-        QueryCriteria queryCriteria = new QueryCriteria();
+    private MovieQueryCriteria createCriteria(String value) {
+        MovieQueryCriteria movieQueryCriteria = new MovieQueryCriteria();
 
         return Arrays.stream(QueryOperator.values())
                 .filter(e -> value.startsWith(e.op))
                 .map(e -> {
-                    queryCriteria.setValue(value.substring(1));
-                    queryCriteria.setOp(e);
-                    return queryCriteria;
+                    movieQueryCriteria.setValue(value.substring(1));
+                    movieQueryCriteria.setOp(e);
+                    return movieQueryCriteria;
                 })
                 .findFirst()
                 .orElseGet(() -> {
-                    queryCriteria.setValue(value);
-                    queryCriteria.setOp(QueryOperator.EQUALS);
-                    return queryCriteria;
+                    movieQueryCriteria.setValue(value);
+                    movieQueryCriteria.setOp(QueryOperator.EQUALS);
+                    return movieQueryCriteria;
                 });
     }
 }

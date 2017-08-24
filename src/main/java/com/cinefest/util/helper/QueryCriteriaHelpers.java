@@ -1,14 +1,14 @@
 package com.cinefest.util.helper;
 
-import com.cinefest.pojo.params.QueryCriteria;
+import com.cinefest.pojo.params.MovieQueryCriteria;
 import com.cinefest.util.enumeration.QueryOperator;
 
 import java.util.Arrays;
 
 public class QueryCriteriaHelpers {
 
-    public static QueryCriteria createCriteriaFromValue(String value) {
-        QueryCriteria criteria = new QueryCriteria();
+    public static MovieQueryCriteria createCriteriaFromValue(String value) {
+        MovieQueryCriteria criteria = new MovieQueryCriteria();
         Arrays.stream(QueryOperator.values())
                 .filter(e -> value.startsWith(e.op))
                 .map(e -> {

@@ -3,7 +3,7 @@ package com.cinefest.pojo.params;
 import com.cinefest.util.enumeration.MovieAttr;
 import com.cinefest.util.enumeration.QueryOperator;
 
-public class QueryCriteria {
+public class MovieQueryCriteria {
 
     MovieAttr key;
     QueryOperator op;

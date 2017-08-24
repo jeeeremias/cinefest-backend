@@ -1,7 +1,7 @@
 package com.cinefest.specification;
 
 import com.cinefest.entity.MovieEntity;
-import com.cinefest.pojo.params.QueryCriteria;
+import com.cinefest.pojo.params.MovieQueryCriteria;
 import com.cinefest.util.converter.ParamConverter;
 import com.cinefest.util.enumeration.MovieAttr;
 import com.cinefest.util.enumeration.MovieType;
@@ -15,9 +15,9 @@ import javax.persistence.criteria.Root;
 
 public class MovieSpecification implements Specification<MovieEntity> {
 
-    private QueryCriteria criteria;
+    private MovieQueryCriteria criteria;
 
-    public MovieSpecification(QueryCriteria criteria) {
+    public MovieSpecification(MovieQueryCriteria criteria) {
         this.criteria = criteria;
     }
 

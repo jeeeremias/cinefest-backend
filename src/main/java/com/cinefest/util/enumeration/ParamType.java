@@ -5,5 +5,5 @@ public enum ParamType {
     STRING,
     DATE,
     LONG,
-    CUSTOM;
+    CUSTOM
 }
