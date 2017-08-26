@@ -45,7 +45,7 @@ public class MovieSpecification implements Specification<MovieEntity> {
                     root.get(criteria.getKey().entityAttr), criteria.getValue());
         }
         if (ParamType.CUSTOM.equals(criteria.getOp()) && MovieAttr.TYPE.equals(criteria.getOp())) {
-                return builder.greaterThanOrEqualTo(
+                return builder.equal(
                         root.get(criteria.getKey().entityAttr), MovieType.fromDesc(criteria.getValue()));
         }
         return null;
