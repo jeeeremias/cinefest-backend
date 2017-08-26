@@ -5,32 +5,32 @@ import com.cinefest.util.enumeration.QueryOperator;
 
 public class MovieQueryCriteria {
 
-    MovieAttr key;
-    QueryOperator op;
-    String value;
+  MovieAttr key;
+  QueryOperator op;
+  String value;
 
-    public MovieAttr getKey() {
-        return key;
-    }
+  public MovieAttr getKey() {
+    return key;
+  }
 
-    public void setKey(MovieAttr key) {
-        this.key = key;
-    }
+  public void setKey(MovieAttr key) {
+    this.key = key;
+  }
 
-    public QueryOperator getOp() {
-        return op;
-    }
+  public QueryOperator getOp() {
+    return op;
+  }
 
-    public void setOp(QueryOperator op) {
-        this.op = op;
-    }
+  public void setOp(QueryOperator op) {
+    this.op = op;
+  }
 
-    public String getValue() {
-        return value;
-    }
+  public String getValue() {
+    return value;
+  }
 
-    public void setValue(String value) {
-        this.value = value;
-    }
+  public void setValue(String value) {
+    this.value = value;
+  }
 
 }

@@ -23,42 +23,42 @@ import static com.cinefest.util.EndpointsUrl.MOVIE_BY_ID;
 @RestController
 class MovieController {
 
-    @Autowired
-	MovieRestFacade movieRestFacade;
+  @Autowired
+  MovieRestFacade movieRestFacade;
 
-    @Autowired
-	MovieService movieService;
+  @Autowired
+  MovieService movieService;
 
-	@RequestMapping(method = RequestMethod.GET, value = MOVIES, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public Iterable<MovieDTO> getMovies(@RequestParam(required = false) Map<String, String> params) {
-		return movieRestFacade.getAll(params);
-	}
+  @RequestMapping(method = RequestMethod.GET, value = MOVIES, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public Iterable<MovieDTO> getMovies(@RequestParam(required = false) Map<String, String> params) {
+    return movieRestFacade.getAll(params);
+  }
 
-	@RequestMapping(method = RequestMethod.GET, value = MOVIE_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public MovieDTO getMovie(@PathParam("id") long id) {
-		return movieRestFacade.getOne(id);
-	}
+  @RequestMapping(method = RequestMethod.GET, value = MOVIE_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public MovieDTO getMovie(@PathParam("id") long id) {
+    return movieRestFacade.getOne(id);
+  }
 
-	@RequestMapping(method = RequestMethod.POST, value = MOVIES, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	public void newMovie(@RequestBody MovieDTO movie, HttpServletResponse response, UriComponentsBuilder b) {
-		MovieEntity movieEntity = movieService.newMovie(MovieConverter.dtoToVO(movie));
-        UriComponents uriComponents = b.path(MOVIE_BY_ID).buildAndExpand(movieEntity.getId());
-		response.addHeader("Location", uriComponents.toUriString());
-	}
+  @RequestMapping(method = RequestMethod.POST, value = MOVIES, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseStatus(code = HttpStatus.NO_CONTENT)
+  public void newMovie(@RequestBody MovieDTO movie, HttpServletResponse response, UriComponentsBuilder b) {
+    MovieEntity movieEntity = movieService.newMovie(MovieConverter.dtoToVO(movie));
+    UriComponents uriComponents = b.path(MOVIE_BY_ID).buildAndExpand(movieEntity.getId());
+    response.addHeader("Location", uriComponents.toUriString());
+  }
 
-	@RequestMapping(method = RequestMethod.PUT, value = MOVIE_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public MovieEntity uptadeMovie(@PathParam("id") long id, @RequestBody MovieDTO movie) {
-		return movieService.save(null);
-	}
+  @RequestMapping(method = RequestMethod.PUT, value = MOVIE_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public MovieEntity uptadeMovie(@PathParam("id") long id, @RequestBody MovieDTO movie) {
+    return movieService.save(null);
+  }
 
-	@RequestMapping(method = RequestMethod.DELETE, value = MOVIE_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public MovieEntity deleteMovie(@PathParam("id") long id, @RequestBody MovieDTO movie) {
-		throw new NotImplementedException();
-	}
+  @RequestMapping(method = RequestMethod.DELETE, value = MOVIE_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public MovieEntity deleteMovie(@PathParam("id") long id, @RequestBody MovieDTO movie) {
+    throw new NotImplementedException();
+  }
 
 }

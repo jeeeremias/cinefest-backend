@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class ParamConverter {
 
-    public static Date toDate(String date) {
-        return new Date();
-    }
+  public static Date toDate(String date) {
+    return new Date();
+  }
 }

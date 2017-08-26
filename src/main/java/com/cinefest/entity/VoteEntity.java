@@ -1,69 +1,62 @@
 package com.cinefest.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class VoteEntity implements Serializable {
 
-	@Id
-	@GeneratedValue
-	private long id;
+  @Id
+  @GeneratedValue
+  private long id;
 
-	@Column
-	private LocalDateTime dateTime;
+  @Column
+  private LocalDateTime dateTime;
 
-	@Transient
-	private long movieId;
+  @Transient
+  private long movieId;
 
-	@ManyToOne
-	@JoinColumn(name = "movieId")
-	@JsonIgnore
-	private MovieEntity movie;
+  @ManyToOne
+  @JoinColumn(name = "movieId")
+  @JsonIgnore
+  private MovieEntity movie;
 
-	public VoteEntity() {
-		super();
-	}
-	
-	public long getId() {
-		return id;
-	}
+  public VoteEntity() {
+    super();
+  }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+  public long getId() {
+    return id;
+  }
 
-	public LocalDateTime getDateTime() {
-		return dateTime;
-	}
+  public void setId(long id) {
+    this.id = id;
+  }
 
-	public void setDateTime(LocalDateTime dateTime) {
-		this.dateTime = dateTime;
-	}
+  public LocalDateTime getDateTime() {
+    return dateTime;
+  }
 
-	public MovieEntity getMovie() {
-		return movie;
-	}
+  public void setDateTime(LocalDateTime dateTime) {
+    this.dateTime = dateTime;
+  }
 
-	public void setMovie(MovieEntity movie) {
-		this.movie = movie;
-	}
+  public MovieEntity getMovie() {
+    return movie;
+  }
 
-	public long getMovieId() {
-		return movieId;
-	}
+  public void setMovie(MovieEntity movie) {
+    this.movie = movie;
+  }
 
-	public void setMovieId(long movieId) {
-		this.movieId = movieId;
-	}
+  public long getMovieId() {
+    return movieId;
+  }
+
+  public void setMovieId(long movieId) {
+    this.movieId = movieId;
+  }
 }

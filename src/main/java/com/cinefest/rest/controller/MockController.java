@@ -15,13 +15,13 @@ import java.util.List;
 @RestController
 public class MockController {
 
-    @Autowired
-    MockService mockService;
+  @Autowired
+  MockService mockService;
 
-    @RequestMapping(value = "/init", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    @ResponseBody
-    public List<MovieEntity> init() throws IOException {
+  @RequestMapping(value = "/init", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+  @ResponseBody
+  public List<MovieEntity> init() throws IOException {
 
-        return mockService.iniciar();
-    }
+    return mockService.iniciar();
+  }
 }

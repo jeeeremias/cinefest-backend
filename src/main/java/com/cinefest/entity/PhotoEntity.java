@@ -1,75 +1,69 @@
 package com.cinefest.entity;
 
-import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 public class PhotoEntity implements Serializable {
 
-	@Id
-	@GeneratedValue
-	private Long id;
-	
-	@Column
-	private String source;
+  @Id
+  @GeneratedValue
+  private Long id;
 
-	@Column
-	private boolean main;
-	
-	@ManyToOne
-	@JoinColumn(name = "idMovie")
-	@JsonIgnore
-	private MovieEntity movie;
+  @Column
+  private String source;
 
-	public PhotoEntity() {
-		super();
-	}
+  @Column
+  private boolean main;
 
-	public PhotoEntity(String source, boolean main, MovieEntity movie) {
-		super();
-		this.source = source;
-		this.main = main;
-		this.movie = movie;
-	}
-	
-	public String getSource() {
-		return source;
-	}
+  @ManyToOne
+  @JoinColumn(name = "idMovie")
+  @JsonIgnore
+  private MovieEntity movie;
 
-	public void setSource(String source) {
-		this.source = source;
-	}
-	
-	public MovieEntity getMovie() {
-		return movie;
-	}
-	
-	public void setMovie(MovieEntity movie) {
-		this.movie = movie;
-	}
-	
-	public boolean isMain() {
-		return main;
-	}
+  public PhotoEntity() {
+    super();
+  }
 
-	public void setMain(boolean main) {
-		this.main = main;
-	}
+  public PhotoEntity(String source, boolean main, MovieEntity movie) {
+    super();
+    this.source = source;
+    this.main = main;
+    this.movie = movie;
+  }
 
-	public Long getId() {
-		return id;
-	}
+  public String getSource() {
+    return source;
+  }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+  public void setSource(String source) {
+    this.source = source;
+  }
+
+  public MovieEntity getMovie() {
+    return movie;
+  }
+
+  public void setMovie(MovieEntity movie) {
+    this.movie = movie;
+  }
+
+  public boolean isMain() {
+    return main;
+  }
+
+  public void setMain(boolean main) {
+    this.main = main;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
 
 }

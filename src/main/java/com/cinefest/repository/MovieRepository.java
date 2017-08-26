@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.List;
 
 public interface MovieRepository extends JpaRepository<MovieEntity, Long>, JpaSpecificationExecutor<MovieEntity> {
-	List<MovieEntity> findByscreeningDateTime(String screeningDateTime, Sort sort);
+  List<MovieEntity> findByscreeningDateTime(String screeningDateTime, Sort sort);
 }

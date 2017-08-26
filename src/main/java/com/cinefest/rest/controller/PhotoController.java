@@ -12,13 +12,13 @@ import java.io.IOException;
 //@RestController("photo")
 public class PhotoController {
 
-    @Autowired
-    PhotoRestFacade photoRestFacade;
+  @Autowired
+  PhotoRestFacade photoRestFacade;
 
-    @RequestMapping(value = "/photo/{source}", produces = MediaType.IMAGE_JPEG_VALUE)
-    @ResponseBody
-    public byte[] getPhoto(@PathParam("source") String resource) throws IOException {
+  @RequestMapping(value = "/photo/{source}", produces = MediaType.IMAGE_JPEG_VALUE)
+  @ResponseBody
+  public byte[] getPhoto(@PathParam("source") String resource) throws IOException {
 
-        return photoRestFacade.getPhoto(resource);
-    }
+    return photoRestFacade.getPhoto(resource);
+  }
 }

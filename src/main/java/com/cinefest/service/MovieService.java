@@ -1,7 +1,6 @@
 package com.cinefest.service;
 
 import com.cinefest.entity.MovieEntity;
-import com.cinefest.pojo.dto.MovieDTO;
 import com.cinefest.pojo.params.PagingAndSortingParams;
 import com.cinefest.pojo.params.SearchCriteria;
 import com.cinefest.pojo.vo.MovieVO;
@@ -18,102 +17,101 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class MovieService {
 
-    @Autowired
-    MovieRepository movieRespository;
+  @Autowired
+  MovieRepository movieRespository;
 
-    @Autowired
-    VoteRepository voteRespository;
+  @Autowired
+  VoteRepository voteRespository;
 
-    public List<MovieVO> getAll(SearchCriteria searchCriteria) {
-        PageRequest pageRequest = createPageRequest(searchCriteria.getPagingAndSortingParams());
-        Specifications specifications = createSpecifications(searchCriteria.getSpecifications());
-        return MovieConverter.entitiesToVos(movieRespository.findAll(specifications, pageRequest).getContent());
+  public List<MovieVO> getAll(SearchCriteria searchCriteria) {
+    PageRequest pageRequest = createPageRequest(searchCriteria.getPagingAndSortingParams());
+    Specifications specifications = createSpecifications(searchCriteria.getSpecifications());
+    return MovieConverter.entitiesToVos(movieRespository.findAll(specifications, pageRequest).getContent());
+  }
+
+  public List<MovieEntity> getByDay(String dataExibicao) {
+    List<MovieEntity> movieEntities = movieRespository.findByscreeningDateTime(dataExibicao, new Sort(Sort.Direction.ASC, "name"));
+    if (dataExibicao.equals("15/02") || dataExibicao.equals("16/02") || dataExibicao.equals("17/02") || dataExibicao.equals("18/02") || dataExibicao.equals("19/02")) {
+      if (movieEntities != null) {
+        movieEntities.addAll(movieRespository.findByscreeningDateTime("15 a 19/02", new Sort(Sort.Direction.ASC, "name")));
+      } else {
+        movieEntities = movieRespository.findByscreeningDateTime("15 a 19/02", new Sort(Sort.Direction.ASC, "name"));
+      }
+    }
+    return movieEntities;
+  }
+
+  public MovieVO getOne(long id) {
+    return MovieConverter.entityToVO(movieRespository.findOne(id));
+  }
+
+  public String votos(String dia) {
+    List<MovieEntity> movieEntities = getByDay(dia);
+    StringBuilder sb = new StringBuilder("Codigo, MovieEntity, Votos, (%)\n");
+    float total = voteRespository.countByDateTime(dia);
+
+    for (MovieEntity movieEntity : movieEntities) {
+      sb.append(movieEntity.getId() + ",");
+      sb.append(movieEntity.getName() + ",");
+      sb.append(movieEntity.getVotes().size() + ",");
+      sb.append(((100.0 * movieEntity.getVotes().size()) / total) + ",");
+      sb.append("\n");
+    }
+    sb.append(",,,\n,,Total Votos," + total + "\n");
+    return sb.toString();
+  }
+
+  public MovieEntity newMovie(MovieVO movieVO) {
+    MovieEntity movieEntity = MovieConverter.voToEntity(movieVO);
+    return save(movieEntity);
+  }
+
+  public MovieEntity save(MovieEntity movieEntity) {
+    return movieRespository.save(movieEntity);
+  }
+
+
+  private PageRequest createPageRequest(PagingAndSortingParams params) {
+    Sort.Direction direction;
+    List<Sort.Order> orders = new ArrayList<>();
+    String prop;
+    for (String param : params.getSort()) {
+      if (param.startsWith("-")) {
+        direction = Sort.Direction.DESC;
+        prop = param.substring(1);
+      } else {
+        direction = Sort.Direction.ASC;
+        prop = param;
+      }
+      orders.add(new Sort.Order(direction, prop));
+    }
+    Sort sort = new Sort(orders);
+    PageRequest pageRequest = new PageRequest(params.getPage(), params.getSize(), sort);
+    return pageRequest;
+  }
+
+  private Specifications createSpecifications(List<Specification> specs) {
+    Specifications specifications = null;
+    for (Specification spec : specs) {
+      if (specifications == null) {
+        specifications = Specifications.where(spec);
+      } else {
+        specifications.and(spec);
+      }
     }
 
-    public List<MovieEntity> getByDay(String dataExibicao) {
-        List<MovieEntity> movieEntities = movieRespository.findByscreeningDateTime(dataExibicao, new Sort(Sort.Direction.ASC, "name"));
-        if (dataExibicao.equals("15/02") || dataExibicao.equals("16/02") || dataExibicao.equals("17/02") || dataExibicao.equals("18/02") || dataExibicao.equals("19/02")) {
-            if(movieEntities != null) {
-                movieEntities.addAll(movieRespository.findByscreeningDateTime("15 a 19/02", new Sort(Sort.Direction.ASC, "name")));
-            } else {
-                movieEntities = movieRespository.findByscreeningDateTime("15 a 19/02", new Sort(Sort.Direction.ASC, "name"));
-            }
-        }
-        return movieEntities;
+    return specifications;
+  }
+
+  private char getOperator(String value) {
+    if (value.startsWith(">") || value.startsWith("<") || value.startsWith(":")) {
+      return value.charAt(0);
     }
-
-    public MovieVO getOne(long id) {
-        return MovieConverter.entityToVO(movieRespository.findOne(id));
-    }
-
-    public String votos(String dia) {
-        List<MovieEntity> movieEntities = getByDay(dia);
-        StringBuilder sb = new StringBuilder("Codigo, MovieEntity, Votos, (%)\n");
-        float total = voteRespository.countByDateTime(dia);
-
-        for (MovieEntity movieEntity : movieEntities) {
-            sb.append(movieEntity.getId() + ",");
-            sb.append(movieEntity.getName() + ",");
-            sb.append(movieEntity.getVotes().size() + ",");
-            sb.append(((100.0 * movieEntity.getVotes().size()) / total) + ",");
-            sb.append("\n");
-        }
-        sb.append(",,,\n,,Total Votos," + total + "\n");
-        return sb.toString();
-    }
-
-    public MovieEntity newMovie(MovieVO movieVO) {
-        MovieEntity movieEntity = MovieConverter.voToEntity(movieVO);
-        return save(movieEntity);
-    }
-
-    public MovieEntity save(MovieEntity movieEntity) {
-        return movieRespository.save(movieEntity);
-    }
-
-
-    private PageRequest createPageRequest(PagingAndSortingParams params) {
-        Sort.Direction direction;
-        List<Sort.Order> orders = new ArrayList<>();
-        String prop;
-        for (String param : params.getSort()) {
-            if (param.startsWith("-")) {
-                direction = Sort.Direction.DESC;
-                prop = param.substring(1);
-            } else {
-                direction = Sort.Direction.ASC;
-                prop = param;
-            }
-            orders.add(new Sort.Order(direction, prop));
-        }
-        Sort sort = new Sort(orders);
-        PageRequest pageRequest = new PageRequest(params.getPage(), params.getSize(), sort);
-        return pageRequest;
-    }
-
-    private Specifications createSpecifications(List<Specification> specs) {
-        Specifications specifications = null;
-        for (Specification spec : specs) {
-            if (specifications == null) {
-                specifications = Specifications.where(spec);
-            } else {
-                specifications.and(spec);
-            }
-        }
-
-        return specifications;
-    }
-
-    private char getOperator(String value) {
-        if (value.startsWith(">") || value.startsWith("<") || value.startsWith(":")) {
-            return value.charAt(0);
-        }
-        return '=';
-    }
+    return '=';
+  }
 }

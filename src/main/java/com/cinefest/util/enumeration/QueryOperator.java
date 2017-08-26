@@ -4,21 +4,21 @@ import java.util.Arrays;
 
 public enum QueryOperator {
 
-    GREATER(">"),
-    LESS("<"),
-    EQUALS(":"),
-    LIKE("*");
+  GREATER(">"),
+  LESS("<"),
+  EQUALS(":"),
+  LIKE("*");
 
-    public final String op;
+  public final String op;
 
-    QueryOperator(String op) {
-        this.op = op;
-    }
+  QueryOperator(String op) {
+    this.op = op;
+  }
 
-    public static QueryOperator fromOp(char op) {
-        return Arrays.stream(QueryOperator.values())
-                .filter(e -> e.op.equals(op))
-                .findFirst()
-                .orElse(null);
-    }
+  public static QueryOperator fromOp(char op) {
+    return Arrays.stream(QueryOperator.values())
+      .filter(e -> e.op.equals(op))
+      .findFirst()
+      .orElse(null);
+  }
 }

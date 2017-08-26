@@ -19,60 +19,60 @@ import java.util.Map;
 @Service
 public class MovieRestFacade {
 
-	@Autowired
-    private MovieService movieService;
+  @Autowired
+  private MovieService movieService;
 
-    @Autowired
-    private PagingAndSortingParamsConverter pagingAndSortingParamsConverter;
+  @Autowired
+  private PagingAndSortingParamsConverter pagingAndSortingParamsConverter;
 
-	public List<MovieDTO> getAll(Map<String, String> params) {
-        SearchCriteria searchCriteria = null;
-        if (params != null) {
-            searchCriteria = toQueryParams(params);
+  public List<MovieDTO> getAll(Map<String, String> params) {
+    SearchCriteria searchCriteria = null;
+    if (params != null) {
+      searchCriteria = toQueryParams(params);
+    }
+    return MovieConverter.vosToDtos(movieService.getAll(searchCriteria));
+  }
+
+  public MovieDTO getOne(Long id) {
+    return MovieConverter.voToDto(movieService.getOne(id));
+  }
+
+  private SearchCriteria toQueryParams(Map<String, String> params) {
+    SearchCriteria searchCriteria = new SearchCriteria();
+    searchCriteria.setPagingAndSortingParams(pagingAndSortingParamsConverter.convertToQueryParam(params));
+
+    params.entrySet()
+      .forEach(e -> {
+        MovieAttr attrEnum = MovieAttr.fromQueryAttr(e.getKey());
+        if (attrEnum == null || e.getValue() == null) {
+          return;
         }
-		return MovieConverter.vosToDtos(movieService.getAll(searchCriteria));
-	}
+        if (!attrEnum.searchable) {
+          return;
+        }
+        MovieQueryCriteria criteria = createCriteria(e.getValue());
+        criteria.setKey(attrEnum);
+        searchCriteria.addSpecification(new MovieSpecification(criteria));
+      });
 
-    public MovieDTO getOne(Long id) {
-        return MovieConverter.voToDto(movieService.getOne(id));
-    }
+    return searchCriteria;
+  }
 
-    private SearchCriteria toQueryParams(Map<String, String> params) {
-        SearchCriteria searchCriteria = new SearchCriteria();
-        searchCriteria.setPagingAndSortingParams(pagingAndSortingParamsConverter.convertToQueryParam(params));
+  private MovieQueryCriteria createCriteria(String value) {
+    MovieQueryCriteria movieQueryCriteria = new MovieQueryCriteria();
 
-        params.entrySet()
-                .forEach(e -> {
-                    MovieAttr attrEnum = MovieAttr.fromQueryAttr(e.getKey());
-                    if (attrEnum == null || e.getValue() == null) {
-                        return;
-                    }
-                    if (!attrEnum.searchable) {
-                        return;
-                    }
-                    MovieQueryCriteria criteria = createCriteria(e.getValue());
-                    criteria.setKey(attrEnum);
-                    searchCriteria.addSpecification(new MovieSpecification(criteria));
-                });
-
-        return searchCriteria;
-    }
-
-    private MovieQueryCriteria createCriteria(String value) {
-        MovieQueryCriteria movieQueryCriteria = new MovieQueryCriteria();
-
-        return Arrays.stream(QueryOperator.values())
-                .filter(e -> value.startsWith(e.op))
-                .map(e -> {
-                    movieQueryCriteria.setValue(value.substring(1));
-                    movieQueryCriteria.setOp(e);
-                    return movieQueryCriteria;
-                })
-                .findFirst()
-                .orElseGet(() -> {
-                    movieQueryCriteria.setValue(value);
-                    movieQueryCriteria.setOp(QueryOperator.EQUALS);
-                    return movieQueryCriteria;
-                });
-    }
+    return Arrays.stream(QueryOperator.values())
+      .filter(e -> value.startsWith(e.op))
+      .map(e -> {
+        movieQueryCriteria.setValue(value.substring(1));
+        movieQueryCriteria.setOp(e);
+        return movieQueryCriteria;
+      })
+      .findFirst()
+      .orElseGet(() -> {
+        movieQueryCriteria.setValue(value);
+        movieQueryCriteria.setOp(QueryOperator.EQUALS);
+        return movieQueryCriteria;
+      });
+  }
 }
