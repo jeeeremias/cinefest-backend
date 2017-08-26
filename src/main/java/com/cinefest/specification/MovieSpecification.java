@@ -1,7 +1,7 @@
 package com.cinefest.specification;
 
 import com.cinefest.entity.MovieEntity;
-import com.cinefest.pojo.params.MovieQueryCriteria;
+import com.cinefest.pojo.params.MovieSearchElement;
 import com.cinefest.util.converter.ParamConverter;
 import com.cinefest.util.enumeration.MovieAttr;
 import com.cinefest.util.enumeration.MovieType;
@@ -15,9 +15,9 @@ import javax.persistence.criteria.Root;
 
 public class MovieSpecification implements Specification<MovieEntity> {
 
-  private MovieQueryCriteria criteria;
+  private MovieSearchElement criteria;
 
-  public MovieSpecification(MovieQueryCriteria criteria) {
+  public MovieSpecification(MovieSearchElement criteria) {
     this.criteria = criteria;
   }
 
@@ -70,10 +70,6 @@ public class MovieSpecification implements Specification<MovieEntity> {
     if (ParamType.DATE.equals(criteria.getKey().type)) {
       return builder.greaterThanOrEqualTo(
         root.get(criteria.getKey().entityAttr), ParamConverter.toDate(criteria.getValue()));
-    }
-    if (ParamType.CUSTOM.equals(criteria.getOp()) && MovieAttr.TYPE.equals(criteria.getOp())) {
-      return builder.greaterThanOrEqualTo(
-        root.get(criteria.getKey().entityAttr), MovieType.fromDesc(criteria.getValue()));
     }
     return null;
   }

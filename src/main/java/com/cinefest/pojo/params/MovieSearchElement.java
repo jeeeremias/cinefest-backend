@@ -1,14 +1,16 @@
 package com.cinefest.pojo.params;
 
+import com.cinefest.search.SearchElement;
 import com.cinefest.util.enumeration.MovieAttr;
 import com.cinefest.util.enumeration.QueryOperator;
 
-public class MovieQueryCriteria {
+public class MovieSearchElement implements SearchElement<MovieAttr> {
 
   MovieAttr key;
   QueryOperator op;
   String value;
 
+  @Override
   public MovieAttr getKey() {
     return key;
   }
@@ -17,6 +19,7 @@ public class MovieQueryCriteria {
     this.key = key;
   }
 
+  @Override
   public QueryOperator getOp() {
     return op;
   }
@@ -25,6 +28,7 @@ public class MovieQueryCriteria {
     this.op = op;
   }
 
+  @Override
   public String getValue() {
     return value;
   }

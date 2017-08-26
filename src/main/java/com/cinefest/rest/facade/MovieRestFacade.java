@@ -1,11 +1,10 @@
 package com.cinefest.rest.facade;
 
 import com.cinefest.pojo.dto.MovieDTO;
-import com.cinefest.pojo.params.MovieQueryCriteria;
+import com.cinefest.pojo.params.MovieSearchElement;
 import com.cinefest.pojo.params.SearchCriteria;
 import com.cinefest.rest.util.converter.PagingAndSortingParamsConverter;
 import com.cinefest.service.MovieService;
-import com.cinefest.specification.MovieSpecification;
 import com.cinefest.util.converter.MovieConverter;
 import com.cinefest.util.enumeration.MovieAttr;
 import com.cinefest.util.enumeration.QueryOperator;
@@ -28,7 +27,7 @@ public class MovieRestFacade {
   public List<MovieDTO> getAll(Map<String, String> params) {
     SearchCriteria searchCriteria = null;
     if (params != null) {
-      searchCriteria = toQueryParams(params);
+      searchCriteria = toMovieQuery(params);
     }
     return MovieConverter.vosToDtos(movieService.getAll(searchCriteria));
   }
@@ -37,7 +36,7 @@ public class MovieRestFacade {
     return MovieConverter.voToDto(movieService.getOne(id));
   }
 
-  private SearchCriteria toQueryParams(Map<String, String> params) {
+  private SearchCriteria toMovieQuery(Map<String, String> params) {
     SearchCriteria searchCriteria = new SearchCriteria();
     searchCriteria.setPagingAndSortingParams(pagingAndSortingParamsConverter.convertToQueryParam(params));
 
@@ -50,29 +49,29 @@ public class MovieRestFacade {
         if (!attrEnum.searchable) {
           return;
         }
-        MovieQueryCriteria criteria = createCriteria(e.getValue());
-        criteria.setKey(attrEnum);
-        searchCriteria.addSpecification(new MovieSpecification(criteria));
+        MovieSearchElement searchElem = createCriteria(e.getValue());
+        searchElem.setKey(attrEnum);
+        searchCriteria.addSearch(searchElem);
       });
 
     return searchCriteria;
   }
 
-  private MovieQueryCriteria createCriteria(String value) {
-    MovieQueryCriteria movieQueryCriteria = new MovieQueryCriteria();
+  private MovieSearchElement createCriteria(String value) {
+    MovieSearchElement movieSearchCriteria = new MovieSearchElement();
 
     return Arrays.stream(QueryOperator.values())
       .filter(e -> value.startsWith(e.op))
       .map(e -> {
-        movieQueryCriteria.setValue(value.substring(1));
-        movieQueryCriteria.setOp(e);
-        return movieQueryCriteria;
+        movieSearchCriteria.setValue(value.substring(1));
+        movieSearchCriteria.setOp(e);
+        return movieSearchCriteria;
       })
       .findFirst()
       .orElseGet(() -> {
-        movieQueryCriteria.setValue(value);
-        movieQueryCriteria.setOp(QueryOperator.EQUALS);
-        return movieQueryCriteria;
+        movieSearchCriteria.setValue(value);
+        movieSearchCriteria.setOp(QueryOperator.EQUALS);
+        return movieSearchCriteria;
       });
   }
 }
