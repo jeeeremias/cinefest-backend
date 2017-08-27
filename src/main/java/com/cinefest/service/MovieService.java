@@ -7,9 +7,14 @@ import com.cinefest.pojo.params.SearchCriteria;
 import com.cinefest.pojo.vo.MovieVO;
 import com.cinefest.repository.MovieRepository;
 import com.cinefest.repository.VoteRepository;
+import com.cinefest.specification.MovieSpecification;
+import com.cinefest.specification.MovieSpecificationsHelper;
 import com.cinefest.util.converter.MovieConverter;
 import com.cinefest.util.enumeration.MovieAttr;
+import com.cinefest.util.enumeration.MovieType;
+import com.cinefest.util.enumeration.ParamType;
 import com.cinefest.util.enumeration.QueryOperator;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -18,6 +23,7 @@ import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,21 +116,45 @@ public class MovieService {
     return specifications;
   }
 
-  // TODO: Implement this method
-  private <MovieEntity> Specification<MovieEntity> getSpecification(MovieAttr key, String value, QueryOperator op) {
+  private Specification<MovieEntity> getSpecification(MovieAttr key, String value, QueryOperator op) {
     switch (op) {
       case EQUALS:
-        return null;
+        return equalSpecification(key, value);
 
       case LIKE:
-        return null;
+        return likeSpecification(key, value);
 
       case GREATER:
-        return null;
+        return greaterSpecification(key, value);
 
       case LESS:
-        return null;
+        return lessSpecification(key, value);
     }
     return null;
   }
+
+  private Specification<MovieEntity> lessSpecification(MovieAttr key, String value) {
+    return MovieSpecificationsHelper.lessThan(key.entityAttr, LocalDate.parse(value));
+  }
+
+  private Specification<MovieEntity> greaterSpecification(MovieAttr key, String value) {
+    return MovieSpecificationsHelper.greaterThan(key.entityAttr, LocalDate.parse(value));
+  }
+
+  private Specification<MovieEntity> likeSpecification(MovieAttr key, String value) {
+    return MovieSpecificationsHelper.like(key.entityAttr, value);
+  }
+
+  private Specification<MovieEntity> equalSpecification(MovieAttr key, String value) {
+    if (ParamType.STRING.equals(key.type)) {
+      return MovieSpecificationsHelper.equal(key.entityAttr, value);
+    }
+    if (ParamType.CUSTOM.equals(key.type)) {
+      return MovieSpecificationsHelper.equal(MovieType.fromDesc(value));
+    }
+    return null;
+  }
+  
+  
+
 }
