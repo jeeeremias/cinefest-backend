@@ -1,12 +1,15 @@
 package com.cinefest.service;
 
 import com.cinefest.entity.MovieEntity;
+import com.cinefest.pojo.params.MovieSearchElement;
 import com.cinefest.pojo.params.PagingAndSortingParams;
 import com.cinefest.pojo.params.SearchCriteria;
 import com.cinefest.pojo.vo.MovieVO;
 import com.cinefest.repository.MovieRepository;
 import com.cinefest.repository.VoteRepository;
 import com.cinefest.util.converter.MovieConverter;
+import com.cinefest.util.enumeration.MovieAttr;
+import com.cinefest.util.enumeration.QueryOperator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -28,9 +31,9 @@ public class MovieService {
   @Autowired
   VoteRepository voteRespository;
 
-  public List<MovieVO> getAll(SearchCriteria searchCriteria) {
+  public List<MovieVO> getAll(SearchCriteria<MovieSearchElement> searchCriteria) {
     PageRequest pageRequest = createPageRequest(searchCriteria.getPagingAndSortingParams());
-    Specifications specifications = createSpecifications(searchCriteria.getSpecifications());
+    Specifications specifications = createSpecifications(searchCriteria.getSearches());
     return MovieConverter.entitiesToVos(movieRespository.findAll(specifications, pageRequest).getContent());
   }
 
@@ -95,23 +98,33 @@ public class MovieService {
     return pageRequest;
   }
 
-  private Specifications createSpecifications(List<Specification> specs) {
+  private Specifications createSpecifications(List<MovieSearchElement> searchElements) {
     Specifications specifications = null;
-    for (Specification spec : specs) {
+    for (MovieSearchElement search : searchElements) {
       if (specifications == null) {
-        specifications = Specifications.where(spec);
+        specifications = Specifications.where(getSpecification(search.getKey(), search.getValue(), search.getOp()));
       } else {
-        specifications.and(spec);
+        specifications.and(getSpecification(search.getKey(), search.getValue(), search.getOp()));
       }
     }
-
     return specifications;
   }
 
-  private char getOperator(String value) {
-    if (value.startsWith(">") || value.startsWith("<") || value.startsWith(":")) {
-      return value.charAt(0);
+  // TODO: Implement this method
+  private <MovieEntity> Specification<MovieEntity> getSpecification(MovieAttr key, String value, QueryOperator op) {
+    switch (op) {
+      case EQUALS:
+        return null;
+
+      case LIKE:
+        return null;
+
+      case GREATER:
+        return null;
+
+      case LESS:
+        return null;
     }
-    return '=';
+    return null;
   }
 }

@@ -1,7 +1,6 @@
 package com.cinefest.pojo.params;
 
 import com.cinefest.search.SearchElement;
-import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +18,13 @@ public class SearchCriteria<T extends SearchElement> {
     this.pagingAndSortingParams = pagingAndSortingParams;
   }
 
-  public List<Specification> getSpecifications() {
-    return null;
+  public List<T> getSearches() {
+    return searches;
   }
 
-  public void addSpecification(Specification specification) {}
+  public void setSearches(List<T> searches) {
+    this.searches = searches;
+  }
 
   public void addSearch(T search) {
     if (searches == null) {
