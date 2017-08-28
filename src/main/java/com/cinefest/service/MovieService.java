@@ -7,14 +7,13 @@ import com.cinefest.pojo.params.SearchCriteria;
 import com.cinefest.pojo.vo.MovieVO;
 import com.cinefest.repository.MovieRepository;
 import com.cinefest.repository.VoteRepository;
-import com.cinefest.specification.MovieSpecification;
-import com.cinefest.specification.MovieSpecificationsHelper;
+import com.cinefest.specification.MovieSpecificationConverter;
+import com.cinefest.specification.MovieSpecificationHelper;
 import com.cinefest.util.converter.MovieConverter;
 import com.cinefest.util.enumeration.MovieAttr;
 import com.cinefest.util.enumeration.MovieType;
 import com.cinefest.util.enumeration.ParamType;
 import com.cinefest.util.enumeration.QueryOperator;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -39,7 +38,7 @@ public class MovieService {
 
   public List<MovieVO> getAll(SearchCriteria<MovieSearchElement> searchCriteria) {
     PageRequest pageRequest = createPageRequest(searchCriteria.getPagingAndSortingParams());
-    Specifications specifications = createSpecifications(searchCriteria.getSearches());
+    Specifications specifications = MovieSpecificationConverter.createSpecifications(searchCriteria.getSearches());
     return MovieConverter.entitiesToVos(movieRespository.findAll(specifications, pageRequest).getContent());
   }
 
@@ -103,58 +102,5 @@ public class MovieService {
     PageRequest pageRequest = new PageRequest(params.getPage(), params.getSize(), sort);
     return pageRequest;
   }
-
-  private Specifications createSpecifications(List<MovieSearchElement> searchElements) {
-    Specifications specifications = null;
-    for (MovieSearchElement search : searchElements) {
-      if (specifications == null) {
-        specifications = Specifications.where(getSpecification(search.getKey(), search.getValue(), search.getOp()));
-      } else {
-        specifications.and(getSpecification(search.getKey(), search.getValue(), search.getOp()));
-      }
-    }
-    return specifications;
-  }
-
-  private Specification<MovieEntity> getSpecification(MovieAttr key, String value, QueryOperator op) {
-    switch (op) {
-      case EQUALS:
-        return equalSpecification(key, value);
-
-      case LIKE:
-        return likeSpecification(key, value);
-
-      case GREATER:
-        return greaterSpecification(key, value);
-
-      case LESS:
-        return lessSpecification(key, value);
-    }
-    return null;
-  }
-
-  private Specification<MovieEntity> lessSpecification(MovieAttr key, String value) {
-    return MovieSpecificationsHelper.lessThan(key.entityAttr, LocalDate.parse(value));
-  }
-
-  private Specification<MovieEntity> greaterSpecification(MovieAttr key, String value) {
-    return MovieSpecificationsHelper.greaterThan(key.entityAttr, LocalDate.parse(value));
-  }
-
-  private Specification<MovieEntity> likeSpecification(MovieAttr key, String value) {
-    return MovieSpecificationsHelper.like(key.entityAttr, value);
-  }
-
-  private Specification<MovieEntity> equalSpecification(MovieAttr key, String value) {
-    if (ParamType.STRING.equals(key.type)) {
-      return MovieSpecificationsHelper.equal(key.entityAttr, value);
-    }
-    if (ParamType.CUSTOM.equals(key.type)) {
-      return MovieSpecificationsHelper.equal(MovieType.fromDesc(value));
-    }
-    return null;
-  }
-  
-  
 
 }

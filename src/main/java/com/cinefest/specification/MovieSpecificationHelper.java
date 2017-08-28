@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 import static com.cinefest.util.enumeration.MovieAttr.TYPE;
 
-public class MovieSpecificationsHelper {
+public class MovieSpecificationHelper {
 
   public static Specification<MovieEntity> equal(String key, String value) {
     return (root, query, builder) -> builder.equal(root.get(key), value);
