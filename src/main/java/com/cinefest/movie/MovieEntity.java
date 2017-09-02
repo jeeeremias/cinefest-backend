@@ -1,6 +1,8 @@
-package com.cinefest.entity;
+package com.cinefest.movie;
 
-import com.cinefest.util.enumeration.MovieType;
+import com.cinefest.entity.PhotoEntity;
+import com.cinefest.entity.VoteEntity;
+import com.cinefest.movie.enumeration.MovieType;
 
 import javax.persistence.*;
 import java.io.Serializable;

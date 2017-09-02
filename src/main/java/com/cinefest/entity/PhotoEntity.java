@@ -1,5 +1,6 @@
 package com.cinefest.entity;
 
+import com.cinefest.movie.MovieEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;

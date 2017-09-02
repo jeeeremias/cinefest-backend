@@ -1,28 +1,18 @@
-package com.cinefest.service;
+package com.cinefest.movie;
 
-import com.cinefest.entity.MovieEntity;
-import com.cinefest.pojo.params.MovieSearchElement;
-import com.cinefest.pojo.params.PagingAndSortingParams;
-import com.cinefest.pojo.params.SearchCriteria;
-import com.cinefest.pojo.vo.MovieVO;
-import com.cinefest.repository.MovieRepository;
+import com.cinefest.movie.pojo.MovieSearchElement;
+import com.cinefest.rest.params.PagingAndSortingParams;
+import com.cinefest.rest.params.SearchCriteria;
+import com.cinefest.movie.pojo.MovieVO;
 import com.cinefest.repository.VoteRepository;
-import com.cinefest.specification.MovieSpecificationConverter;
-import com.cinefest.specification.MovieSpecificationHelper;
-import com.cinefest.util.converter.MovieConverter;
-import com.cinefest.util.enumeration.MovieAttr;
-import com.cinefest.util.enumeration.MovieType;
-import com.cinefest.util.enumeration.ParamType;
-import com.cinefest.util.enumeration.QueryOperator;
+import com.cinefest.movie.specification.MovieSpecificationConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,17 +28,17 @@ public class MovieService {
 
   public List<MovieVO> getAll(SearchCriteria<MovieSearchElement> searchCriteria) {
     PageRequest pageRequest = createPageRequest(searchCriteria.getPagingAndSortingParams());
-    Specifications specifications = MovieSpecificationConverter.createSpecifications(searchCriteria.getSearches());
+    Specifications specifications = MovieSpecificationConverter.buildSpecifications(searchCriteria.getSearches());
     return MovieConverter.entitiesToVos(movieRespository.findAll(specifications, pageRequest).getContent());
   }
 
   public List<MovieEntity> getByDay(String dataExibicao) {
-    List<MovieEntity> movieEntities = movieRespository.findByscreeningDateTime(dataExibicao, new Sort(Sort.Direction.ASC, "name"));
+    List<MovieEntity> movieEntities = movieRespository.findByScreeningDateTime(dataExibicao, new Sort(Sort.Direction.ASC, "name"));
     if (dataExibicao.equals("15/02") || dataExibicao.equals("16/02") || dataExibicao.equals("17/02") || dataExibicao.equals("18/02") || dataExibicao.equals("19/02")) {
       if (movieEntities != null) {
-        movieEntities.addAll(movieRespository.findByscreeningDateTime("15 a 19/02", new Sort(Sort.Direction.ASC, "name")));
+        movieEntities.addAll(movieRespository.findByScreeningDateTime("15 a 19/02", new Sort(Sort.Direction.ASC, "name")));
       } else {
-        movieEntities = movieRespository.findByscreeningDateTime("15 a 19/02", new Sort(Sort.Direction.ASC, "name"));
+        movieEntities = movieRespository.findByScreeningDateTime("15 a 19/02", new Sort(Sort.Direction.ASC, "name"));
       }
     }
     return movieEntities;

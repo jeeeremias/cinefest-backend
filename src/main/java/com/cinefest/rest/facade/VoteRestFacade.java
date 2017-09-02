@@ -1,9 +1,9 @@
 package com.cinefest.rest.facade;
 
-import com.cinefest.entity.MovieEntity;
+import com.cinefest.movie.MovieEntity;
 import com.cinefest.entity.VoteEntity;
-import com.cinefest.pojo.params.SearchCriteria;
-import com.cinefest.repository.MovieRepository;
+import com.cinefest.rest.params.SearchCriteria;
+import com.cinefest.movie.MovieRepository;
 import com.cinefest.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;

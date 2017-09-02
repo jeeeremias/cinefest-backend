@@ -1,10 +1,6 @@
-package com.cinefest.rest.controller;
+package com.cinefest.movie;
 
-import com.cinefest.entity.MovieEntity;
-import com.cinefest.pojo.dto.MovieDTO;
-import com.cinefest.rest.facade.MovieRestFacade;
-import com.cinefest.service.MovieService;
-import com.cinefest.util.converter.MovieConverter;
+import com.cinefest.movie.pojo.MovieDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

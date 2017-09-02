@@ -1,4 +1,6 @@
-package com.cinefest.util.enumeration;
+package com.cinefest.movie.enumeration;
+
+import com.cinefest.util.enumeration.ParamType;
 
 import java.util.Arrays;
 

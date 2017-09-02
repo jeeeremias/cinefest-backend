@@ -1,6 +1,6 @@
 package com.cinefest.rest.controller;
 
-import com.cinefest.entity.MovieEntity;
+import com.cinefest.movie.MovieEntity;
 import com.cinefest.service.MockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

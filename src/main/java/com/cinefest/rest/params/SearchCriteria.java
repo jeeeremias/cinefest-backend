@@ -1,4 +1,4 @@
-package com.cinefest.pojo.params;
+package com.cinefest.rest.params;
 
 import com.cinefest.search.SearchElement;
 

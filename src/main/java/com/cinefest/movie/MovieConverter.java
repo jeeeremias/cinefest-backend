@@ -1,8 +1,7 @@
-package com.cinefest.util.converter;
+package com.cinefest.movie;
 
-import com.cinefest.entity.MovieEntity;
-import com.cinefest.pojo.dto.MovieDTO;
-import com.cinefest.pojo.vo.MovieVO;
+import com.cinefest.movie.pojo.MovieDTO;
+import com.cinefest.movie.pojo.MovieVO;
 
 import java.util.List;
 import java.util.stream.Collectors;

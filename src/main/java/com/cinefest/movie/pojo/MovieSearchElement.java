@@ -1,7 +1,7 @@
-package com.cinefest.pojo.params;
+package com.cinefest.movie.pojo;
 
 import com.cinefest.search.SearchElement;
-import com.cinefest.util.enumeration.MovieAttr;
+import com.cinefest.movie.enumeration.MovieAttr;
 import com.cinefest.util.enumeration.QueryOperator;
 
 public class MovieSearchElement implements SearchElement<MovieAttr> {

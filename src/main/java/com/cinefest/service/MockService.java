@@ -1,8 +1,9 @@
 package com.cinefest.service;
 
-import com.cinefest.entity.MovieEntity;
+import com.cinefest.movie.MovieEntity;
 import com.cinefest.entity.PhotoEntity;
-import com.cinefest.util.enumeration.MovieType;
+import com.cinefest.movie.MovieService;
+import com.cinefest.movie.enumeration.MovieType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

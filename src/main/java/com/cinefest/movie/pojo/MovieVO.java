@@ -1,6 +1,6 @@
-package com.cinefest.pojo.vo;
+package com.cinefest.movie.pojo;
 
-import com.cinefest.util.enumeration.MovieType;
+import com.cinefest.movie.enumeration.MovieType;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

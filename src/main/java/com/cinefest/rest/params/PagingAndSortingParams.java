@@ -1,4 +1,4 @@
-package com.cinefest.pojo.params;
+package com.cinefest.rest.params;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.cinefest.rest.util.converter;
 
-import com.cinefest.pojo.params.PagingAndSortingParams;
+import com.cinefest.rest.params.PagingAndSortingParams;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;

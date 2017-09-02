@@ -1,9 +1,9 @@
-package com.cinefest.specification;
+package com.cinefest.movie.specification;
 
-import com.cinefest.entity.MovieEntity;
-import com.cinefest.pojo.params.MovieSearchElement;
-import com.cinefest.util.enumeration.MovieAttr;
-import com.cinefest.util.enumeration.MovieType;
+import com.cinefest.movie.MovieEntity;
+import com.cinefest.movie.pojo.MovieSearchElement;
+import com.cinefest.movie.enumeration.MovieAttr;
+import com.cinefest.movie.enumeration.MovieType;
 import com.cinefest.util.enumeration.ParamType;
 import com.cinefest.util.enumeration.QueryOperator;
 import org.springframework.data.jpa.domain.Specification;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class MovieSpecificationConverter {
 
-  public static Specifications createSpecifications(List<MovieSearchElement> searchElements) {
+  public static Specifications buildSpecifications(List<MovieSearchElement> searchElements) {
     Specifications specifications = null;
     for (MovieSearchElement search : searchElements) {
       if (specifications == null) {

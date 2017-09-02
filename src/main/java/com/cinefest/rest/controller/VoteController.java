@@ -1,9 +1,9 @@
 package com.cinefest.rest.controller;
 
 import com.cinefest.entity.VoteEntity;
-import com.cinefest.pojo.params.SearchCriteria;
+import com.cinefest.rest.params.SearchCriteria;
 import com.cinefest.rest.facade.VoteRestFacade;
-import com.cinefest.service.MovieService;
+import com.cinefest.movie.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

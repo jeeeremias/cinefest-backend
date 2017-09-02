@@ -1,12 +1,10 @@
-package com.cinefest.rest.facade;
+package com.cinefest.movie;
 
-import com.cinefest.pojo.dto.MovieDTO;
-import com.cinefest.pojo.params.MovieSearchElement;
-import com.cinefest.pojo.params.SearchCriteria;
+import com.cinefest.movie.pojo.MovieDTO;
+import com.cinefest.movie.pojo.MovieSearchElement;
+import com.cinefest.rest.params.SearchCriteria;
 import com.cinefest.rest.util.converter.PagingAndSortingParamsConverter;
-import com.cinefest.service.MovieService;
-import com.cinefest.util.converter.MovieConverter;
-import com.cinefest.util.enumeration.MovieAttr;
+import com.cinefest.movie.enumeration.MovieAttr;
 import com.cinefest.util.enumeration.QueryOperator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
