@@ -32,9 +32,24 @@ public class MovieServiceImpl implements MovieService {
 
   @Override
   public List<MovieVO> getAll(SearchCriteria<MovieSearchElement> searchCriteria) {
-    PageRequest pageRequest = createPageRequest(searchCriteria.getPagingAndSortingParams());
-    Specifications specifications = MovieSpecificationConverter.buildSpecifications(searchCriteria.getSearches());
-    return MovieConverter.entitiesToVos(movieRepository.findAll(specifications, pageRequest).getContent());
+    Specifications specifications = null;
+    PageRequest pageRequest = null;
+    List<MovieVO> movies;
+    if (searchCriteria.getPagingAndSortingParams() != null) {
+      pageRequest = createPageRequest(searchCriteria.getPagingAndSortingParams());
+    }
+    if (searchCriteria.getSearches() != null) {
+      specifications = MovieSpecificationConverter.buildSpecifications(searchCriteria.getSearches());
+    }
+
+    if (pageRequest != null && searchCriteria != null) {
+      movies = MovieConverter.entitiesToVos(movieRepository.findAll(specifications, pageRequest).getContent());
+    } else if (pageRequest != null) {
+      movies = MovieConverter.entitiesToVos(movieRepository.findAll(pageRequest).getContent());
+    } else {
+      movies = MovieConverter.entitiesToVos(movieRepository.findAll(specifications));
+    }
+    return movies;
   }
 
   @Override

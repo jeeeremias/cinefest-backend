@@ -17,10 +17,17 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class MovieRestAdapterImpl extends MovieServiceImpl implements MovieRestAdapter {
+public class MovieRestAdapterImpl implements MovieRestAdapter {
+
+  PagingAndSortingParamsConverter pagingAndSortingParamsConverter;
+  MovieService service;
 
   @Autowired
-  private PagingAndSortingParamsConverter pagingAndSortingParamsConverter;
+  public MovieRestAdapterImpl(PagingAndSortingParamsConverter pagingAndSortingParamsConverter,
+                              MovieService service) {
+    this.pagingAndSortingParamsConverter = pagingAndSortingParamsConverter;
+    this.service = service;
+  }
 
   @Override
   public List<MovieDTO> getDTOs(Map<String, String> params) {
@@ -28,17 +35,17 @@ public class MovieRestAdapterImpl extends MovieServiceImpl implements MovieRestA
     if (params != null) {
       searchCriteria = toMovieQuery(params);
     }
-    return MovieConverter.vosToDtos(super.getAll(searchCriteria));
+    return MovieConverter.vosToDtos(service.getAll(searchCriteria));
   }
 
-  @Autowired
+  @Override
   public MovieDTO getDTOById(long id) {
-    return MovieConverter.voToDto(super.getOne(id));
+    return MovieConverter.voToDto(service.getOne(id));
   }
 
   @Override
   public MovieDTO newFromDTO(MovieDTO movieDTO) {
-    return MovieConverter.voToDto(super.create(MovieConverter.dtoToVO(movieDTO)));
+    return MovieConverter.voToDto(service.create(MovieConverter.dtoToVO(movieDTO)));
   }
 
   private SearchCriteria toMovieQuery(Map<String, String> params) {

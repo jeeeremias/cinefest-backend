@@ -1,6 +1,5 @@
 package com.cinefest.movie;
 
-import com.cinefest.movie.impl.MovieRestAdapterImpl;
 import com.cinefest.movie.pojo.MovieDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -17,7 +16,7 @@ import static com.cinefest.movie.MovieEndpoints.MOVIE_BY_ID;
 class MovieController {
 
   @Autowired
-  MovieRestAdapterImpl movieRestAdapterImpl;
+  MovieRestAdapter movieRestAdapterImpl;
 
   @RequestMapping(method = RequestMethod.GET, value = MOVIES, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
