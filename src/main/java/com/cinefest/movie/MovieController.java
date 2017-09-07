@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.websocket.server.PathParam;
 import java.util.Map;
 
-import static com.cinefest.util.EndpointsUrl.MOVIES;
-import static com.cinefest.util.EndpointsUrl.MOVIE_BY_ID;
+import static com.cinefest.movie.MovieEndpoints.MOVIES;
+import static com.cinefest.movie.MovieEndpoints.MOVIE_BY_ID;
 
 @RestController
 class MovieController {

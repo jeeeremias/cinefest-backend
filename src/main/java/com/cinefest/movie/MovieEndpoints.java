@@ -1,9 +1,6 @@
-package com.cinefest.util;
+package com.cinefest.movie;
 
-/**
- * Created by jere on 04/06/17.
- */
-public class EndpointsUrl {
+public class MovieEndpoints {
   public static final String MOVIES = "/movies";
   private static final String ID = "/{id}";
   public static final String MOVIE_BY_ID = MOVIES + ID;
