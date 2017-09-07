@@ -1,5 +1,8 @@
-package com.cinefest.movie;
+package com.cinefest.movie.impl;
 
+import com.cinefest.movie.MovieConverter;
+import com.cinefest.movie.MovieRestAdapter;
+import com.cinefest.movie.MovieService;
 import com.cinefest.movie.pojo.MovieDTO;
 import com.cinefest.movie.pojo.MovieSearchElement;
 import com.cinefest.rest.params.SearchCriteria;
@@ -14,24 +17,28 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class MovieRestFacade {
-
-  @Autowired
-  private MovieService movieService;
+public class MovieRestAdapterImpl extends MovieServiceImpl implements MovieRestAdapter {
 
   @Autowired
   private PagingAndSortingParamsConverter pagingAndSortingParamsConverter;
 
-  public List<MovieDTO> getAll(Map<String, String> params) {
+  @Override
+  public List<MovieDTO> getDTOs(Map<String, String> params) {
     SearchCriteria searchCriteria = null;
     if (params != null) {
       searchCriteria = toMovieQuery(params);
     }
-    return MovieConverter.vosToDtos(movieService.getAll(searchCriteria));
+    return MovieConverter.vosToDtos(super.getAll(searchCriteria));
   }
 
-  public MovieDTO getOne(Long id) {
-    return MovieConverter.voToDto(movieService.getOne(id));
+  @Autowired
+  public MovieDTO getDTOById(long id) {
+    return MovieConverter.voToDto(super.getOne(id));
+  }
+
+  @Override
+  public MovieDTO newFromDTO(MovieDTO movieDTO) {
+    return MovieConverter.voToDto(super.create(MovieConverter.dtoToVO(movieDTO)));
   }
 
   private SearchCriteria toMovieQuery(Map<String, String> params) {

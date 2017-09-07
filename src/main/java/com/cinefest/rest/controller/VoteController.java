@@ -3,7 +3,7 @@ package com.cinefest.rest.controller;
 import com.cinefest.entity.VoteEntity;
 import com.cinefest.rest.params.SearchCriteria;
 import com.cinefest.rest.facade.VoteRestFacade;
-import com.cinefest.movie.MovieService;
+import com.cinefest.movie.impl.MovieServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ public class VoteController {
   VoteRestFacade voteRestFacade;
 
   @Autowired
-  MovieService movieService;
+  MovieServiceImpl movieServiceImpl;
 
   @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
   @ResponseBody
@@ -45,7 +45,7 @@ public class VoteController {
     response.setContentType("text/csv;charset=UTF-8");
     response.setHeader("Content-disposition", String.format("attachment; filename=\"%s\"", csvFileName));
     System.out.println(response.getCharacterEncoding());
-    response.getOutputStream().print(movieService.votos(dia));
+    response.getOutputStream().print(movieServiceImpl.votos(dia));
     response.getOutputStream().flush();
     response.getOutputStream().close();
   }

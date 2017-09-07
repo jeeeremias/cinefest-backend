@@ -2,7 +2,7 @@ package com.cinefest.service;
 
 import com.cinefest.movie.MovieEntity;
 import com.cinefest.entity.PhotoEntity;
-import com.cinefest.movie.MovieService;
+import com.cinefest.movie.impl.MovieServiceImpl;
 import com.cinefest.movie.enumeration.MovieType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 public class MockService {
 
   @Autowired
-  MovieService movieService;
+  MovieServiceImpl movieServiceImpl;
 
   public List<MovieEntity> iniciar() throws IOException {
     String status = "";
@@ -53,7 +53,7 @@ public class MockService {
       status = status.concat("parse movieEntity: " + filmeString[0] + " ;");
     }
     for (MovieEntity filmee : movieEntities) {
-      movieService.save(filmee);
+      movieServiceImpl.save(filmee);
       status = status.concat("Gravou movieEntity: " + filmee.getId() + " ;");
     }
     return movieEntities;
