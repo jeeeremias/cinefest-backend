@@ -1,6 +1,5 @@
 package com.cinefest.movie;
 
-import com.cinefest.movie.pojo.MovieDTO;
 import com.cinefest.movie.pojo.MovieVO;
 
 import java.util.List;
@@ -46,46 +45,9 @@ public class MovieConverter {
     return vo;
   }
 
-  public static MovieVO dtoToVO(MovieDTO dtos) {
-    MovieVO vo = new MovieVO();
-    vo.setCity(dtos.getCity());
-    vo.setDirector(dtos.getDirector());
-    vo.setDirectorBiography(dtos.getDirectorBiography());
-    vo.setDirectorEmail(dtos.getDirectorEmail());
-    vo.setFullSynopsis(dtos.getFullSynopsis());
-    vo.setGenre(dtos.getGenre());
-    vo.setName(dtos.getName());
-    vo.setIncomeDate(dtos.getIncomeDate());
-    vo.setRuntime(dtos.getRuntime());
-    vo.setScreeningDateTime(dtos.getScreeningDateTime());
-    vo.setShortSynopsis(dtos.getShortSynopsis());
-    return vo;
-  }
-
-  public static MovieDTO voToDto(MovieVO vo) {
-    MovieDTO dto = new MovieDTO();
-    dto.setCity(vo.getCity());
-    dto.setDirector(vo.getDirector());
-    dto.setDirectorBiography(vo.getDirectorBiography());
-    dto.setDirectorEmail(vo.getDirectorEmail());
-    dto.setFullSynopsis(vo.getFullSynopsis());
-    dto.setGenre(vo.getGenre());
-    dto.setName(vo.getName());
-    dto.setIncomeDate(vo.getIncomeDate());
-    dto.setRuntime(vo.getRuntime());
-    dto.setScreeningDateTime(vo.getScreeningDateTime());
-    dto.setShortSynopsis(vo.getShortSynopsis());
-    return dto;
-  }
-
   public static List<MovieVO> entitiesToVos(List<MovieEntity> entities) {
     return entities.stream()
       .map(MovieConverter::entityToVO).collect(Collectors.toList());
-  }
-
-  public static List<MovieDTO> vosToDtos(List<MovieVO> vos) {
-    return vos.stream()
-      .map(MovieConverter::voToDto).collect(Collectors.toList());
   }
 
 }

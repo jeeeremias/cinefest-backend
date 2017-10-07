@@ -13,4 +13,6 @@ public interface MovieService {
   MovieVO getOne(long id);
 
   MovieVO create(MovieVO movieVO);
+
+  MovieVO update(MovieVO movieVO, long id);
 }

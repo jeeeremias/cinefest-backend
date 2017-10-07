@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.cinefest.movie.MovieConverter.entitiesToVos;
+import static com.cinefest.movie.MovieConverter.entityToVO;
 
 @Service
 @Transactional
@@ -34,9 +35,12 @@ public class MovieServiceImpl implements MovieService {
 
   @Override
   public List<MovieVO> getAll(SearchCriteria<MovieSearchElement> searchCriteria) {
+    if (searchCriteria == null) {
+      return entitiesToVos(movieRepository.findAll());
+    }
+
     Specifications specifications = null;
     PageRequest pageRequest = null;
-    List<MovieVO> movies;
     if (searchCriteria.getPagingAndSortingParams() != null) {
       pageRequest = createPageRequest(searchCriteria.getPagingAndSortingParams());
     }
@@ -44,14 +48,13 @@ public class MovieServiceImpl implements MovieService {
       specifications = MovieSpecificationConverter.buildSpecifications(searchCriteria.getSearches());
     }
 
-    if (pageRequest != null && searchCriteria != null) {
-      movies = entitiesToVos(movieRepository.findAll(specifications, pageRequest).getContent());
+    if (pageRequest != null && specifications != null) {
+      return entitiesToVos(movieRepository.findAll(specifications, pageRequest).getContent());
     } else if (pageRequest != null) {
-      movies = entitiesToVos(movieRepository.findAll(pageRequest).getContent());
+      return entitiesToVos(movieRepository.findAll(pageRequest).getContent());
     } else {
-      movies = entitiesToVos(movieRepository.findAll(specifications));
+      return entitiesToVos(movieRepository.findAll(specifications));
     }
-    return movies;
   }
 
   @Override
@@ -79,6 +82,51 @@ public class MovieServiceImpl implements MovieService {
   public MovieVO create(MovieVO movieVO) {
     MovieEntity movieEntity = MovieConverter.voToEntity(movieVO);
     return MovieConverter.entityToVO(save(movieEntity));
+  }
+
+  @Override
+  public MovieVO update(MovieVO movieVO, long id) {
+    MovieEntity movieEntity = movieRepository.findOne(id);
+    if (movieVO.getCity() != null) {
+      movieEntity.setCity(movieVO.getCity());
+    }
+    if (movieVO.getDirector() != null) {
+      movieEntity.setDirector(movieVO.getDirector());
+    }
+    if (movieVO.getDirectorBiography() != null) {
+      movieEntity.setDirectorBiography(movieVO.getDirectorBiography());
+    }
+    if (movieVO.getDirectorEmail() != null) {
+      movieEntity.setDirectorEmail(movieVO.getDirectorEmail());
+    }
+    if (movieVO.getFullSynopsis() != null) {
+      movieEntity.setFullSynopsis(movieVO.getFullSynopsis());
+    }
+    if (movieVO.getGenre() != null) {
+      movieEntity.setGenre(movieVO.getGenre());
+    }
+    if (movieVO.getIncomeDate() != null) {
+      movieEntity.setIncomeDate(movieVO.getIncomeDate());
+    }
+    if (movieVO.getName() != null) {
+      movieEntity.setName(movieVO.getName());
+    }
+    if (movieVO.getRuntime() != null) {
+      movieEntity.setRuntime(movieVO.getRuntime());
+    }
+    if (movieVO.getScreeningDateTime() != null) {
+      movieEntity.setScreeningDateTime(movieVO.getScreeningDateTime());
+    }
+    if (movieVO.getShortSynopsis() != null) {
+      movieEntity.setShortSynopsis(movieVO.getShortSynopsis());
+    }
+    if (movieVO.getState() != null) {
+      movieEntity.setState(movieVO.getState());
+    }
+    if (movieVO.getType() != null) {
+      movieEntity.setType(movieVO.getType());
+    }
+    return entityToVO(save(movieEntity));
   }
 
   public MovieEntity save(MovieEntity movieEntity) {
@@ -112,8 +160,7 @@ public class MovieServiceImpl implements MovieService {
       orders.add(new Sort.Order(direction, prop));
     }
     Sort sort = new Sort(orders);
-    PageRequest pageRequest = new PageRequest(params.getPage(), params.getSize(), sort);
-    return pageRequest;
+    return new PageRequest(params.getPage(), params.getSize(), sort);
   }
 
 }
