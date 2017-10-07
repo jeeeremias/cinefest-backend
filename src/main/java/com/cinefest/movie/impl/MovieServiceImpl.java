@@ -20,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.cinefest.movie.MovieConverter.entitiesToVos;
+
 @Service
 @Transactional
 public class MovieServiceImpl implements MovieService {
@@ -43,11 +45,11 @@ public class MovieServiceImpl implements MovieService {
     }
 
     if (pageRequest != null && searchCriteria != null) {
-      movies = MovieConverter.entitiesToVos(movieRepository.findAll(specifications, pageRequest).getContent());
+      movies = entitiesToVos(movieRepository.findAll(specifications, pageRequest).getContent());
     } else if (pageRequest != null) {
-      movies = MovieConverter.entitiesToVos(movieRepository.findAll(pageRequest).getContent());
+      movies = entitiesToVos(movieRepository.findAll(pageRequest).getContent());
     } else {
-      movies = MovieConverter.entitiesToVos(movieRepository.findAll(specifications));
+      movies = entitiesToVos(movieRepository.findAll(specifications));
     }
     return movies;
   }
