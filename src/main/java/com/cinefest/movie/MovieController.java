@@ -1,8 +1,7 @@
 package com.cinefest.movie;
 
 import com.cinefest.movie.enumeration.MovieAttr;
-import com.cinefest.movie.pojo.MovieSearchElement;
-import com.cinefest.movie.pojo.MovieVO;
+import com.cinefest.pojo.MovieVO;
 import com.cinefest.rest.params.SearchCriteria;
 import com.cinefest.rest.util.converter.PagingAndSortingParamsConverter;
 import com.cinefest.util.enumeration.QueryOperator;

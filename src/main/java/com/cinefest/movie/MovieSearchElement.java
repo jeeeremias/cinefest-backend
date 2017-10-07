@@ -1,4 +1,4 @@
-package com.cinefest.movie.pojo;
+package com.cinefest.movie;
 
 import com.cinefest.search.SearchElement;
 import com.cinefest.movie.enumeration.MovieAttr;

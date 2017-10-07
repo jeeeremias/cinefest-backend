@@ -1,7 +1,7 @@
 package com.cinefest.movie.specification;
 
 import com.cinefest.movie.MovieEntity;
-import com.cinefest.movie.pojo.MovieSearchElement;
+import com.cinefest.movie.MovieSearchElement;
 import com.cinefest.movie.enumeration.MovieAttr;
 import com.cinefest.movie.enumeration.MovieType;
 import com.cinefest.util.enumeration.ParamType;

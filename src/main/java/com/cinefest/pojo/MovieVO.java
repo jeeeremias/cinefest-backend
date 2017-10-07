@@ -1,9 +1,11 @@
-package com.cinefest.movie.pojo;
+package com.cinefest.pojo;
 
 import com.cinefest.movie.enumeration.MovieType;
+import com.cinefest.pojo.PhotoVO;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class MovieVO {
 
@@ -21,6 +23,7 @@ public class MovieVO {
   private String fullSynopsis;
   private String directorBiography;
   private String directorEmail;
+  private List<PhotoVO> photos;
 
   public long getId() {
     return id;
@@ -132,5 +135,13 @@ public class MovieVO {
 
   public void setDirectorEmail(String directorEmail) {
     this.directorEmail = directorEmail;
+  }
+
+  public List<PhotoVO> getPhotos() {
+    return photos;
+  }
+
+  public void setPhotos(List<PhotoVO> photos) {
+    this.photos = photos;
   }
 }

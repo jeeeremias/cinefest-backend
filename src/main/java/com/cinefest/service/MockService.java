@@ -45,7 +45,7 @@ public class MockService {
       movieEntity = new MovieEntity(Long.valueOf(filmeString[0]), MovieType.fromDesc(filmeString[1]), filmeString[2],
         filmeString[3], filmeString[4], LocalDate.now(), filmeString[6], filmeString[7], LocalDateTime.now(),
         filmeString[10], shortDesc, filmeString[11], filmeString[12], filmeString[13]);
-      imagens = new ArrayList<PhotoEntity>();
+      imagens = new ArrayList<>();
       imagens.add(new PhotoEntity("/" + filmeString[0] + "_1.jpg", true, movieEntity));
       imagens.add(new PhotoEntity("/" + filmeString[0] + "_2.jpg", false, movieEntity));
       imagens.add(new PhotoEntity("/" + filmeString[0] + "_3.jpg", false, movieEntity));

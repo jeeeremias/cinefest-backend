@@ -1,7 +1,10 @@
 package com.cinefest.movie;
 
-import com.cinefest.movie.pojo.MovieVO;
+import com.cinefest.entity.PhotoEntity;
+import com.cinefest.pojo.MovieVO;
+import com.cinefest.pojo.PhotoVO;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,6 +45,11 @@ public class MovieConverter {
     vo.setRuntime(entity.getRuntime());
     vo.setScreeningDateTime(entity.getScreeningDateTime());
     vo.setShortSynopsis(entity.getShortSynopsis());
+    List<PhotoVO> photos = new ArrayList<>();
+    for (PhotoEntity photo : entity.getPhotos()) {
+      photos.add(new PhotoVO(photo.getId()));
+    }
+    vo.setPhotos(photos);
     return vo;
   }
 
