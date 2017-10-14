@@ -6,7 +6,6 @@ import com.cinefest.movie.MovieSearchElement;
 import com.cinefest.movie.MovieService;
 import com.cinefest.movie.specification.MovieSpecificationConverter;
 import com.cinefest.pojo.MovieVO;
-import com.cinefest.repository.VoteRepository;
 import com.cinefest.rest.params.PagingAndSortingParams;
 import com.cinefest.rest.params.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +26,6 @@ public class MovieServiceImpl implements MovieService {
 
   @Autowired
   MovieRepository movieRepository;
-
-  @Autowired
-  VoteRepository voteRepository;
 
   @Override
   public List<MovieVO> getAll(SearchCriteria<MovieSearchElement> searchCriteria) {
@@ -113,18 +109,6 @@ public class MovieServiceImpl implements MovieService {
 
   private MovieEntity save(MovieEntity movieEntity) {
     return movieRepository.save(movieEntity);
-  }
-
-  public List<MovieEntity> getByDay(String dataExibicao) {
-    List<MovieEntity> movieEntities = movieRepository.findByScreeningDateTime(dataExibicao, new Sort(Sort.Direction.ASC, "name"));
-    if (dataExibicao.equals("15/02") || dataExibicao.equals("16/02") || dataExibicao.equals("17/02") || dataExibicao.equals("18/02") || dataExibicao.equals("19/02")) {
-      if (movieEntities != null) {
-        movieEntities.addAll(movieRepository.findByScreeningDateTime("15 a 19/02", new Sort(Sort.Direction.ASC, "name")));
-      } else {
-        movieEntities = movieRepository.findByScreeningDateTime("15 a 19/02", new Sort(Sort.Direction.ASC, "name"));
-      }
-    }
-    return movieEntities;
   }
 
   private PageRequest createPageRequest(PagingAndSortingParams params) {

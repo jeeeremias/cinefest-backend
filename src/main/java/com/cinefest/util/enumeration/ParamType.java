@@ -6,5 +6,6 @@ public enum ParamType {
   DATE,
   DATE_TIME,
   LONG,
+  DOUBLE,
   CUSTOM
 }

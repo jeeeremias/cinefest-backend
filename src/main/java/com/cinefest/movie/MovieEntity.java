@@ -1,11 +1,11 @@
 package com.cinefest.movie;
 
 import com.cinefest.entity.PhotoEntity;
-import com.cinefest.review.ReviewEntity;
+import com.cinefest.rate.RateEntity;
+import com.cinefest.rate.review.ReviewEntity;
 import com.cinefest.movie.enumeration.MovieType;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -55,11 +55,11 @@ public class MovieEntity {
   @Column
   private String directorEmail;
 
-  @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
   private List<PhotoEntity> photos;
 
-  @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  private List<ReviewEntity> votes;
+  @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
+  private List<RateEntity> rates;
 
   public MovieEntity() {
     super();
@@ -207,11 +207,11 @@ public class MovieEntity {
     this.photos = photos;
   }
 
-  public List<ReviewEntity> getVotes() {
-    return votes;
+  public List<RateEntity> getRates() {
+    return rates;
   }
 
-  public void setVotes(List<ReviewEntity> votes) {
-    this.votes = votes;
+  public void setRates(List<RateEntity> rates) {
+    this.rates = rates;
   }
 }

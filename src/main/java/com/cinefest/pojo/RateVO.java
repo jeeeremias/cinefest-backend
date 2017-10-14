@@ -1,4 +1,5 @@
 package com.cinefest.pojo;
 
-public class VoteVO {
+public class RateVO {
+
 }
