@@ -52,7 +52,7 @@ class MovieController {
   }
 
   @RequestMapping(method = RequestMethod.DELETE, value = MOVIE_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-  public MovieVO deleteMovie(@PathParam("id") long id, @RequestBody MovieVO movie) throws IllegalAccessException {
+  public MovieVO deleteMovie(@PathParam("id") long id) throws IllegalAccessException {
     throw new IllegalAccessException();
   }
 
