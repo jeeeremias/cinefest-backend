@@ -21,8 +21,8 @@ import static com.cinefest.movie.MovieEndpoints.MOVIE_BY_ID;
 @RestController("/movies")
 class MovieController {
 
-  PagingAndSortingParamsConverter pagingAndSortingParamsConverter;
-  MovieService movieService;
+  private PagingAndSortingParamsConverter pagingAndSortingParamsConverter;
+  private MovieService movieService;
 
   @Autowired
   public MovieController(PagingAndSortingParamsConverter pagingAndSortingParamsConverter, MovieService movieService) {
