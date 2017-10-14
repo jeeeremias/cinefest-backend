@@ -59,6 +59,9 @@ public class MovieSpecificationConverter {
     if (ParamType.STRING.equals(key.type)) {
       return MovieSpecificationHelper.equal(key.entityAttr, value);
     }
+    if (ParamType.DATE.equals(key.type)) {
+      return MovieSpecificationHelper.equal(key.entityAttr, LocalDate.parse(value));
+    }
     if (ParamType.CUSTOM.equals(key.type)) {
       return MovieSpecificationHelper.equal(MovieType.fromDesc(value));
     }

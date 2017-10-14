@@ -13,7 +13,7 @@ public enum MovieAttr {
   INCOME_DATE("income_date", "incomeDate", true, false, ParamType.DATE),
   GENRE("genre", "genre", true, true, ParamType.STRING),
   RUNTIME("runtime", "runtime", true, false, ParamType.DATE),
-  SCREENING_DATE_TIME("screening_date_time", "screeningDateTime", true, false, ParamType.DATE),
+  SCREENING_DATE_TIME("screening_date_time", "screeningDateTime", true, false, ParamType.DATE_TIME),
   DIRECTOR("director", "director", true, true, ParamType.STRING),
   SHORT_SYNOPSIS("short_synopsis", "shortSynopsis", true, true, ParamType.STRING),
   FULL_SYNOPSIS("full_synopsis", "fullSynopsis", true, true, ParamType.STRING),

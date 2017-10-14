@@ -1,15 +1,14 @@
 package com.cinefest.movie.impl;
 
-import com.cinefest.movie.MovieConverter;
 import com.cinefest.movie.MovieEntity;
 import com.cinefest.movie.MovieRepository;
-import com.cinefest.movie.MovieService;
 import com.cinefest.movie.MovieSearchElement;
-import com.cinefest.rest.params.PagingAndSortingParams;
-import com.cinefest.rest.params.SearchCriteria;
+import com.cinefest.movie.MovieService;
+import com.cinefest.movie.specification.MovieSpecificationConverter;
 import com.cinefest.pojo.MovieVO;
 import com.cinefest.repository.VoteRepository;
-import com.cinefest.movie.specification.MovieSpecificationConverter;
+import com.cinefest.rest.params.PagingAndSortingParams;
+import com.cinefest.rest.params.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -20,8 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.cinefest.movie.MovieConverter.entitiesToVos;
-import static com.cinefest.movie.MovieConverter.entityToVO;
+import static com.cinefest.movie.MovieConverter.*;
 
 @Service
 @Transactional
@@ -59,33 +57,17 @@ public class MovieServiceImpl implements MovieService {
 
   @Override
   public MovieVO getOne(long id) {
-    return MovieConverter.entityToVO(movieRepository.findOne(id));
-  }
-
-  public String votos(String dia) {
-    List<MovieEntity> movieEntities = getByDay(dia);
-    StringBuilder sb = new StringBuilder("Codigo, MovieEntity, Votos, (%)\n");
-    float total = voteRepository.countByDateTime(dia);
-
-    for (MovieEntity movieEntity : movieEntities) {
-      sb.append(movieEntity.getId() + ",");
-      sb.append(movieEntity.getName() + ",");
-      sb.append(movieEntity.getVotes().size() + ",");
-      sb.append(((100.0 * movieEntity.getVotes().size()) / total) + ",");
-      sb.append("\n");
-    }
-    sb.append(",,,\n,,Total Votos," + total + "\n");
-    return sb.toString();
+    return entityToVO(movieRepository.findOne(id));
   }
 
   @Override
   public MovieVO create(MovieVO movieVO) {
-    MovieEntity movieEntity = MovieConverter.voToEntity(movieVO);
-    return MovieConverter.entityToVO(save(movieEntity));
+    MovieEntity movieEntity = voToEntity(movieVO);
+    return entityToVO(save(movieEntity));
   }
 
   @Override
-  public MovieVO update(MovieVO movieVO, long id) {
+  public MovieVO update(long id, MovieVO movieVO) {
     MovieEntity movieEntity = movieRepository.findOne(id);
     if (movieVO.getCity() != null) {
       movieEntity.setCity(movieVO.getCity());
@@ -129,7 +111,7 @@ public class MovieServiceImpl implements MovieService {
     return entityToVO(save(movieEntity));
   }
 
-  public MovieEntity save(MovieEntity movieEntity) {
+  private MovieEntity save(MovieEntity movieEntity) {
     return movieRepository.save(movieEntity);
   }
 

@@ -4,6 +4,7 @@ public enum ParamType {
 
   STRING,
   DATE,
+  DATE_TIME,
   LONG,
   CUSTOM
 }

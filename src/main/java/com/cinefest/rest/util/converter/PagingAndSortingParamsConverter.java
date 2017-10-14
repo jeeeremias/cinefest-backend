@@ -14,8 +14,8 @@ public class PagingAndSortingParamsConverter {
   static final String SIZE_PARAM = "size";
   static final String SORT_PARAM = "sort";
 
-  final int defaultPage = 0;
-  final int defaultSize = 100;
+  static final int defaultPage = 0;
+  static final int defaultSize = 100;
 
   public PagingAndSortingParams convertToQueryParam(Map<String, String> params) {
     PagingAndSortingParams pagingAndSortingParams = new PagingAndSortingParams();

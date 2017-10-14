@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static com.cinefest.movie.MovieEndpoints.MOVIES;
 import static com.cinefest.movie.MovieEndpoints.MOVIE_BY_ID;
 
-@RestController
+@RestController("/movies")
 class MovieController {
 
   PagingAndSortingParamsConverter pagingAndSortingParamsConverter;
@@ -31,10 +32,7 @@ class MovieController {
 
   @RequestMapping(method = RequestMethod.GET, value = MOVIES, produces = MediaType.APPLICATION_JSON_VALUE)
   public List<MovieVO> getMovies(@RequestParam(required = false) Map<String, String> params) {
-    SearchCriteria searchCriteria = null;
-    if (params != null) {
-      searchCriteria = toMovieQuery(params);
-    }
+    SearchCriteria searchCriteria = toMovieQuery(params);
     return movieService.getAll(searchCriteria);
   }
 
@@ -50,7 +48,7 @@ class MovieController {
 
   @RequestMapping(method = RequestMethod.PUT, value = MOVIE_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
   public MovieVO uptadeMovie(@PathParam("id") long id, @RequestBody MovieVO movie) {
-    return movieService.create(movie);
+    return movieService.update(id, movie);
   }
 
   @RequestMapping(method = RequestMethod.DELETE, value = MOVIE_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -60,6 +58,9 @@ class MovieController {
 
   private SearchCriteria toMovieQuery(Map<String, String> params) {
     SearchCriteria searchCriteria = new SearchCriteria();
+    if (params == null) {
+      params = new HashMap<>();
+    }
     searchCriteria.setPagingAndSortingParams(pagingAndSortingParamsConverter.convertToQueryParam(params));
 
     params.entrySet()
@@ -96,5 +97,4 @@ class MovieController {
         return movieSearchCriteria;
       });
   }
-
 }

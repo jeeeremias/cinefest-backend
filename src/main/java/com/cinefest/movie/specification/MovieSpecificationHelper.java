@@ -6,12 +6,21 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import static com.cinefest.movie.enumeration.MovieAttr.TYPE;
 
 public class MovieSpecificationHelper {
 
   public static Specification<MovieEntity> equal(String key, String value) {
+    return (root, query, builder) -> builder.equal(root.get(key), value);
+  }
+
+  public static Specification<MovieEntity> equal(String key, LocalDate value) {
+    return (root, query, builder) -> builder.equal(root.get(key), value);
+  }
+
+  public static Specification<MovieEntity> equal(String key, LocalDateTime value) {
     return (root, query, builder) -> builder.equal(root.get(key), value);
   }
 

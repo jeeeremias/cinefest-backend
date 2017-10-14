@@ -1,7 +1,7 @@
 package com.cinefest.movie;
 
 import com.cinefest.entity.PhotoEntity;
-import com.cinefest.entity.VoteEntity;
+import com.cinefest.review.ReviewEntity;
 import com.cinefest.movie.enumeration.MovieType;
 
 import javax.persistence.*;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-public class MovieEntity implements Serializable {
+public class MovieEntity {
 
   @Id
   private long id;
@@ -59,7 +59,7 @@ public class MovieEntity implements Serializable {
   private List<PhotoEntity> photos;
 
   @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  private List<VoteEntity> votes;
+  private List<ReviewEntity> votes;
 
   public MovieEntity() {
     super();
@@ -207,11 +207,11 @@ public class MovieEntity implements Serializable {
     this.photos = photos;
   }
 
-  public List<VoteEntity> getVotes() {
+  public List<ReviewEntity> getVotes() {
     return votes;
   }
 
-  public void setVotes(List<VoteEntity> votes) {
+  public void setVotes(List<ReviewEntity> votes) {
     this.votes = votes;
   }
 }

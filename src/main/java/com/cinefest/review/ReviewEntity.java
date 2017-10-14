@@ -1,4 +1,4 @@
-package com.cinefest.entity;
+package com.cinefest.review;
 
 import com.cinefest.movie.MovieEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-public class VoteEntity implements Serializable {
+public class ReviewEntity {
 
   @Id
   @GeneratedValue
@@ -25,7 +25,7 @@ public class VoteEntity implements Serializable {
   @JsonIgnore
   private MovieEntity movie;
 
-  public VoteEntity() {
+  public ReviewEntity() {
     super();
   }
 

@@ -1,7 +1,7 @@
 package com.cinefest.rest.facade;
 
 import com.cinefest.movie.MovieEntity;
-import com.cinefest.entity.VoteEntity;
+import com.cinefest.review.ReviewEntity;
 import com.cinefest.rest.params.SearchCriteria;
 import com.cinefest.movie.MovieRepository;
 import com.cinefest.repository.VoteRepository;
@@ -20,13 +20,13 @@ public class VoteRestFacade {
   @Autowired
   MovieRepository movieRespository;
 
-  public VoteEntity save(VoteEntity voteEntity) {
-    MovieEntity movieEntity = movieRespository.findOne(voteEntity.getMovieId());
-    voteEntity.setMovie(movieEntity);
-    return voteRespository.save(voteEntity);
+  public ReviewEntity save(ReviewEntity reviewEntity) {
+    MovieEntity movieEntity = movieRespository.findOne(reviewEntity.getMovieId());
+    reviewEntity.setMovie(movieEntity);
+    return voteRespository.save(reviewEntity);
   }
 
-  public Iterable<VoteEntity> getAll(SearchCriteria params) {
+  public Iterable<ReviewEntity> getAll(SearchCriteria params) {
     return voteRespository.findAll(new Sort(Sort.Direction.ASC, "day"));
   }
 
