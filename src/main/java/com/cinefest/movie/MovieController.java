@@ -55,7 +55,7 @@ class MovieController {
 
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @RequestMapping(method = RequestMethod.DELETE, value = MOVIE_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-  public MovieVO deleteMovie(@PathParam("id") long id) throws IllegalAccessException {
+  public void deleteMovie(@PathParam("id") long id) throws IllegalAccessException {
     movieService.delete(id);
   }
 
