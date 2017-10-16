@@ -22,10 +22,6 @@ public class SearchCriteria<T extends SearchElement> {
     return searches;
   }
 
-  public void setSearches(List<T> searches) {
-    this.searches = searches;
-  }
-
   public void addSearch(T search) {
     if (searches == null) {
       searches = new ArrayList<>();

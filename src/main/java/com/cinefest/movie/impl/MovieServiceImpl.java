@@ -103,6 +103,11 @@ public class MovieServiceImpl implements MovieService {
     return entityToVO(save(movieEntity));
   }
 
+  @Override
+  public void delete(long id) {
+    movieRepository.delete(id);
+  }
+
   private MovieEntity save(MovieEntity movieEntity) {
     return movieRepository.save(movieEntity);
   }

@@ -3,6 +3,7 @@ package com.cinefest.rate;
 import com.cinefest.pojo.RateVO;
 import com.cinefest.rest.params.SearchCriteria;
 import com.cinefest.rest.util.converter.PagingAndSortingParamsConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ public class RateController {
   private RateService rateService;
   private PagingAndSortingParamsConverter pagingAndSortingParamsConverter;
 
+  @Autowired
   public RateController(RateService rateService, PagingAndSortingParamsConverter pagingAndSortingParamsConverter) {
     this.rateService = rateService;
     this.pagingAndSortingParamsConverter = pagingAndSortingParamsConverter;

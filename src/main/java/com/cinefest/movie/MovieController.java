@@ -6,6 +6,7 @@ import com.cinefest.rest.params.SearchCriteria;
 import com.cinefest.rest.util.converter.PagingAndSortingParamsConverter;
 import com.cinefest.util.enumeration.QueryOperator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +42,7 @@ class MovieController {
     return movieService.getOne(id);
   }
 
+  @ResponseStatus(HttpStatus.CREATED)
   @RequestMapping(method = RequestMethod.POST, value = MOVIES, produces = MediaType.APPLICATION_JSON_VALUE)
   public MovieVO newMovie(@RequestBody MovieVO movie) {
     return movieService.create(movie);
@@ -51,9 +53,10 @@ class MovieController {
     return movieService.update(id, movie);
   }
 
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   @RequestMapping(method = RequestMethod.DELETE, value = MOVIE_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
   public MovieVO deleteMovie(@PathParam("id") long id) throws IllegalAccessException {
-    throw new IllegalAccessException();
+    movieService.delete(id);
   }
 
   private SearchCriteria toMovieQuery(Map<String, String> params) {

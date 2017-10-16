@@ -14,4 +14,6 @@ public interface MovieService {
   MovieVO create(MovieVO movieVO);
 
   MovieVO update(long id, MovieVO movieVO);
+
+  void delete(long id);
 }
