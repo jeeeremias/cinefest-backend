@@ -29,10 +29,6 @@ public class MovieServiceImpl implements MovieService {
 
   @Override
   public List<MovieVO> getAll(SearchCriteria<MovieSearchElement> searchCriteria) {
-    if (searchCriteria == null) {
-      return entitiesToVos(movieRepository.findAll());
-    }
-
     Specifications specifications = null;
     PageRequest pageRequest = null;
     if (searchCriteria.getPagingAndSortingParams() != null) {

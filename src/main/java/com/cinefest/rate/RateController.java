@@ -19,8 +19,9 @@ public class RateController {
   private RateService rateService;
   private PagingAndSortingParamsConverter pagingAndSortingParamsConverter;
 
-  public RateController(RateService rateService) {
+  public RateController(RateService rateService, PagingAndSortingParamsConverter pagingAndSortingParamsConverter) {
     this.rateService = rateService;
+    this.pagingAndSortingParamsConverter = pagingAndSortingParamsConverter;
   }
 
   @RequestMapping(method = RequestMethod.GET, value = RATES, produces = MediaType.APPLICATION_JSON_VALUE)
