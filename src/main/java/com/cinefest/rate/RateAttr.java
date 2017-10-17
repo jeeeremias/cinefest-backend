@@ -1,6 +1,9 @@
 package com.cinefest.rate;
 
+import com.cinefest.movie.enumeration.MovieAttr;
 import com.cinefest.util.enumeration.ParamType;
+
+import java.util.Arrays;
 
 public enum RateAttr {
   
@@ -21,5 +24,19 @@ public enum RateAttr {
     this.sortable = sortable;
     this.searchable = searchable;
     this.type = type;
+  }
+
+  public static RateAttr fromQueryAttr(String queryAttr) {
+    return Arrays.stream(RateAttr.values())
+      .filter(e -> e.queryAttr.equals(queryAttr))
+      .findFirst()
+      .orElse(null);
+  }
+
+  public static RateAttr fromEntityAttr(String entityAttr) {
+    return Arrays.stream(RateAttr.values())
+      .filter(e -> e.entityAttr.equals(entityAttr))
+      .findFirst()
+      .orElse(null);
   }
 }

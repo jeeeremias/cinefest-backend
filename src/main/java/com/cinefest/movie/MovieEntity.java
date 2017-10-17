@@ -65,28 +65,6 @@ public class MovieEntity {
     super();
   }
 
-  public MovieEntity(Long id, MovieType type, String nome, String city,
-                     String state, LocalDate incomeDate, String genre, String runtime,
-                     LocalDateTime screeningDateTime, String director,
-                     String shortSynopsis, String fullSynopsis,
-                     String directorBiography, String directorEmail) {
-    super();
-    this.id = id;
-    this.type = type;
-    this.name = nome;
-    this.city = city;
-    this.state = state;
-    this.incomeDate = incomeDate;
-    this.genre = genre;
-    this.runtime = runtime;
-    this.screeningDateTime = screeningDateTime;
-    this.director = director;
-    this.shortSynopsis = shortSynopsis;
-    this.fullSynopsis = fullSynopsis;
-    this.directorBiography = directorBiography;
-    this.directorEmail = directorEmail;
-  }
-
   public long getId() {
     return id;
   }
