@@ -6,6 +6,7 @@ import com.cinefest.rate.review.ReviewEntity;
 import com.cinefest.movie.enumeration.MovieType;
 
 import javax.persistence.*;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,7 +36,7 @@ public class MovieEntity {
   private String genre;
 
   @Column
-  private String runtime;
+  private Duration runtime;
 
   @Column
   private LocalDateTime screeningDateTime;
