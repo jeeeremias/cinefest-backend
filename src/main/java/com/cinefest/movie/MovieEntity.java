@@ -122,11 +122,11 @@ public class MovieEntity {
     this.genre = genre;
   }
 
-  public String getRuntime() {
+  public Duration getRuntime() {
     return runtime;
   }
 
-  public void setRuntime(String runtime) {
+  public void setRuntime(Duration runtime) {
     this.runtime = runtime;
   }
 
