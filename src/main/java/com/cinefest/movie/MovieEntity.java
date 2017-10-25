@@ -2,7 +2,6 @@ package com.cinefest.movie;
 
 import com.cinefest.entity.PhotoEntity;
 import com.cinefest.rate.RateEntity;
-import com.cinefest.rate.review.ReviewEntity;
 import com.cinefest.movie.enumeration.MovieType;
 
 import javax.persistence.*;
@@ -44,11 +43,8 @@ public class MovieEntity {
   @Column
   private String director;
 
-  @Column
-  private String shortSynopsis;
-
   @Column(length = 5000)
-  private String fullSynopsis;
+  private String synopsis;
 
   @Column(length = 5000)
   private String directorBiography;
@@ -146,20 +142,12 @@ public class MovieEntity {
     this.director = director;
   }
 
-  public String getShortSynopsis() {
-    return shortSynopsis;
+  public String getSynopsis() {
+    return synopsis;
   }
 
-  public void setShortSynopsis(String shortSynopsis) {
-    this.shortSynopsis = shortSynopsis;
-  }
-
-  public String getFullSynopsis() {
-    return fullSynopsis;
-  }
-
-  public void setFullSynopsis(String fullSynopsis) {
-    this.fullSynopsis = fullSynopsis;
+  public void setSynopsis(String synopsis) {
+    this.synopsis = synopsis;
   }
 
   public String getDirectorBiography() {

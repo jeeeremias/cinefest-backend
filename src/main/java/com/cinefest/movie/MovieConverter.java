@@ -21,7 +21,7 @@ public class MovieConverter {
     entity.setDirector(vo.getDirector());
     entity.setDirectorBiography(vo.getDirectorBiography());
     entity.setDirectorEmail(vo.getDirectorEmail());
-    entity.setFullSynopsis(vo.getFullSynopsis());
+    entity.setSynopsis(vo.getSynopsis());
     entity.setGenre(vo.getGenre());
     entity.setName(vo.getName());
     entity.setIncomeDate(vo.getIncomeDate());
@@ -38,7 +38,7 @@ public class MovieConverter {
     vo.setDirector(entity.getDirector());
     vo.setDirectorBiography(entity.getDirectorBiography());
     vo.setDirectorEmail(entity.getDirectorEmail());
-    vo.setFullSynopsis(entity.getFullSynopsis());
+    vo.setSynopsis(entity.getSynopsis());
     vo.setGenre(entity.getGenre());
     vo.setName(entity.getName());
     vo.setIncomeDate(entity.getIncomeDate());

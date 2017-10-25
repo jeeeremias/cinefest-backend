@@ -73,8 +73,8 @@ public class MovieServiceImpl implements MovieService {
     if (movieVO.getDirectorEmail() != null) {
       movieEntity.setDirectorEmail(movieVO.getDirectorEmail());
     }
-    if (movieVO.getFullSynopsis() != null) {
-      movieEntity.setFullSynopsis(movieVO.getFullSynopsis());
+    if (movieVO.getSynopsis() != null) {
+      movieEntity.setSynopsis(movieVO.getSynopsis());
     }
     if (movieVO.getGenre() != null) {
       movieEntity.setGenre(movieVO.getGenre());

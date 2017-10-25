@@ -1,8 +1,8 @@
 package com.cinefest.pojo;
 
 import com.cinefest.movie.enumeration.MovieType;
-import com.cinefest.pojo.PhotoVO;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,11 +16,10 @@ public class MovieVO {
   private String state;
   private LocalDate incomeDate;
   private String genre;
-  private String runtime;
+  private Duration runtime;
   private LocalDateTime screeningDateTime;
   private String director;
-  private String shortSynopsis;
-  private String fullSynopsis;
+  private String synopsis;
   private String directorBiography;
   private String directorEmail;
   private List<PhotoVO> photos;
@@ -81,11 +80,11 @@ public class MovieVO {
     this.genre = genre;
   }
 
-  public String getRuntime() {
+  public Duration getRuntime() {
     return runtime;
   }
 
-  public void setRuntime(String runtime) {
+  public void setRuntime(Duration runtime) {
     this.runtime = runtime;
   }
 
@@ -105,20 +104,12 @@ public class MovieVO {
     this.director = director;
   }
 
-  public String getShortSynopsis() {
-    return shortSynopsis;
+  public String getSynopsis() {
+    return synopsis;
   }
 
-  public void setShortSynopsis(String shortSynopsis) {
-    this.shortSynopsis = shortSynopsis;
-  }
-
-  public String getFullSynopsis() {
-    return fullSynopsis;
-  }
-
-  public void setFullSynopsis(String fullSynopsis) {
-    this.fullSynopsis = fullSynopsis;
+  public void setSynopsis(String synopsis) {
+    this.synopsis = synopsis;
   }
 
   public String getDirectorBiography() {
