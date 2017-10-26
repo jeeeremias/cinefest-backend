@@ -91,9 +91,6 @@ public class MovieServiceImpl implements MovieService {
     if (movieVO.getScreeningDateTime() != null) {
       movieEntity.setScreeningDateTime(movieVO.getScreeningDateTime());
     }
-    if (movieVO.getShortSynopsis() != null) {
-      movieEntity.setShortSynopsis(movieVO.getShortSynopsis());
-    }
     if (movieVO.getState() != null) {
       movieEntity.setState(movieVO.getState());
     }
