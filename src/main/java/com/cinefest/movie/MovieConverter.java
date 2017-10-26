@@ -27,7 +27,6 @@ public class MovieConverter {
     entity.setIncomeDate(vo.getIncomeDate());
     entity.setRuntime(vo.getRuntime());
     entity.setScreeningDateTime(vo.getScreeningDateTime());
-    entity.setShortSynopsis(vo.getShortSynopsis());
     return entity;
   }
 
@@ -44,7 +43,6 @@ public class MovieConverter {
     vo.setIncomeDate(entity.getIncomeDate());
     vo.setRuntime(entity.getRuntime());
     vo.setScreeningDateTime(entity.getScreeningDateTime());
-    vo.setShortSynopsis(entity.getShortSynopsis());
     List<PhotoVO> photos = new ArrayList<>();
     for (PhotoEntity photo : entity.getPhotos()) {
       photos.add(new PhotoVO(photo.getId()));
