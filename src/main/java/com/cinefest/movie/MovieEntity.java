@@ -14,6 +14,7 @@ import java.util.List;
 public class MovieEntity {
 
   @Id
+  @GeneratedValue
   private long id;
 
   @Column

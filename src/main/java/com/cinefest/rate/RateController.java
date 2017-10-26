@@ -1,12 +1,11 @@
 package com.cinefest.rate;
 
-import com.cinefest.movie.MovieSearchElement;
-import com.cinefest.movie.enumeration.MovieAttr;
 import com.cinefest.pojo.RateVO;
 import com.cinefest.rest.params.SearchCriteria;
 import com.cinefest.rest.util.converter.PagingAndSortingParamsConverter;
 import com.cinefest.util.enumeration.QueryOperator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,10 +15,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.cinefest.rate.RateEndpoints.RATES;
-import static com.cinefest.rate.RateEndpoints.RATES_BY_ID;
+import static com.cinefest.movie.PathEndpoints.ID;
+import static com.cinefest.movie.PathEndpoints.RATES;
+import static com.cinefest.movie.PathEndpoints.RATE_ID;
 
-@RestController("/rates")
+
+@RestController()
 public class RateController {
 
   private RateService rateService;
@@ -37,22 +38,23 @@ public class RateController {
     return rateService.getAll(searchCriteria);
   }
 
-  @RequestMapping(method = RequestMethod.GET, value = RATES_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping(method = RequestMethod.GET, value = RATE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
   public RateVO getRate(@PathParam("id") long id) {
     return rateService.getOne(id);
   }
 
+  @ResponseStatus(HttpStatus.CREATED)
   @RequestMapping(method = RequestMethod.POST, value = RATES, produces = MediaType.APPLICATION_JSON_VALUE)
   public RateVO newRate(@RequestBody RateVO rate) {
     return rateService.create(rate);
   }
 
-  @RequestMapping(method = RequestMethod.PUT, value = RATES_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping(method = RequestMethod.PUT, value = RATE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
   public RateVO updateRate(@PathParam("id") long id, @RequestBody RateVO rate) {
     return rateService.update(id, rate);
   }
 
-  @RequestMapping(method = RequestMethod.DELETE, value = RATES_BY_ID)
+  @RequestMapping(method = RequestMethod.DELETE, value = RATE_ID)
   public void deleteRate(@PathParam("id") long id) throws IllegalAccessException {
     throw new IllegalAccessException();
   }

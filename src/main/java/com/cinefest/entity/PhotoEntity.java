@@ -20,20 +20,7 @@ public class PhotoEntity implements Serializable {
   private boolean main;
 
   @ManyToOne
-  @JoinColumn(name = "idMovie")
-  @JsonIgnore
   private MovieEntity movie;
-
-  public PhotoEntity() {
-    super();
-  }
-
-  public PhotoEntity(String source, boolean main, MovieEntity movie) {
-    super();
-    this.source = source;
-    this.main = main;
-    this.movie = movie;
-  }
 
   public String getSource() {
     return source;

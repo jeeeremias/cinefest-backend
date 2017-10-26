@@ -1,8 +1,7 @@
 package com.cinefest.rate;
 
+import com.cinefest.entity.UserEntity;
 import com.cinefest.movie.MovieEntity;
-import com.cinefest.rate.review.ReviewEntity;
-import com.cinefest.user.UserEntity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -20,12 +19,10 @@ public class RateEntity {
   @Column
   private LocalDateTime dateTime;
 
-  @Column
-  @OneToOne(mappedBy = "id")
+  @ManyToOne
   private UserEntity user;
 
-  @Column
-  @OneToOne(mappedBy = "id")
+  @ManyToOne
   private MovieEntity movie;
 
   public long getId() {

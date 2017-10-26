@@ -16,10 +16,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.cinefest.movie.MovieEndpoints.MOVIES;
-import static com.cinefest.movie.MovieEndpoints.MOVIE_BY_ID;
+import static com.cinefest.movie.PathEndpoints.MOVIES;
+import static com.cinefest.movie.PathEndpoints.MOVIE_ID;
 
-@RestController("/movies")
+@RestController()
 class MovieController {
 
   private PagingAndSortingParamsConverter pagingAndSortingParamsConverter;
@@ -37,7 +37,7 @@ class MovieController {
     return movieService.getAll(searchCriteria);
   }
 
-  @RequestMapping(method = RequestMethod.GET, value = MOVIE_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping(method = RequestMethod.GET, value = MOVIE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
   public MovieVO getMovie(@PathParam("id") long id) {
     return movieService.getOne(id);
   }
@@ -48,13 +48,13 @@ class MovieController {
     return movieService.create(movie);
   }
 
-  @RequestMapping(method = RequestMethod.PUT, value = MOVIE_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping(method = RequestMethod.PUT, value = MOVIE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
   public MovieVO uptadeMovie(@PathParam("id") long id, @RequestBody MovieVO movie) {
     return movieService.update(id, movie);
   }
 
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  @RequestMapping(method = RequestMethod.DELETE, value = MOVIE_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping(method = RequestMethod.DELETE, value = MOVIE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
   public void deleteMovie(@PathParam("id") long id) throws IllegalAccessException {
     movieService.delete(id);
   }
