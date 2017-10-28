@@ -15,12 +15,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.cinefest.movie.PathEndpoints.ID;
-import static com.cinefest.movie.PathEndpoints.RATES;
-import static com.cinefest.movie.PathEndpoints.RATE_ID;
+import static com.cinefest.rest.PathEndpoints.RATES;
+import static com.cinefest.rest.PathEndpoints.RATE_ID;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 
-@RestController()
+@RestController
 public class RateController {
 
   private RateService rateService;
@@ -32,29 +34,30 @@ public class RateController {
     this.pagingAndSortingParamsConverter = pagingAndSortingParamsConverter;
   }
 
-  @RequestMapping(method = RequestMethod.GET, value = RATES, produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping(method = GET, value = RATES, produces = APPLICATION_JSON_VALUE)
   public List<RateVO> getRates(@RequestParam(required = false) Map<String, String> params) throws IllegalAccessException {
     SearchCriteria searchCriteria = toMovieQuery(params);
     return rateService.getAll(searchCriteria);
   }
 
-  @RequestMapping(method = RequestMethod.GET, value = RATE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping(method = GET, value = RATE_ID, produces = APPLICATION_JSON_VALUE)
   public RateVO getRate(@PathParam("id") long id) {
     return rateService.getOne(id);
   }
 
-  @ResponseStatus(HttpStatus.CREATED)
-  @RequestMapping(method = RequestMethod.POST, value = RATES, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseStatus(value = HttpStatus.CREATED)
+  @RequestMapping(method = POST, value = RATES, produces = APPLICATION_JSON_VALUE)
   public RateVO newRate(@RequestBody RateVO rate) {
     return rateService.create(rate);
   }
 
-  @RequestMapping(method = RequestMethod.PUT, value = RATE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping(method = PUT, value = RATE_ID, produces = APPLICATION_JSON_VALUE)
   public RateVO updateRate(@PathParam("id") long id, @RequestBody RateVO rate) {
     return rateService.update(id, rate);
   }
 
-  @RequestMapping(method = RequestMethod.DELETE, value = RATE_ID)
+  @ResponseStatus(NO_CONTENT)
+  @RequestMapping(method = DELETE, value = RATE_ID)
   public void deleteRate(@PathParam("id") long id) throws IllegalAccessException {
     throw new IllegalAccessException();
   }

@@ -43,11 +43,6 @@ public class MovieConverter {
     vo.setIncomeDate(entity.getIncomeDate());
     vo.setRuntime(entity.getRuntime());
     vo.setScreeningDateTime(entity.getScreeningDateTime());
-    List<PhotoVO> photos = new ArrayList<>();
-    for (PhotoEntity photo : entity.getPhotos()) {
-      photos.add(new PhotoVO(photo.getId()));
-    }
-    vo.setPhotos(photos);
     return vo;
   }
 

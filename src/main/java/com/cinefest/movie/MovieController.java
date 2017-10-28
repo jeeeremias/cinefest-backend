@@ -16,10 +16,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.cinefest.movie.PathEndpoints.MOVIES;
-import static com.cinefest.movie.PathEndpoints.MOVIE_ID;
+import static com.cinefest.rest.PathEndpoints.MOVIES;
+import static com.cinefest.rest.PathEndpoints.MOVIE_ID;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
-@RestController()
+@RestController
 class MovieController {
 
   private PagingAndSortingParamsConverter pagingAndSortingParamsConverter;
@@ -31,30 +35,30 @@ class MovieController {
     this.movieService = movieService;
   }
 
-  @RequestMapping(method = RequestMethod.GET, value = MOVIES, produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping(method = GET, value = MOVIES, produces = APPLICATION_JSON_VALUE)
   public List<MovieVO> getMovies(@RequestParam(required = false) Map<String, String> params) {
     SearchCriteria searchCriteria = toMovieQuery(params);
     return movieService.getAll(searchCriteria);
   }
 
-  @RequestMapping(method = RequestMethod.GET, value = MOVIE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping(method = GET, value = MOVIE_ID, produces = APPLICATION_JSON_VALUE)
   public MovieVO getMovie(@PathParam("id") long id) {
     return movieService.getOne(id);
   }
 
-  @ResponseStatus(HttpStatus.CREATED)
-  @RequestMapping(method = RequestMethod.POST, value = MOVIES, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseStatus(CREATED)
+  @RequestMapping(method = POST, value = MOVIES, produces = APPLICATION_JSON_VALUE)
   public MovieVO newMovie(@RequestBody MovieVO movie) {
     return movieService.create(movie);
   }
 
-  @RequestMapping(method = RequestMethod.PUT, value = MOVIE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping(method = PUT, value = MOVIE_ID, produces = APPLICATION_JSON_VALUE)
   public MovieVO uptadeMovie(@PathParam("id") long id, @RequestBody MovieVO movie) {
     return movieService.update(id, movie);
   }
 
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  @RequestMapping(method = RequestMethod.DELETE, value = MOVIE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseStatus(NO_CONTENT)
+  @RequestMapping(method = DELETE, value = MOVIE_ID, produces = APPLICATION_JSON_VALUE)
   public void deleteMovie(@PathParam("id") long id) throws IllegalAccessException {
     movieService.delete(id);
   }
