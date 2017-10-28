@@ -3,25 +3,29 @@ charset=utf-8
 end_of_line=lf
 insert_final_newline=false
 indent_style=space
-indent_size=4
+indent_size=2
 
 [{*.sht,*.html,*.shtm,*.shtml,*.htm}]
 indent_style=space
-indent_size=2
+indent_size=4
 
 [{*.mod,*.dtd,*.ent,*.elt}]
 indent_style=space
-indent_size=2
+indent_size=4
 
 [{*.jhm,*.xslt,*.xul,*.rng,*.xsl,*.xsd,*.ant,*.svg,*.tld,*.fxml,*.jrxml,*.xml,*.jnlp,*.wsdl,*.pom}]
 indent_style=space
-indent_size=2
-
-[*.json]
-indent_style=space
-indent_size=2
+indent_size=4
 
 [*.java]
 indent_style=space
 indent_size=2
+
+[{*.gant,*.groovy,*.gradle,*.gy,*.gdsl}]
+indent_style=space
+indent_size=4
+
+[{*.kts,*.kt}]
+indent_style=space
+indent_size=4
 
