@@ -53,7 +53,7 @@ public class MovieServiceImpl implements MovieService {
 
   @Override
   public MovieVO getOne(long id) {
-    return toVO(movieRepository.findOne(id));
+    return toVO(movieRepository.getOne(id));
   }
 
   @Override
@@ -64,7 +64,7 @@ public class MovieServiceImpl implements MovieService {
 
   @Override
   public MovieVO update(long id, MovieVO movieVO) {
-    MovieEntity movieEntity = movieRepository.findOne(id);
+    MovieEntity movieEntity = movieRepository.getOne(id);
     if (movieVO.getCity() != null) {
       movieEntity.setCity(movieVO.getCity());
     }
@@ -106,7 +106,7 @@ public class MovieServiceImpl implements MovieService {
 
   @Override
   public void delete(long id) {
-    movieRepository.delete(id);
+    movieRepository.deleteById(id);
   }
 
   private MovieEntity save(MovieEntity movieEntity) {
