@@ -1,32 +1,17 @@
-package com.cinefest.entity;
+package com.cinefest.pojo;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.time.LocalDate;
 
-@Entity
-public class UserEntity {
+public class UserVO {
 
-  @Id
-  @GeneratedValue
   private String id;
-
-  @Column
   private String firstName;
-
-  @Column
   private String lastName;
-
-  @Column
   private String email;
-
-  @Column
   private String cellPhone;
-
-  @Column
   private LocalDate bornDate;
+  private boolean privateEmail;
 
   public String getId() {
     return id;
@@ -74,5 +59,13 @@ public class UserEntity {
 
   public void setBornDate(LocalDate bornDate) {
     this.bornDate = bornDate;
+  }
+
+  public boolean isPrivateEmail() {
+    return privateEmail;
+  }
+
+  public void setPrivateEmail(boolean privateEmail) {
+    this.privateEmail = privateEmail;
   }
 }
