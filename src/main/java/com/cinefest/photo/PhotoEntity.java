@@ -1,4 +1,4 @@
-package com.cinefest.entity;
+package com.cinefest.photo;
 
 import com.cinefest.movie.MovieEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -22,20 +22,20 @@ public class PhotoEntity implements Serializable {
   @ManyToOne
   private MovieEntity movie;
 
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
   public String getSource() {
     return source;
   }
 
   public void setSource(String source) {
     this.source = source;
-  }
-
-  public MovieEntity getMovie() {
-    return movie;
-  }
-
-  public void setMovie(MovieEntity movie) {
-    this.movie = movie;
   }
 
   public boolean isMain() {
@@ -46,12 +46,11 @@ public class PhotoEntity implements Serializable {
     this.main = main;
   }
 
-  public Long getId() {
-    return id;
+  public MovieEntity getMovie() {
+    return movie;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setMovie(MovieEntity movie) {
+    this.movie = movie;
   }
-
 }

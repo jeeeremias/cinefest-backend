@@ -1,10 +1,7 @@
 package com.cinefest.movie;
 
-import com.cinefest.entity.PhotoEntity;
 import com.cinefest.pojo.MovieVO;
-import com.cinefest.pojo.PhotoVO;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +25,7 @@ public class MovieConverter {
     entity.setIncomeDate(vo.getIncomeDate());
     entity.setRuntime(vo.getRuntime());
     entity.setScreeningDateTime(vo.getScreeningDateTime());
+    entity.setType(vo.getType());
     return entity;
   }
 
@@ -45,6 +43,7 @@ public class MovieConverter {
     vo.setIncomeDate(entity.getIncomeDate());
     vo.setRuntime(entity.getRuntime());
     vo.setScreeningDateTime(entity.getScreeningDateTime());
+    vo.setType(entity.getType());
     return vo;
   }
 

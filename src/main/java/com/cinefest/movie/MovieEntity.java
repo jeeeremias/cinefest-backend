@@ -1,6 +1,6 @@
 package com.cinefest.movie;
 
-import com.cinefest.entity.PhotoEntity;
+import com.cinefest.photo.PhotoEntity;
 import com.cinefest.rate.RateEntity;
 import com.cinefest.movie.enumeration.MovieType;
 
