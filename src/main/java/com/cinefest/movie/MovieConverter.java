@@ -18,6 +18,7 @@ public class MovieConverter {
     MovieEntity entity = new MovieEntity();
     entity.setId(vo.getId());
     entity.setCity(vo.getCity());
+    entity.setState(vo.getState());
     entity.setDirector(vo.getDirector());
     entity.setDirectorBiography(vo.getDirectorBiography());
     entity.setDirectorEmail(vo.getDirectorEmail());
@@ -34,6 +35,7 @@ public class MovieConverter {
     MovieVO vo = new MovieVO();
     vo.setId(entity.getId());
     vo.setCity(entity.getCity());
+    vo.setState(entity.getState());
     vo.setDirector(entity.getDirector());
     vo.setDirectorBiography(entity.getDirectorBiography());
     vo.setDirectorEmail(entity.getDirectorEmail());
