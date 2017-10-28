@@ -11,7 +11,7 @@ public class MovieConverter {
     throw new IllegalAccessError("Utility class " + this.getClass().getName() + "cannot be instantiated");
   }
 
-  public static MovieEntity voToEntity(MovieVO vo) {
+  public static MovieEntity toEntity(MovieVO vo) {
     MovieEntity entity = new MovieEntity();
     entity.setId(vo.getId());
     entity.setCity(vo.getCity());
@@ -29,7 +29,7 @@ public class MovieConverter {
     return entity;
   }
 
-  public static MovieVO entityToVO(MovieEntity entity) {
+  public static MovieVO toVO(MovieEntity entity) {
     MovieVO vo = new MovieVO();
     vo.setId(entity.getId());
     vo.setCity(entity.getCity());
@@ -47,9 +47,9 @@ public class MovieConverter {
     return vo;
   }
 
-  public static List<MovieVO> entitiesToVos(List<MovieEntity> entities) {
+  public static List<MovieVO> toVos(List<MovieEntity> entities) {
     return entities.stream()
-      .map(MovieConverter::entityToVO).collect(Collectors.toList());
+      .map(MovieConverter::toVO).collect(Collectors.toList());
   }
 
 }
