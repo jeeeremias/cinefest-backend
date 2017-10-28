@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static javax.persistence.CascadeType.PERSIST;
+
 @Entity
 public class MovieEntity {
 
@@ -53,7 +55,7 @@ public class MovieEntity {
   @Column
   private String directorEmail;
 
-  @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY, cascade = PERSIST)
   private List<PhotoEntity> photos;
 
   @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
