@@ -2,16 +2,14 @@ package com.cinefest.rate;
 
 import com.cinefest.pojo.RateVO;
 import com.cinefest.rest.params.SearchCriteria;
-import com.cinefest.rest.util.converter.PagingAndSortingParamsConverter;
-import com.cinefest.util.enumeration.QueryOperator;
+import com.cinefest.rest.util.converter.PageAndSortParamsFactory;
+import com.cinefest.service.util.enumeration.QueryOperator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,17 +24,15 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 public class RateController {
 
   private RateService rateService;
-  private PagingAndSortingParamsConverter pagingAndSortingParamsConverter;
 
   @Autowired
-  public RateController(RateService rateService, PagingAndSortingParamsConverter pagingAndSortingParamsConverter) {
+  public RateController(RateService rateService) {
     this.rateService = rateService;
-    this.pagingAndSortingParamsConverter = pagingAndSortingParamsConverter;
   }
 
   @RequestMapping(method = GET, value = RATES, produces = APPLICATION_JSON_VALUE)
-  public List<RateVO> getRates(@RequestParam(required = false) Map<String, String> params) throws IllegalAccessException {
-    SearchCriteria searchCriteria = toMovieQuery(params);
+  public List<RateVO> getRates(@RequestParam(required = false) Map<String, String> params) {
+    SearchCriteria<RateSearchElement> searchCriteria = toRateQuery(params);
     return rateService.getAll(searchCriteria);
   }
 
@@ -58,16 +54,19 @@ public class RateController {
 
   @ResponseStatus(NO_CONTENT)
   @RequestMapping(method = DELETE, value = RATE_ID)
-  public void deleteRate(@PathParam("id") long id) throws IllegalAccessException {
-    throw new IllegalAccessException();
+  public void deleteRate(@PathParam("id") long id) {
+    throw new UnsupportedOperationException();
   }
 
-  private SearchCriteria toMovieQuery(Map<String, String> params) {
-    SearchCriteria searchCriteria = new SearchCriteria();
+  private SearchCriteria<RateSearchElement> toRateQuery(final Map<String, String> params) {
+    SearchCriteria<RateSearchElement> searchCriteria = new SearchCriteria<>();
+
     if (params == null) {
-      params = new HashMap<>();
+      searchCriteria.setPageAndSortParams(PageAndSortParamsFactory.createDefault());
+      return searchCriteria;
+    } else {
+      searchCriteria.setPageAndSortParams(PageAndSortParamsFactory.fromParams(params));
     }
-    searchCriteria.setPagingAndSortingParams(pagingAndSortingParamsConverter.convertToQueryParam(params));
 
     params.entrySet()
       .forEach(e -> {

@@ -1,6 +1,5 @@
 package com.cinefest.rate;
 
-import com.cinefest.movie.MovieSearchElement;
 import com.cinefest.pojo.RateVO;
 import com.cinefest.rest.params.SearchCriteria;
 
@@ -8,7 +7,7 @@ import java.util.List;
 
 public interface RateService {
 
-  List<RateVO> getAll(SearchCriteria<MovieSearchElement> searchCriteria);
+  List<RateVO> getAll(SearchCriteria<RateSearchElement> searchCriteria);
 
   RateVO getOne(long id);
 

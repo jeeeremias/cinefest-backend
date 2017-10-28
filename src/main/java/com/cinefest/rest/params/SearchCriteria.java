@@ -7,15 +7,15 @@ import java.util.List;
 
 public class SearchCriteria<T extends SearchElement> {
 
-  private PagingAndSortingParams pagingAndSortingParams;
+  private PageAndSortParams pageAndSortParams;
   private List<T> searches;
 
-  public PagingAndSortingParams getPagingAndSortingParams() {
-    return pagingAndSortingParams;
+  public PageAndSortParams getPageAndSortParams() {
+    return pageAndSortParams;
   }
 
-  public void setPagingAndSortingParams(PagingAndSortingParams pagingAndSortingParams) {
-    this.pagingAndSortingParams = pagingAndSortingParams;
+  public void setPageAndSortParams(PageAndSortParams pageAndSortParams) {
+    this.pageAndSortParams = pageAndSortParams;
   }
 
   public List<T> getSearches() {

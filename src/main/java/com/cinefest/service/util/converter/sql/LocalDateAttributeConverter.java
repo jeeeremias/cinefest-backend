@@ -1,4 +1,4 @@
-package com.cinefest.util.converter.sql;
+package com.cinefest.service.util.converter.sql;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

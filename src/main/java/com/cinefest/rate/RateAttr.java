@@ -1,14 +1,13 @@
 package com.cinefest.rate;
 
-import com.cinefest.movie.enumeration.MovieAttr;
-import com.cinefest.util.enumeration.ParamType;
+import com.cinefest.service.util.enumeration.ParamType;
 
 import java.util.Arrays;
 
 public enum RateAttr {
   
   RATE("rate", "rate", true, true, ParamType.DOUBLE),
-  USER("user", "user", true, true, ParamType.CUSTOM),
+  USER("user", "user", false, false, ParamType.CUSTOM),
   MOVIE("movie", "movie", true, true, ParamType.CUSTOM),
   REVIEW("review", "review", false, true, ParamType.STRING);
 

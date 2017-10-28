@@ -3,16 +3,13 @@ package com.cinefest.movie;
 import com.cinefest.movie.enumeration.MovieAttr;
 import com.cinefest.pojo.MovieVO;
 import com.cinefest.rest.params.SearchCriteria;
-import com.cinefest.rest.util.converter.PagingAndSortingParamsConverter;
-import com.cinefest.util.enumeration.QueryOperator;
+import com.cinefest.rest.util.converter.PageAndSortParamsFactory;
+import com.cinefest.service.util.enumeration.QueryOperator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,18 +23,16 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RestController
 class MovieController {
 
-  private PagingAndSortingParamsConverter pagingAndSortingParamsConverter;
   private MovieService movieService;
 
   @Autowired
-  public MovieController(PagingAndSortingParamsConverter pagingAndSortingParamsConverter, MovieService movieService) {
-    this.pagingAndSortingParamsConverter = pagingAndSortingParamsConverter;
+  public MovieController(MovieService movieService) {
     this.movieService = movieService;
   }
 
   @RequestMapping(method = GET, value = MOVIES, produces = APPLICATION_JSON_VALUE)
   public List<MovieVO> getMovies(@RequestParam(required = false) Map<String, String> params) {
-    SearchCriteria searchCriteria = toMovieQuery(params);
+    SearchCriteria<MovieSearchElement> searchCriteria = toMovieQuery(params);
     return movieService.getAll(searchCriteria);
   }
 
@@ -59,16 +54,19 @@ class MovieController {
 
   @ResponseStatus(NO_CONTENT)
   @RequestMapping(method = DELETE, value = MOVIE_ID, produces = APPLICATION_JSON_VALUE)
-  public void deleteMovie(@PathParam("id") long id) throws IllegalAccessException {
+  public void deleteMovie(@PathParam("id") long id) {
     movieService.delete(id);
   }
 
-  private SearchCriteria toMovieQuery(Map<String, String> params) {
-    SearchCriteria searchCriteria = new SearchCriteria();
+  private SearchCriteria<MovieSearchElement> toMovieQuery(final Map<String, String> params) {
+    SearchCriteria<MovieSearchElement> searchCriteria = new SearchCriteria<>();
+
     if (params == null) {
-      params = new HashMap<>();
+      searchCriteria.setPageAndSortParams(PageAndSortParamsFactory.createDefault());
+      return searchCriteria;
+    } else {
+      searchCriteria.setPageAndSortParams(PageAndSortParamsFactory.fromParams(params));
     }
-    searchCriteria.setPagingAndSortingParams(pagingAndSortingParamsConverter.convertToQueryParam(params));
 
     params.entrySet()
       .forEach(e -> {

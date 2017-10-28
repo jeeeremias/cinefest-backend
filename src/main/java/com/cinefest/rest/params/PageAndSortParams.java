@@ -2,7 +2,7 @@ package com.cinefest.rest.params;
 
 import java.util.List;
 
-public class PagingAndSortingParams {
+public class PageAndSortParams {
   int page;
   int size;
   List<String> sort;

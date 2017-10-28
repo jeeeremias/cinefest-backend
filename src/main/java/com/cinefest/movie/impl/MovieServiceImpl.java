@@ -4,58 +4,62 @@ import com.cinefest.movie.MovieEntity;
 import com.cinefest.movie.MovieRepository;
 import com.cinefest.movie.MovieSearchElement;
 import com.cinefest.movie.MovieService;
-import com.cinefest.movie.specification.MovieSpecificationConverter;
+import com.cinefest.movie.specification.MovieSpecificationBuilder;
 import com.cinefest.pojo.MovieVO;
-import com.cinefest.rest.params.PagingAndSortingParams;
 import com.cinefest.rest.params.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.cinefest.movie.MovieConverter.*;
+import static com.cinefest.service.util.converter.PageRequestConverter.toPageRequest;
 
 @Service
 @Transactional
 public class MovieServiceImpl implements MovieService {
 
+  private MovieRepository movieRepository;
+  private MovieSpecificationBuilder specificationBuilder;
+
   @Autowired
-  MovieRepository movieRepository;
+  public MovieServiceImpl(MovieRepository movieRepository, MovieSpecificationBuilder specificationBuilder) {
+    this.movieRepository = movieRepository;
+    this.specificationBuilder = specificationBuilder;
+  }
 
   @Override
   public List<MovieVO> getAll(SearchCriteria<MovieSearchElement> searchCriteria) {
-    Specifications specifications = null;
+    Specifications<MovieEntity> specifications = null;
     PageRequest pageRequest = null;
-    if (searchCriteria.getPagingAndSortingParams() != null) {
-      pageRequest = createPageRequest(searchCriteria.getPagingAndSortingParams());
+    if (searchCriteria.getPageAndSortParams() != null) {
+      pageRequest = toPageRequest(searchCriteria.getPageAndSortParams());
     }
     if (searchCriteria.getSearches() != null) {
-      specifications = MovieSpecificationConverter.buildSpecifications(searchCriteria.getSearches());
+      specifications = specificationBuilder.buildSpecifications(searchCriteria.getSearches());
     }
 
     if (pageRequest != null && specifications != null) {
-      return entitiesToVos(movieRepository.findAll(specifications, pageRequest).getContent());
+      return toVos(movieRepository.findAll(specifications, pageRequest).getContent());
     } else if (pageRequest != null) {
-      return entitiesToVos(movieRepository.findAll(pageRequest).getContent());
+      return toVos(movieRepository.findAll(pageRequest).getContent());
     } else {
-      return entitiesToVos(movieRepository.findAll(specifications));
+      return toVos(movieRepository.findAll(specifications));
     }
   }
 
   @Override
   public MovieVO getOne(long id) {
-    return entityToVO(movieRepository.findOne(id));
+    return toVO(movieRepository.findOne(id));
   }
 
   @Override
   public MovieVO create(MovieVO movieVO) {
-    MovieEntity movieEntity = voToEntity(movieVO);
-    return entityToVO(save(movieEntity));
+    MovieEntity movieEntity = toEntity(movieVO);
+    return toVO(save(movieEntity));
   }
 
   @Override
@@ -97,7 +101,7 @@ public class MovieServiceImpl implements MovieService {
     if (movieVO.getType() != null) {
       movieEntity.setType(movieVO.getType());
     }
-    return entityToVO(save(movieEntity));
+    return toVO(save(movieEntity));
   }
 
   @Override
@@ -107,24 +111,6 @@ public class MovieServiceImpl implements MovieService {
 
   private MovieEntity save(MovieEntity movieEntity) {
     return movieRepository.save(movieEntity);
-  }
-
-  private PageRequest createPageRequest(PagingAndSortingParams params) {
-    Sort.Direction direction;
-    List<Sort.Order> orders = new ArrayList<>();
-    String prop;
-    for (String param : params.getSort()) {
-      if (param.startsWith("-")) {
-        direction = Sort.Direction.DESC;
-        prop = param.substring(1);
-      } else {
-        direction = Sort.Direction.ASC;
-        prop = param;
-      }
-      orders.add(new Sort.Order(direction, prop));
-    }
-    Sort sort = new Sort(orders);
-    return new PageRequest(params.getPage(), params.getSize(), sort);
   }
 
 }

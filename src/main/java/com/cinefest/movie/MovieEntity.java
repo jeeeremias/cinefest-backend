@@ -1,8 +1,8 @@
 package com.cinefest.movie;
 
+import com.cinefest.movie.enumeration.MovieType;
 import com.cinefest.photo.PhotoEntity;
 import com.cinefest.rate.RateEntity;
-import com.cinefest.movie.enumeration.MovieType;
 
 import javax.persistence.*;
 import java.time.Duration;

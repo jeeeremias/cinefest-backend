@@ -1,7 +1,7 @@
 package com.cinefest.rate;
 
 import com.cinefest.search.SearchElement;
-import com.cinefest.util.enumeration.QueryOperator;
+import com.cinefest.service.util.enumeration.QueryOperator;
 
 public class RateSearchElement implements SearchElement<RateAttr> {
 

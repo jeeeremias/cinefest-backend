@@ -1,8 +1,8 @@
 package com.cinefest.movie;
 
-import com.cinefest.search.SearchElement;
 import com.cinefest.movie.enumeration.MovieAttr;
-import com.cinefest.util.enumeration.QueryOperator;
+import com.cinefest.search.SearchElement;
+import com.cinefest.service.util.enumeration.QueryOperator;
 
 public class MovieSearchElement implements SearchElement<MovieAttr> {
 

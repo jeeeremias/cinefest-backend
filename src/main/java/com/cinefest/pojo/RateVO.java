@@ -7,7 +7,7 @@ public class RateVO {
   private long id;
   private double rate;
   private LocalDateTime dateTime;
-  private UserVO user;
+  private PublicUserVO publicUserVO;
 
   public long getId() {
     return id;
@@ -33,11 +33,11 @@ public class RateVO {
     this.dateTime = dateTime;
   }
 
-  public UserVO getUser() {
-    return user;
+  public PublicUserVO getPublicUserVO() {
+    return publicUserVO;
   }
 
-  public void setUser(UserVO user) {
-    this.user = user;
+  public void setPublicUserVO(PublicUserVO publicUserVO) {
+    this.publicUserVO = publicUserVO;
   }
 }

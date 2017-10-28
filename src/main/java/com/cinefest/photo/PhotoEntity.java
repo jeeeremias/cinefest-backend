@@ -1,7 +1,6 @@
 package com.cinefest.photo;
 
 import com.cinefest.movie.MovieEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;

@@ -1,4 +1,4 @@
-package com.cinefest.util.enumeration;
+package com.cinefest.service.util.enumeration;
 
 import java.util.Arrays;
 

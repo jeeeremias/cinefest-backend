@@ -1,6 +1,6 @@
 package com.cinefest.search;
 
-import com.cinefest.util.enumeration.QueryOperator;
+import com.cinefest.service.util.enumeration.QueryOperator;
 
 public interface SearchElement<T> {
 

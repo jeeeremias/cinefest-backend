@@ -1,10 +1,12 @@
 package com.cinefest.rate;
 
-import com.cinefest.entity.UserEntity;
 import com.cinefest.movie.MovieEntity;
+import com.cinefest.user.UserEntity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+
+import static javax.persistence.FetchType.LAZY;
 
 @Entity
 public class RateEntity {
@@ -22,7 +24,7 @@ public class RateEntity {
   @ManyToOne
   private UserEntity user;
 
-  @ManyToOne
+  @ManyToOne(fetch = LAZY)
   private MovieEntity movie;
 
   public long getId() {
